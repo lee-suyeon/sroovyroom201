@@ -5,9 +5,8 @@ const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const config = require('./config/key');
 
-const { User } = require("./server/models/User");
-
 const mongoose = require('mongoose');
+
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, 
   useUnifiedTopology: true, 
@@ -18,6 +17,9 @@ mongoose.connect(config.mongoURI, {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// router
+app.use('/api/users', require('./routes/users'));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
