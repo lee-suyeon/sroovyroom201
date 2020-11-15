@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // salt length
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -48,6 +49,27 @@ userSchema.pre('save', function(next) {
     next();
   }
 })
+
+userSchema.methods.comparePassword = function (plainPassword, callback) {
+  // plainPassword을 암호화해서 기존에 암호화된 비밀번호와 맞는지 체크
+  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+    if(err) return callback(err),
+    callback(null, isMatch)
+  })
+}
+
+userSchema.methods.generateToken = function ( callback ) {
+  const user = this;
+
+  // jsonwebtoken을 이용해서 토큰 생성
+  let token = jwt.sign(user._id.toHexString(), 'sroovyroom' )
+  
+  user.token = token;
+  user.save(function (err, user) {
+    if(err) return callback(err)
+    callback(null, user)
+  });
+}
 
 const User = mongoose.model('User', userSchema);
 

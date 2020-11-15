@@ -18,4 +18,37 @@ router.post('/register', (req, res) => {
   });
 });
 
+// 로그인
+router.post('/login', (req, res) => {
+
+  // 요청한 id를 DB에서 찾는다. 
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if(!user) {
+      return res.json({
+        loginSuccess: false,
+        message: '가입하지 않은 아이디입니다.'
+      })
+    }
+    // 요청한 id를 데이터 베이스에 있다면 비밀번호를 확인
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if(!isMatch){
+        return res.json({
+          loginSucess: false, 
+          message: '비밀번호가 틀렸습니다.' 
+        });
+      }
+
+      // Token 생성
+      user.generateToken((err, user) => {
+        if(err) return res.status(400).send(err);
+
+        // 토큰을 쿠키에 저장한다. 
+        res.cookie('x_auth', user.token)
+          .status(200)
+          .json({ loginSuccess: true, userId: user._id })
+      });
+    })
+  })
+});
+
 module.exports = router;
