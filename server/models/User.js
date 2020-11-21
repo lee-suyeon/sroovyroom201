@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    maxlength: 50
+    maxlength: 100
   },
   role: { // host = 0, friend = 1, guest = 9
     type: Number,
@@ -53,7 +53,7 @@ userSchema.pre('save', function(next) {
 userSchema.methods.comparePassword = function (plainPassword, callback) {
   // plainPassword을 암호화해서 기존에 암호화된 비밀번호와 맞는지 체크
   bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
-    if(err) return callback(err),
+    if(err) return callback(err);
     callback(null, isMatch)
   })
 }

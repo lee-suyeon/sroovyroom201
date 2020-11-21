@@ -31,12 +31,8 @@ router.post('/login', (req, res) => {
     }
     // 요청한 id를 데이터 베이스에 있다면 비밀번호를 확인
     user.comparePassword(req.body.password, (err, isMatch) => {
-      if(!isMatch){
-        return res.json({
-          loginSucess: false, 
-          message: '비밀번호가 틀렸습니다.' 
-        });
-      }
+      if(!isMatch)
+        return res.json({ loginSuccess: false, message: '비밀번호가 틀렸습니다.' });
 
       // Token 생성
       user.generateToken((err, user) => {
