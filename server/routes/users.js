@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const { User } = require('../models/User');
+const { auth } = require('../middleware/auth');
+
+// auth 인증
+router.get('/auth', auth, (req, res) => {
+  // 유저 정보를 제공
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    name: req.user.name,
+    email: req.user.email,
+    role: req.user.role,
+    image: req.user.image,
+  })
+})
 
 // 회원가입
 router.post('/register', (req, res) => {

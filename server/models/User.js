@@ -50,7 +50,8 @@ userSchema.pre('save', function(next) {
   }
 })
 
-userSchema.methods.comparePassword = function (plainPassword, callback) {
+// 비밀번호 비교
+userSchema.methods.comparePassword = (plainPassword, callback) => {
   // plainPassword을 암호화해서 기존에 암호화된 비밀번호와 맞는지 체크
   bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
     if(err) return callback(err);
@@ -58,7 +59,8 @@ userSchema.methods.comparePassword = function (plainPassword, callback) {
   })
 }
 
-userSchema.methods.generateToken = function ( callback ) {
+// 토큰 생성
+userSchema.methods.generateToken = callback => {
   const user = this;
 
   // jsonwebtoken을 이용해서 토큰 생성
@@ -70,6 +72,23 @@ userSchema.methods.generateToken = function ( callback ) {
     callback(null, user)
   });
 }
+
+// 토큰 찾기
+userSchema.methods.findByToken = ( token, callback ) => {
+  const user = this;
+
+  // 토큰 복호화 decode
+  jwt.verify(token, 'sroovyroom', (err, decoded) => {
+    // userId로 유저를 찾은 후 
+    // 클라이언트에서 가져온 token과 DB에 보관된 token이 일치하는지 확인
+
+    user.findOne({ "_id": decoded, "token": token }, (err, user) => {
+      if(err) return callback(err);
+      callback(null, user);
+    })
+  })
+}
+
 
 const User = mongoose.model('User', userSchema);
 
