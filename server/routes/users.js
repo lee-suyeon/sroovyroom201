@@ -62,4 +62,16 @@ router.post('/login', (req, res) => {
   })
 });
 
+// 로그아웃
+router.get('/logout', auth, (req, res) => {
+  console.log('req.user', req.user);
+  // 로그아웃 하려는 유저를 찾아서 token을 지워준다.
+  User.findOneAndUpdate({ _id: req.user._id }, 
+    { token: "" },
+    (err, user) => {
+      if(err) return res.json({ success: false, err });
+      return res.status(200).send({ success: true });
+    });
+});
+
 module.exports = router;

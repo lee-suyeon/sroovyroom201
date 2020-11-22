@@ -51,7 +51,7 @@ userSchema.pre('save', function(next) {
 })
 
 // 비밀번호 비교
-userSchema.methods.comparePassword = (plainPassword, callback) => {
+userSchema.methods.comparePassword = function (plainPassword, callback) {
   // plainPassword을 암호화해서 기존에 암호화된 비밀번호와 맞는지 체크
   bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
     if(err) return callback(err);
@@ -60,7 +60,7 @@ userSchema.methods.comparePassword = (plainPassword, callback) => {
 }
 
 // 토큰 생성
-userSchema.methods.generateToken = callback => {
+userSchema.methods.generateToken = function (callback) {
   const user = this;
 
   // jsonwebtoken을 이용해서 토큰 생성
@@ -74,7 +74,7 @@ userSchema.methods.generateToken = callback => {
 }
 
 // 토큰 찾기
-userSchema.methods.findByToken = ( token, callback ) => {
+userSchema.statics.findByToken = function ( token, callback ) {
   const user = this;
 
   // 토큰 복호화 decode
