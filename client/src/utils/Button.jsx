@@ -48,9 +48,10 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 4px;
   color: #fff;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   padding: 0 1rem;
+  transition: 0.2s;
   
   /* 크기 */
   ${sizeStyle}
