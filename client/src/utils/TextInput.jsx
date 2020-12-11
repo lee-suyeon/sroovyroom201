@@ -21,12 +21,15 @@ const StyledInput = styled.div`
 
 `
 
-function TextInput({ children, label, type, placeholder, ...rest }) {
+function TextInput({ children, type, placeholder, value, onChange, ...rest }) {
   return (
     <StyledInput>
       <input 
         type={type}
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
+        {...rest}
       />
     </StyledInput>
   )
