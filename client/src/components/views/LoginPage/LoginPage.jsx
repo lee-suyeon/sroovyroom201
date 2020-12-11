@@ -2,7 +2,21 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loginUser } from '../../../_actions/user_action';
+
+import styled from 'styled-components';
+import Button from '../../../utils/Button';
 import TextInput from '../../../utils/TextInput';
+import Logo from '../../../utils/Logo';
+import { Title, Text } from '../../../utils/Typo';
+
+const ContentPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 2.5rem;
+`
 
 function LoginPage(props) {
 
@@ -36,24 +50,34 @@ function LoginPage(props) {
   }
 
   return (
-    <div>
-      Entering the sroovyroom201
+    <ContentPage>
+      <Logo size="large" />
+      <Text margin={"0 0 0.5rem"}>WELCOME BACK!</Text>
+      <Title>ENTERING THE SROOVYROOM201</Title>
 
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={onSubmitHandler}>
         <TextInput 
-          label="E-mail"
           type="email"
+          placeholder="e-mail"
           value={email}
           onChange={onEmailHandler}
         />
-        {/* <label>E-mail</label>
-        <input type="email" value={email} onChange={onEmailHandler}/> */}
-        <label>password</label>
-        <input type="password" value={password} onChange={onPasswordHandler}/>
-        <br />
-        <button>Login</button>
+        <TextInput 
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={onPasswordHandler}
+        />
+        <Button>ENTER</Button>
       </form>
-    </div>
+      <Text 
+        textAlign={"center"}
+        textDecoration={"underline"}
+        margin={"2rem 0 0 0"}
+      >
+        BE FRIEND WITH SROOVYROOM
+      </Text>
+    </ContentPage>
   )
 }
 
