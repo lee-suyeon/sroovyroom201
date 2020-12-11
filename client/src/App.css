@@ -1,0 +1,10 @@
+.App {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: #f3f3f3;
+  padding: 2rem 3rem;
+  overflow: hidden;
+  /* background: rgb(4,86,63);
+  background: linear-gradient(0deg, rgba(4,86,63,1) 0%, rgba(243,243,243,1) 20%); */
+}

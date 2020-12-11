@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import NavMenu from './components/views/NavMenu/NavMenu';
+import { CopyRight } from './utils/Typo';
 import './App.css';
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
         <Route exact path= "/" component={LandingPage} />
         <Route exact path= "/login" component={LoginPage} />
       </Switch>
+
+      <CopyRight />
     </div>
   );
 }
