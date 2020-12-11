@@ -56,13 +56,16 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input{
-    font-family: '', sans-serif;
+    font-family: 'Dosis', 'Noto Sans KR', 'Noto Sans', sans-serif;
+    font-weight: 500;
     -webkit-appearance: none;
     border-radius: 0;
+    border: none;
+    padding: 0.8rem;
   }
 
   button {
-    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Dosis', sans-serif;
     background-color: transparent;
   }
 
