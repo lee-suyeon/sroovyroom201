@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
-  *, *:before, *:after{
+  *, *:before, *:after, div{
     box-sizing: border-box;
   }
 
@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -56,12 +56,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input{
-    font-family: 'Dosis', 'Noto Sans KR', 'Noto Sans', sans-serif;
-    font-weight: 500;
+    font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
     -webkit-appearance: none;
     border-radius: 0;
     border: none;
-    padding: 0.8rem;
+    padding: 0.3rem;
   }
 
   button {
@@ -69,7 +68,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: transparent;
   }
 
-  a {color: inherit; text-decoration: none; outline: none}
+  a {color: inherit; text-decoration: none; outline: none; display: block;}
 
   a:hover, a:active {text-decoration: none;}
 `
