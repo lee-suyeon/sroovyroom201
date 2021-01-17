@@ -3,27 +3,36 @@ import styled, { css } from 'styled-components';
 
 const StyledInput = styled.div`
   /* 공통 */
-  display: flex;
-  margin-bottom: 1.2rem;
+  margin-bottom: 3rem;
+
+  label {
+    display: block;
+    color: ${({ theme }) => theme.mainColor };
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
 
   input {
     width: 100%;
+    height: 3.125rem;
     font-size: 1rem;
     outline: none;
     background: #fff;
-    border-radius: 4px;
-    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.05);
+    border: none;
+    color: #333;
+    border-bottom: 1px solid ${({ theme }) => theme.mainColor }
   }
 
   input: focus {
-    border: 2px solid ${({ theme }) => theme.mainColor };
+    border-bottom: 2px solid ${({ theme }) => theme.mainColor };
   }
 
 `
 
-function TextInput({ children, type, placeholder, value, onChange, ...rest }) {
+function TextInput({ children, label, type, placeholder, value, onChange, ...rest }) {
   return (
     <StyledInput>
+      <label>{label}</label>
       <input 
         type={type}
         value={value}
