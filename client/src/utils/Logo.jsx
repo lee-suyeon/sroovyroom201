@@ -3,9 +3,9 @@ import styled, { css } from 'styled-components';
 
 const sizes = {
   large: {
-    width: '80px',
-    height: '80px',
-    fontSize: '1.6rem',
+    width: '70px',
+    height: '70px',
+    fontSize: '1.3rem',
     marginBottom: '1.5rem',
   },
   medium: {
@@ -50,6 +50,7 @@ const MainLogo = styled.div`
 
   span {
     position: absolute;
+    font-family: 'Dosis', sans-serif;
   }
 
   .sroovy {
@@ -57,7 +58,7 @@ const MainLogo = styled.div`
       props.size === "large" &&
       css`
         top: 12px;
-        left: 20px;
+        left: 18px;
       `}
     ${props =>
       props.size === "medium" &&
@@ -78,7 +79,7 @@ const MainLogo = styled.div`
     ${props =>
       props.size === "large" &&
       css`
-        right: 20px;
+        right: 18px;
         bottom: 12px;
       `}
     ${props =>
@@ -96,8 +97,6 @@ const MainLogo = styled.div`
     }
   }
 `
-
-
 
 function Logo({ size, ...rest }) {
   return (
