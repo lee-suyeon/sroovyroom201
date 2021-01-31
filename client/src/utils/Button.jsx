@@ -4,11 +4,11 @@ import { darken, lighten } from 'polished';
 
 const sizes = {
   large: {
-    height: '3rem',
+    height: '6.5rem',
     fontSize: '1.25rem'
   },
   medium: {
-    height: '3rem',
+    height: '3.6rem',
     fontSize: '1.25rem'
   },
   small: {
@@ -41,18 +41,25 @@ const colorStyle = css`
 
 const StyledButton = styled.button`
   /* 공통 */
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  // display: inline-flex;
+  // justify-content: center;
+  // align-items: center;
   outline: none;
   border: none;
-  border-radius: 4px;
   color: #fff;
   font-weight: 600;
   cursor: pointer;
   padding: 0 1rem;
   transition: 0.2s;
+  position: absolute;
+  left: 0; bottom: 0;
   
+  ${props =>
+    props.width === 'full' &&
+    css`
+      width: 100%;
+    `}
+
   /* 크기 */
   ${sizeStyle}
 
