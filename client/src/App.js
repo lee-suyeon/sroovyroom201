@@ -3,21 +3,18 @@ import { Route, Switch } from 'react-router-dom';
 
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
+import RegisterPage from './components/views/RegisterPage/RegisterPage';
 import NavMenu from './components/views/NavMenu/NavMenu';
-import { CopyRight } from './utils/Typo';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <NavMenu />
-
       <Switch>
         <Route exact path= "/" component={LandingPage} />
         <Route exact path= "/login" component={LoginPage} />
+        <Route exact path= "/register" component={RegisterPage} />
       </Switch>
-
-      <CopyRight />
     </div>
   );
 }
