@@ -17,6 +17,13 @@ const userSchema = mongoose.Schema({
     type: String,
     maxlength: 100
   },
+  mbti: {
+    type: String
+  },
+  message: {
+    type: String,
+    maxlength: 200,
+  },
   role: { // host = 0, friend = 1, guest = 9
     type: Number,
     default: 0 
