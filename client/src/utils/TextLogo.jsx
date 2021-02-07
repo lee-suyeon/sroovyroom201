@@ -6,7 +6,7 @@ const sizes = {
     fontSize: "1.8rem"
   },
   medium: {
-    fontSize: "1.2rem"
+    fontSize: "1rem"
   },
   small: {
     fontSize: "0.825rem"

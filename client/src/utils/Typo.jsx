@@ -2,8 +2,8 @@ import React from 'react'
 import styled, { css } from 'styled-components';
 
 const StyledTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 500;
   color:  ${({ theme, color }) => color || theme.mainColor };
   line-height: 1.2;
   margin-Bottom: 1.5rem;
