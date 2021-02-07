@@ -9,7 +9,28 @@ import TextInput from '../../../utils/TextInput';
 import Logo from '../../../utils/Logo';
 import TextLogo from '../../../utils/TextLogo';
 import Bar from '../../../utils/Bar';
+import SelectBox from '../../../utils/SelectBox';
 import { Title, Text } from '../../../utils/Typo';
+
+const mbtiList = [
+  { idx: 0, name: "모르겠어요.", desc: "" },
+  { idx: 1, name: "ISTJ", desc: "청렴결백 논리주의자" },
+  { idx: 2, name: "ISFJ", desc: "용감한 수호자" },
+  { idx: 3, name: "INFJ", desc: "선의의 옹호자" },
+  { idx: 4, name: "INTJ", desc: "용의주도한 전략가" },
+  { idx: 5, name: "ISTP", desc: "만능 재주꾼" },
+  { idx: 6, name: "ISFP", desc: "호기심 많은 예술가" },
+  { idx: 7, name: "INFP", desc: "열정적인 중재자" },
+  { idx: 8, name: "INTP", desc: "논리적인 사색가" },
+  { idx: 9, name: "ESTJ", desc: "엄격한 관리자" },
+  { idx: 10, name: "ESFJ", desc: "사교적인 외교관" },
+  { idx: 11, name: "ENFJ", desc: "정의로운 사회운동가" },
+  { idx: 12, name: "ENTJ", desc: "대담한 통솔자" },
+  { idx: 13, name: "ESTP", desc: "모험을 즐기는 사업가" },
+  { idx: 14, name: "ESFP", desc: "자유로운 영혼의 연예인" },
+  { idx: 15, name: "ENFP", desc: "재기발랄한 활동가" },
+  { idx: 16, name: "ENTP", desc: "논쟁을 즐기는 변론가" },
+]
 
 const ContentPage = styled.div`
   display: flex;
@@ -18,6 +39,12 @@ const ContentPage = styled.div`
   width: 100%;
   height: 100%;
   padding-bottom: 2.5rem;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5rem;
+  }
 `
 
 const FreeDrink = styled.div`
@@ -33,7 +60,7 @@ function RegisterPage(props) {
     password: "",
     message: "",
   })
-  const [ mbti, setMbti ] = useState("");
+  const [ mbti, setMbti ] = useState(-1);
   const { name, email, password, message } = inputs;
 
   const onChangeInput = (e) => {
@@ -42,6 +69,10 @@ function RegisterPage(props) {
       ...inputs,
       [name]: value,
     })
+  }
+
+  const onChangeSelect = (e) => {
+    setMbti(e.target.value);
   }
 
   const onSubmitHandler = (e) => {
@@ -66,10 +97,9 @@ function RegisterPage(props) {
       });
   }
 
-
   return (
     <ContentPage>
-      <div className="top-content" style={{ padding: '1rem'}}>
+      <div className="top-content" style={{ padding: '1rem 0.5rem'}}>
         <Logo size="large" />
         <TextLogo size="large" />
         <Title>과 친구되기 </Title>
@@ -80,7 +110,7 @@ function RegisterPage(props) {
 
       <Bar/>
 
-      <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler}>
         <TextInput
           label="E-mail"
           type="email"
@@ -105,20 +135,25 @@ function RegisterPage(props) {
           value={password}
           onChange={onChangeInput}
         />
-        <TextInput 
+        <SelectBox
           label="MBTI"
-          type="select"
+          datas={mbtiList}
+          value={mbti}
+          onChange={onChangeSelect}
           placeholder="당신의 MBTI는?"
+          showPlaceholder={true}
         />
+        <span></span>
         <TextInput
-          label="To SROOVYROOM201"
+          label={`To SROOVYROOM`}
           name="message"
           type="text"
           placeholder="하고싶은 말이 있으면 적어주세요. 없으면 서운해요."
           value={message}
           onChange={onChangeInput}
         />
-        <Button>친구맺기</Button>
+        
+        <Button width="full" size="medium">친구맺기</Button>
       </form>
     </ContentPage>
   )
