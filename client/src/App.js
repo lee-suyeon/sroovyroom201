@@ -4,16 +4,19 @@ import { Route, Switch } from 'react-router-dom';
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
-import NavMenu from './components/views/NavMenu/NavMenu';
+import VisitorsPage from './components/views/VisitorsPage/VisitorsPage';
 import './App.css';
+
+import Auth from './hoc/auth';
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact path= "/" component={LandingPage} />
-        <Route exact path= "/login" component={LoginPage} />
-        <Route exact path= "/register" component={RegisterPage} />
+        <Route exact path= "/" component={Auth(LandingPage, null)} />
+        <Route exact path= "/login" component={Auth(LoginPage, false)} />
+        <Route exact path= "/register" component={Auth(RegisterPage, false)} />
+        <Route exact path= "/visitors" component={Auth(VisitorsPage, true)} />
       </Switch>
     </div>
   );
