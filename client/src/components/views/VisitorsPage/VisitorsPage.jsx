@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Logo from '../../../utils/Logo';
@@ -8,6 +9,8 @@ import TextInput from '../../../utils/TextInput';
 import Bar from '../../../utils/Bar';
 
 import { Send } from 'react-feather';
+
+import Axios from 'axios';
 
 const ContentPage = styled.div`
   display: flex;
@@ -55,14 +58,43 @@ const VisitorsForm = styled.form`
     border-bottom: 2px solid ${({ theme }) => theme.baseColor };
   }
 
+  .send-btn {
+    border: none;
+    color: ${({ theme }) => theme.baseColor };
+    margin-top: 15px;
+  }
+
 `
 
-function VisitorsPage() {
-  const [ GuestComment, setGuestComment ] = useState("");
-
-  const onGuestCommentHandler = e => {
+function VisitorsPage(props) {
+  const [ guestComment, setGuestComment ] = useState("");
+  
+  const GuestCommentHandler = e => {
     setGuestComment(e.target.value)
   }
+
+  const SubmitHandler = e => {
+    e.preventDefault();
+
+    if(!guestComment) {
+      return alert("내용을 입력해주세요.")
+    }
+
+    let body = {
+      writer: props.user.userData._id,
+      guestComment,
+    }
+
+    // Axios.post('/api/visitors', body)
+    //   .then(res => {
+    //     if(res.data.success){
+    //       alert("다음에 또 놀러오실거죠?😉")
+    //     } else {
+    //       alert("방명록 작성에 실패했습니다.")
+    //     }
+    //   })
+  }
+
 
   return(
     <ContentPage>
@@ -84,10 +116,18 @@ function VisitorsPage() {
 
       <VisitorsForm>
         <TextInput
-          onChange={onGuestCommentHandler}
+          value={guestComment}
+          onChange={GuestCommentHandler}
           placeholder="방명록을 남겨주세요."
+          maxLength="200"
         />
-        <Send />
+        <button 
+          className="send-btn" 
+          type="submit"
+          onClick={SubmitHandler} 
+        >
+          <Send />
+        </button>
       </VisitorsForm>
 
     </ContentPage>
