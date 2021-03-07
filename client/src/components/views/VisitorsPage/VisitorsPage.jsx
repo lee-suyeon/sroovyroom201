@@ -82,17 +82,17 @@ function VisitorsPage(props) {
 
     let body = {
       writer: props.user.userData._id,
-      guestComment,
+      content: guestComment,
     }
 
-    // Axios.post('/api/visitors', body)
-    //   .then(res => {
-    //     if(res.data.success){
-    //       alert("다음에 또 놀러오실거죠?😉")
-    //     } else {
-    //       alert("방명록 작성에 실패했습니다.")
-    //     }
-    //   })
+    Axios.post('/api/visitors', body)
+      .then(res => {
+        if(res.data.success){
+          alert("다음에 또 놀러오실거죠?😉")
+        } else {
+          alert("방명록 작성에 실패했습니다.")
+        }
+      })
   }
 
 
@@ -114,7 +114,7 @@ function VisitorsPage(props) {
         방명록 내용
       </div>
 
-      <VisitorsForm>
+      <VisitorsForm onSubmit={SubmitHandler}>
         <TextInput
           value={guestComment}
           onChange={GuestCommentHandler}
