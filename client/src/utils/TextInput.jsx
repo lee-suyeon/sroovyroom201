@@ -1,9 +1,20 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const secondStyle = css`
+  ${props =>
+    props.second &&
+    css`
+      color: red;
+    `}
+`;
 
 const StyledInput = styled.div`
   /* 공통 */
+  width: 100%;
   margin-bottom: 2rem;
+
+  ${secondStyle}
 
   label {
     display: block;
@@ -17,7 +28,7 @@ const StyledInput = styled.div`
     height: 2.5rem;
     font-size: 1rem;
     outline: none;
-    background: #fff;
+    background: transparent;
     border: none;
     color: #333;
     border-bottom: 1px solid ${({ theme }) => theme.mainColor }
@@ -33,15 +44,16 @@ const StyledInput = styled.div`
 
 `
 
-function TextInput({ children, label, type, placeholder, value, onChange, ...rest }) {
+function TextInput({ children, label, type, placeholder, value, onChange, mode, ...rest }) {
   return (
     <StyledInput>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <input 
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        mode={mode}
         {...rest}
       />
     </StyledInput>

@@ -23,6 +23,10 @@ const StyledSelectBox = styled.div`
     font-size: 0.825rem;
   }
 
+  select:focus {
+    outline: 1.5px solid ${({ theme }) => theme.mainColor };
+  }
+
   .dropdown { position: relative; }
 
   .dropdown:after {

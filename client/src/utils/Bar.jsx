@@ -8,9 +8,12 @@ const DivideBar = styled.div`
   margin-bottom: 2rem;
 `
 
-function Bar() {
+function Bar({ style, ...rest}) {
   return (
-    <DivideBar />
+    <DivideBar
+      style={style}
+      { ...rest }
+    />
   )
 }
 
