@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
+import Message from './Message';
 
 import Logo from '../../../utils/Logo';
 import TextLogo from '../../../utils/TextLogo';
@@ -34,7 +35,7 @@ const VisitorsForm = styled.form`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0; left: 0;
   color: ${({ theme }) => theme.baseColor };
   background: ${({ theme }) => theme.mainColor };
@@ -63,12 +64,24 @@ const VisitorsForm = styled.form`
     color: ${({ theme }) => theme.baseColor };
     margin-top: 15px;
   }
-
 `
 
 function VisitorsPage(props) {
   const [ guestComment, setGuestComment ] = useState("");
-  
+  const [ messages, setMessages ] = useState([]);
+
+  useEffect(() => {
+
+    Axios.post('/api/visitors/messages')
+      .then(res => {
+        if(res.data.success){
+          setMessages(res.data.messages.reverse())
+        } else {
+          alert('방명록을 불러오는 데 실패했습니다. ')
+        }
+      })
+  }, [messages])
+
   const GuestCommentHandler = e => {
     setGuestComment(e.target.value)
   }
@@ -89,12 +102,12 @@ function VisitorsPage(props) {
       .then(res => {
         if(res.data.success){
           alert("다음에 또 놀러오실거죠?😉")
+          setGuestComment("");
         } else {
           alert("방명록 작성에 실패했습니다.")
         }
       })
   }
-
 
   return(
     <ContentPage>
@@ -108,11 +121,16 @@ function VisitorsPage(props) {
         </GuestCount>
       </div>
 
-      <Bar />
+      <Bar style={{ marginBottom: '1.5rem' }}/>
 
-      <div style={{ height: "400px", overflowY: "auto" }}>
-        방명록 내용
-      </div>
+      <MessageWrapper>
+        {messages&&messages.map((message, idx) => (
+          <Message 
+            key={`${idx}mgs`}
+            message={message}
+          />))
+        }
+      </MessageWrapper>
 
       <VisitorsForm onSubmit={SubmitHandler}>
         <TextInput
@@ -133,5 +151,13 @@ function VisitorsPage(props) {
     </ContentPage>
   );
 }
+
+// height:400px;
+// overflow-y: auto;
+const MessageWrapper = styled.div`
+  width: 100%;
+  color: ${({ theme }) => theme.textColor };
+  padding: 0 0.8rem;
+`
 
 export default VisitorsPage
