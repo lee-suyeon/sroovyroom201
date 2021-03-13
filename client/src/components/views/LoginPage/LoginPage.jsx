@@ -130,7 +130,7 @@ function LoginPage(props) {
             </Link>
           </IconButton>
         </div>
-        <Button width="full" size="medium">ENTER</Button>
+        <Button fullWidth size="medium">ENTER</Button>
       </form>
     </ContentPage>
   )

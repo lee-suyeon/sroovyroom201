@@ -90,6 +90,7 @@ function RegisterPage(props) {
     dispatch(registerUser(body))
       .then(response => {
         if(response.payload.success){
+          alert('회원가입에 성공했습니다!');
           props.history.push('/login');
         } else {
           alert('Failed to be friend');
@@ -143,7 +144,6 @@ function RegisterPage(props) {
           placeholder="당신의 MBTI는?"
           showPlaceholder={true}
         />
-        <span></span>
         <TextInput
           label={`To SROOVYROOM`}
           name="message"
@@ -152,8 +152,7 @@ function RegisterPage(props) {
           value={message}
           onChange={onChangeInput}
         />
-        
-        <Button width="full" size="medium">친구맺기</Button>
+        <Button fullWidth size="medium">친구맺기</Button>
       </form>
     </ContentPage>
   )

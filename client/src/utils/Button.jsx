@@ -8,7 +8,7 @@ const sizes = {
     fontSize: '1.25rem'
   },
   medium: {
-    height: '3.6rem',
+    height: '4rem',
     fontSize: '1.25rem'
   },
   small: {
@@ -55,7 +55,7 @@ const StyledButton = styled.button`
   left: 0; bottom: 0;
   
   ${props =>
-    props.width === 'full' &&
+    props.fullWidth &&
     css`
       width: 100%;
     `}
