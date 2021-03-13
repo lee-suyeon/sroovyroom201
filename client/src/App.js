@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import LandingPage from './components/views/LandingPage/LandingPage';
+import DoorLock from './components/views/DoorLock/DoorLock';
 import MenuPage from './components/views/MenuPage/MenuPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path= "/" component={Auth(LandingPage, null)} />
+        <Route exact path= "/door-lock" component={Auth(DoorLock, null)} />
         <Route exact path= "/menu" component={Auth(MenuPage, null)} />
         <Route exact path= "/login" component={Auth(LoginPage, false)} />
         <Route exact path= "/register" component={Auth(RegisterPage, false)} />
