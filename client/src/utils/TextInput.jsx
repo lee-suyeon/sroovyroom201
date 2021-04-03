@@ -10,9 +10,7 @@ const secondStyle = css`
 `;
 
 const StyledInput = styled.div`
-  /* 공통 */
-  width: 100%;
-  margin-bottom: 2rem;
+  text-align: center;
 
   ${secondStyle}
 
@@ -31,7 +29,9 @@ const StyledInput = styled.div`
     background: transparent;
     border: none;
     color: #333;
-    border-bottom: 1px solid ${({ theme }) => theme.mainColor }
+    text-align: left;
+    border-bottom: 1px solid ${({ theme }) => theme.mainColor };
+    margin-bottom: 2rem;
   }
 
   input::placeholder {

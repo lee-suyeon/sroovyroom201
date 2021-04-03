@@ -31,16 +31,22 @@ const SroovyRoom = styled.div`
       color: #333;
     `}
 
+  ${props =>
+    props.color === "secondary" &&
+    css`
+      color: #fff;
+    `}
+
   ${sizeStyle}
 `
 
-function TextLogo({ size, color, ...rest }) {
+function TextLogo({ size, color, roomNumber, ...rest }) {
   return (
     <SroovyRoom 
       size={size} 
       color={color} 
       {...rest}
-    >SROOVYROOM</SroovyRoom>
+    >{roomNumber ? "SROOVYROOM201" : "SROOVYROOM"}</SroovyRoom>
   )
 }
 
