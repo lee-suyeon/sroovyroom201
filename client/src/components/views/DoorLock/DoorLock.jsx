@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import styled, { css } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { Key, HelpCircle, ArrowLeft } from 'react-feather';
+import { Key, HelpCircle, Heart, Delete } from 'react-feather';
 import TextLogo from '../../../utils/TextLogo'
 import Button from '../../../utils/Button'
 
@@ -41,19 +41,19 @@ const DialNumber = styled.div`
   width: 90%;
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  grid-template-rows: repeat(3, 80px);
+  grid-template-rows: repeat(3, 65px);
   text-align: center;
   margin-top: -1.5rem;
   color: ${({ theme }) => theme.mainColor };
-  
+
   & > div {
     font-family: 'Dosis', sans-serif;
     font-weight: 500;
     font-size: 1.7rem;
-    line-height: 80px;
+    line-height: 65px;
     cursor: pointer;
   }
-  
+
   $ > .number {
     transition: 0.3s;
   }
@@ -67,7 +67,7 @@ const DialNumber = styled.div`
 const HelpWrapper = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.mainColor };
-  
+
   & > div {
     display: flex;
     justify-content: space-between;
@@ -76,7 +76,7 @@ const HelpWrapper = styled.div`
 
 const HelpMessage = styled.div`
   position: absolute;
-  top: 1rem;
+  top: 1.5rem;
   left: 1.5rem;
   padding: 0.5rem 1rem;
   text-align: center;
@@ -89,7 +89,7 @@ const HelpMessage = styled.div`
   &::before {
     content: "";
     position: absolute;
-    top: 1.5rem;
+    top: 1rem;
     right: -0.3rem;
     width: 10px;
     height: 10px;
@@ -116,7 +116,7 @@ const NumberCell = styled.div`
   background: #e2e8e4;
   margin-right: 0.5rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 45px;
   font-family: 'Dosis', sans-serif;
   font-weight: 500;
@@ -133,42 +133,33 @@ const NumberCell = styled.div`
   }
 `
 
-const ResetMessage = styled.div`
-  font-size: 0.825rem;
-  margin-top: -1rem;
-  color: ${({ theme }) => theme.mainColor };
-  font-weight: 500;
-
-  ${props =>
-    props.visible &&
-    css`
-      visibility: hidden;
-    `}
-`
-
 function DoorLock( props ) {
   const [ numbers, setNumbers ] = useState(defaultPassword);
   const [ showMessage, setShowMessage ] = useState(false);
+  const [ heart, setHeart ] = useState(false);
 
-  const onClickNumber = (number) => {
+  const onClickDial = (dial) => {
     let inputNumbers = [ ...numbers ]
     let inputIdx = numbers.findIndex(num => !num);
-
-    if( inputIdx !== -1) {
-      inputNumbers[inputIdx] = number;
-      setNumbers(inputNumbers)
-    } else {
-      return;
+    
+    if(dial !== "delete") { // 지우기 버튼을 클릭했을 때
+      let num = dial.toString();
+      if( inputIdx !== -1) {
+        inputNumbers[inputIdx] = num;
+      } 
+    } else { // 숫자를 클릭했을 때
+      if( inputIdx !== -1) {
+        inputNumbers[inputIdx - 1] = "";
+      } else {
+        inputNumbers[inputNumbers.length - 1] = "";
+      }
     }
+    setNumbers(inputNumbers)
   }
 
   const onClickAlohomora = () => {
     alert('정답');
     props.history.push('/menu');
-  }
-
-  const onClickReset = () => {
-    setNumbers(defaultPassword);
   }
 
   const onClickHelpCircle = useCallback(() => {
@@ -189,7 +180,10 @@ function DoorLock( props ) {
       alert('틀렸습니다. 다시 한번 입력해주세요. ')
       setNumbers(defaultPassword);
     }
-    
+  }
+
+  const onClickHeart = () => {
+    setHeart(prev => !prev)
   }
 
   return (
@@ -199,7 +193,7 @@ function DoorLock( props ) {
             <Key />
             <HelpCircle onClick={onClickHelpCircle}/>
           </div>
-          {showMessage && 
+          {showMessage &&
             <HelpMessage>
               착한 사람 눈에는 문을 여는 주문이 보여요! <br />
               Hint: ⚡️🦉🪶🔮
@@ -209,30 +203,33 @@ function DoorLock( props ) {
 
       <DoorLockWrapper>
         <Guide>
-          <TextLogo />에 <br />
+          <TextLogo style={{ marginBottom: 0 }}/>에 <br />
           입장하려면 비밀번호가 필요해요. <br />
           문을 여는 주문을 알고 있다면 <br />
-          비밀번호는 필요 없어요. 
+          비밀번호는 필요 없어요.
         </Guide>
-        
-        <div style={{ display: "flex", marginTop: '1rem' }}>
-          {numbers.map((number, i) => 
+
+        <div style={{ display: "flex", marginBottom: '1rem' }}>
+          {numbers.map((number, i) =>
             <NumberCell key={`number${i+1}`}>{number}</NumberCell>
           )}
         </div>
-        <ResetMessage
-          visible={numbers[0] ? false : true}
-          onClick={onClickReset}
-        > 다시 입력하기</ResetMessage>
 
         <DialNumber>
           {dial.map((d, idx) => (
-            <div 
+            <div
               key={`dial-${idx+1}`}
               className="number"
-              onClick={() => onClickNumber(d)}
+              onClick={() => onClickDial(d)}
               >{d}</div>
           ))}
+          <div onClick={onClickHeart}>{
+            heart ?
+            "❤️" : 
+            <Heart />
+          }</div>
+          <div onClick={() => onClickDial(0)}>0</div>
+          <div onClick={() => onClickDial("delete")}><Delete /></div>
         </DialNumber>
 
         <Button fullWidth onClick={() => onClickEnter(numbers)}>들어가기</Button>
