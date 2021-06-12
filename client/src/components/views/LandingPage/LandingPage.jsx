@@ -33,8 +33,6 @@ const openDoor = keyframes`
   }
 `
 
-// animation: open 3s linear;
-
 const Door = styled.div`
   position: relative;
   display: flex;
@@ -138,7 +136,7 @@ function LandingPage(props) {
     setTimeout(() => {
       setOpen(false);
       props.history.push('/door-lock');
-    }, 5000)
+    }, 2000)
   }
 
   return (

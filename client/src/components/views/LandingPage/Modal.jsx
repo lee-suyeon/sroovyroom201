@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../../utils/Button';
 import TextLogo from '../../../utils/TextLogo';
@@ -36,11 +36,11 @@ const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem 2rem 1.2rem;
+  padding: 1.5rem 2rem;
   background-color: ${({ theme }) => theme.baseColor };
 
   p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   span {
@@ -60,8 +60,8 @@ const ModalBody = styled.div`
 `
 
 function Modal({ toggleModal, openTheDoor }) {
-
   const [ name, setName ] = useState("");
+  const inputRef = useRef();
 
   const onChangeName = e => {
     setName(e.target.value);
@@ -71,6 +71,12 @@ function Modal({ toggleModal, openTheDoor }) {
     setName("");
     openTheDoor(userName);
     toggleModal();
+  }
+
+  const handleKeyDown = (e) => {
+    if(e.keyCode === 13 && name) {
+      enterTheRoom(name);
+    }
   }
 
   return (
@@ -87,15 +93,21 @@ function Modal({ toggleModal, openTheDoor }) {
         </ModalHeader>
         <ModalBody>
           <p>누...누구세요? 🙊</p>
+          <form 
+            style={{ textAlign: "center" }}
+            onKeyDown={handleKeyDown}
+            >
             <TextInput 
               type="text"
               maxLength="10"
               placeholder="이름을 입력해주세요"
-              style={{ width: '80%', marginBottom: '1rem'}}
+              style={{ width: '80%', marginBottom: '1.2rem'}}
               value={name}
               onChange={onChangeName}
+              ref={inputRef}
             />
             <span onClick={() => enterTheRoom(name)}>들어가기</span>
+          </form>
         </ModalBody>
       </div>
     </ModalWrapper>
