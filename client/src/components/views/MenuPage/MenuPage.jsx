@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+
+import axios from 'axios';
 
 import Bar from 'utils/Bar';
 import Button from 'utils/Button';
@@ -63,7 +66,20 @@ const HomeIcon = styled.div`
   color: ${({ theme }) => theme.mainColor };
 `
 
-function MenuPage() {
+function MenuPage(props) {
+
+  const userData = useSelector(state => state.user.userData);
+
+  const logoutHandler = () => {
+    axios.get(`api/users/logout`).then(response => {
+      if (response.status === 200) {
+        props.history.push("/login");
+      } else {
+        alert('Log Out Failed')
+      }
+    });
+  };
+
   return (
     <div>
       <div style={{ padding: '2rem' }}>
@@ -89,13 +105,17 @@ function MenuPage() {
         </MenuList>
 
       </div>
-      <div style={{ display: 'flex' }}>
+      {(userData && userData.isAuth) ?
+        <Button 
+          onClick={logoutHandler}
+          fullWidth size="medium">CHECK-OUT
+        </Button> :
         <Link to='/login'>
-          <Button fullWidth size="medium">Login</Button>
+          <Button fullWidth size="medium">CHECK-IN</Button>
         </Link>
-      </div>
+      }
     </div>
   )
 }
 
-export default MenuPage
+export default withRouter(MenuPage);
