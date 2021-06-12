@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import moment from 'moment';
 
-import { loginUser } from '../../../_actions/user_action';
+import { loginUser } from '_actions/user_action';
 
-import styled from 'styled-components';
-import Button from '../../../utils/Button';
-import TextInput from '../../../utils/TextInput';
-import Logo from '../../../utils/Logo';
-import TextLogo from '../../../utils/TextLogo';
-import Bar from '../../../utils/Bar';
-import { Title, Text } from '../../../utils/Typo';
+import Button from 'utils/Button';
+import TextInput from 'utils/TextInput';
+import Bar from 'utils/Bar';
+import PageContent from 'utils/PageContent';
+
+import { Menu } from 'react-feather';
 
 import { PhoneCall, UserPlus } from 'react-feather';
 
 const ContentPage = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
-  padding-bottom: 2.5rem;
+  padding: 2rem;
 `
 
 const DayCounter = styled.div`
@@ -47,6 +47,26 @@ const IconButton = styled.div`
   }
 `
 
+const InputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+`
+
+const NavIcon = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: ${({ theme }) => theme.mainColor };
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  width: 100%; 
+  padding: 0 1rem;
+`
+
 function LoginPage(props) {
 
   const dispatch = useDispatch();
@@ -63,8 +83,7 @@ function LoginPage(props) {
     setPassword(e.currentTarget.value);
   }
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     
     let body = {
       email,
@@ -73,29 +92,32 @@ function LoginPage(props) {
     dispatch(loginUser(body))
       .then(response => {
         if(response.payload.loginSuccess){
-          props.history.push('/');
+          props.history.push('/menu');
         } else {
           alert('Error');
         }
       });
   }
 
+  const dayCounter = (
+    <DayCounter>
+      🏡 독립 
+      <span className="day-counter"> {dayCount}</span>
+      일 째
+    </DayCounter>
+  )
+
   return (
     <ContentPage>
-      <div className="top-content" style={{ padding: '1rem'}}>
-        <Logo size="large" />
-        <TextLogo size="large" />
-        <Title>체크인하기</Title>
-        <DayCounter>
-          독립 
-          <span className="day-counter"> {dayCount}</span>
-          일 째
-        </DayCounter>
-      </div>
-
+        <NavIcon><Menu /></NavIcon>
+      <PageContent
+        title="체크인하기"
+        desc={dayCounter}
+      >
+      </PageContent>
       <Bar/>
 
-      <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={onSubmitHandler}>
+      <InputForm onSubmit={onSubmitHandler}>
         <TextInput 
           type="email"
           label="E-mail"
@@ -110,28 +132,32 @@ function LoginPage(props) {
           value={password}
           onChange={onPasswordHandler}
         />
-        <div style={{ display: 'flex', width: '100%', marginBottom: '2rem' }}>
-          <IconButton>
-            <a href="tel:01099386438">
-              <PhoneCall />
-              <span>
-                아무것도 기억이 안나요. <br />
-                호스트에게 전화 걸기
-              </span>
-            </a>
-          </IconButton>
-          <IconButton>
-            <Link to="/register">
-              <UserPlus />
-              <span>
-                아직 친구가 아니에요. <br />
-                친구하러 가기
-              </span>
-            </Link>
-          </IconButton>
-        </div>
-        <Button fullWidth size="medium">ENTER</Button>
-      </form>
+      </InputForm>
+      <ButtonGroup>
+        <IconButton>
+          <a href="tel:01099386438">
+            <PhoneCall />
+            <span>
+              아무것도 기억이 안나요. <br />
+              호스트에게 전화 걸기
+            </span>
+          </a>
+        </IconButton>
+        <IconButton>
+          <Link to="/register">
+            <UserPlus />
+            <span>
+              아직 친구가 아니에요. <br />
+              친구하러 가기
+            </span>
+          </Link>
+        </IconButton>
+      </ButtonGroup>
+      <Button 
+        fullWidth 
+        size="medium"
+        onClick={onSubmitHandler}
+        >ENTER</Button>
     </ContentPage>
   )
 }
