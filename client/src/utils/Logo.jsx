@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 
 const sizes = {
   large: {
-    width: '70px',
-    height: '70px',
+    width: '65px',
+    height: '65px',
     fontSize: '1.3rem',
     marginBottom: '1.5rem',
   },

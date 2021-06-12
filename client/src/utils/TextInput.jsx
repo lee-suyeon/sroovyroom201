@@ -10,7 +10,6 @@ const secondStyle = css`
 `;
 
 const StyledInput = styled.div`
-  text-align: center;
 
   ${secondStyle}
 
