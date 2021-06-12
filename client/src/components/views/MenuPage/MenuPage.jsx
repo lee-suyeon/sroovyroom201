@@ -2,44 +2,32 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import Logo from '../../../utils/Logo';
-import TextLogo from '../../../utils/TextLogo';
-import { Title, Text } from '../../../utils/Typo';
-import Bar from '../../../utils/Bar';
-import Button from '../../../utils/Button';
+import Bar from 'utils/Bar';
+import Button from 'utils/Button';
+import PageContent from 'utils/PageContent';
 
-import { Check } from 'react-feather';
+import { Home } from 'react-feather';
 
 const Menus = [
   { name: "Notice", desc: "우리집 소식", path: "/notice" },
   { name: "Visitors", desc: "방명록", path: "/visitors" },
   { name: "Roomtour", desc: "랜선 집들이", path: "/roomtour" },
   { name: "Instagram", desc: "인스타그램", path: "/instagram" },
-
 ]
-
-const ContentPage = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-width: 100%;
-height: 100%;
-margin-bottom: 3rem;
-`
 
 const MenuList = styled.ul`
   text-align: center;
 
   a {
     display: block;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     position: relative;
     z-index: 10;
   }
 
-   li {
+  li {
     position: relative;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
     transition: 0.3s;
@@ -62,49 +50,51 @@ const MenuList = styled.ul`
 
   span {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 400;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
   }
 `
 
-const List = styled.li`
-  
+const HomeIcon = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: ${({ theme }) => theme.mainColor };
 `
 
 function MenuPage() {
-
-  const onClickMenu = () => {
-
-  }
-
   return (
-    <ContentPage>
-      <div className="top-content" style={{ padding: '1rem'}}>
-        <Logo size="large" />
-        <Title>
-          <TextLogo size="large" />
-          <br />방문을 진심으로<br />환영합니다.
-        </Title>
-        <span style={{ display: 'block', textAlign: 'right'}}>🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️</span>
-      </div>
-
-      <Bar style={{ marginBottom: '1.5rem' }}/>
-      
+    <div>
+      <div style={{ padding: '2rem' }}>
+        <Link to='/'>
+          <HomeIcon><Home /></HomeIcon>
+        </Link>
+        <PageContent 
+          title="방문을 진심으로 환영합니다."
+          desc="🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️"
+        />
+    
+        <Bar style={{ marginBottom: '1.5rem' }}/> 
+          
         <MenuList>
           {Menus.map((menu, idx) => (
             <Link to={menu.path}>
-              <li key={`menu${idx}`} onClick={onClickMenu}>
+              <li key={`menu${idx}`}>
                 {menu.name}
                 <span>{menu.desc}</span>
               </li>
             </Link>
           ))}
         </MenuList>
-      
-      <Button width="full" size="medium">ENTER</Button>
-      
-    </ContentPage>
+
+      </div>
+      <div style={{ display: 'flex' }}>
+        <Link to='/login'>
+          <Button fullWidth size="medium">Login</Button>
+        </Link>
+      </div>
+    </div>
   )
 }
 
