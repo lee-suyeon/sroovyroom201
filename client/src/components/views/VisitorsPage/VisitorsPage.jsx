@@ -3,24 +3,14 @@ import styled from 'styled-components';
 
 import Message from './Message';
 
-import Logo from '../../../utils/Logo';
-import TextLogo from '../../../utils/TextLogo';
-import { Title, Text } from '../../../utils/Typo';
-import TextInput from '../../../utils/TextInput';
-import Bar from '../../../utils/Bar';
+import TextInput from 'utils/TextInput';
+import PageContent from 'utils/PageContent';
+import Nav from 'utils/Nav';
 
-import { Send } from 'react-feather';
+import { Send, Meh } from 'react-feather';
 
 import Axios from 'axios';
-
-const ContentPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding-bottom: 2.5rem;
-`
+import TextLogo from 'utils/TextLogo';
 
 const GuestCount = styled.div`
   text-align: right;
@@ -39,9 +29,10 @@ const VisitorsForm = styled.form`
   bottom: 0; left: 0;
   color: ${({ theme }) => theme.baseColor };
   background: ${({ theme }) => theme.mainColor };
-  padding: 1rem 2rem 2rem;
+  padding: 1.2rem 2rem;
 
   > div {
+    width: 100%;
     margin-bottom: 0;
   }
 
@@ -62,7 +53,23 @@ const VisitorsForm = styled.form`
   .send-btn {
     border: none;
     color: ${({ theme }) => theme.baseColor };
-    margin-top: 15px;
+  }
+`
+
+const MessageWrapper = styled.div`
+  width: 100%;
+  min-height: 250px;
+  color: ${({ theme }) => theme.textColor };
+  padding: 0 0.8rem 3.5rem;
+`
+
+const NoDataMessage = styled.div`
+  text-align: center;
+  margin-top: 3rem;
+
+  & > svg {
+    margin-bottom: 0.4rem;
+    color: ${({ theme }) => theme.mainColor };
   }
 `
 
@@ -103,61 +110,70 @@ function VisitorsPage(props) {
         if(res.data.success){
           alert("다음에 또 놀러오실거죠?😉")
           setGuestComment("");
+          window.scrollTo(0, 0);
         } else {
           alert("방명록 작성에 실패했습니다.")
         }
       })
   }
 
+  const guestCount = (
+    <GuestCount>
+      <div>다녀간 손님🙆🏻 <span className="count-number">12</span>명</div>
+    </GuestCount>
+  )
+
   return(
-    <ContentPage>
-      <div className="top-content" style={{ padding: '1rem'}}>
-        <Logo size="large" />
-        <Title>
-          <TextLogo size="large" />에 <br /> 흔적 남기기
-        </Title>
-        <GuestCount>
-          <div>다녀간 손님🙆🏻 <span className="count-number">12</span>명</div>
-        </GuestCount>
+    <div className="visitors-page">
+      <div style={{ padding: '2rem'}}>
+        <Nav />
+        <PageContent 
+            title="흔적 남기기"
+            desc={guestCount}
+        />
+
+        <MessageWrapper>
+          {messages.length > 0 ?
+            messages.map((message, idx) => 
+            <Message 
+              key={`${idx}mgs`}
+              message={message}
+              />
+            ) : 
+            <NoDataMessage>
+              <Meh />
+              <p>
+                <TextLogo 
+                  size="medium"
+                  color="text"
+                  /> is lonely.
+              </p>
+            </NoDataMessage>
+            }
+        </MessageWrapper>
       </div>
 
-      <Bar style={{ marginBottom: '1.5rem' }}/>
-
-      <MessageWrapper>
-        {messages&&messages.map((message, idx) => (
-          <Message 
-            key={`${idx}mgs`}
-            message={message}
-          />))
-        }
-      </MessageWrapper>
-
-      <VisitorsForm onSubmit={SubmitHandler}>
-        <TextInput
-          value={guestComment}
-          onChange={GuestCommentHandler}
-          placeholder="방명록을 남겨주세요."
-          maxLength="200"
-        />
-        <button 
-          className="send-btn" 
-          type="submit"
-          onClick={SubmitHandler} 
-        >
-          <Send />
-        </button>
-      </VisitorsForm>
-
-    </ContentPage>
+        <VisitorsForm onSubmit={SubmitHandler}>
+          <TextInput
+            value={guestComment}
+            onChange={GuestCommentHandler}
+            placeholder="방명록을 남겨주세요."
+            maxLength="200"
+            style={{ marginBottom: '1rem' }}
+            
+          />
+          <button 
+            className="send-btn" 
+            type="submit"
+            onClick={SubmitHandler} 
+          >
+            <Send />
+          </button>
+        </VisitorsForm>
+    </div>
   );
 }
 
-// height:400px;
-// overflow-y: auto;
-const MessageWrapper = styled.div`
-  width: 100%;
-  color: ${({ theme }) => theme.textColor };
-  padding: 0 0.8rem;
-`
+
 
 export default VisitorsPage

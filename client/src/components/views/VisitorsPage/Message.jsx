@@ -8,10 +8,6 @@ const MessageForm = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.mainColor };
   margin-bottom: 1.5rem;
 
-  &:last-child {
-    border-bottom: none;
-  }
-
   & > div {
     display: flex;
     justify-content: space-between;
