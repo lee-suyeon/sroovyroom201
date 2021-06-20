@@ -7,6 +7,7 @@ import MenuPage from './components/views/MenuPage/MenuPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
 import VisitorsPage from './components/views/VisitorsPage/VisitorsPage';
+import NoticePage from './components/views/NoticePage/NoticePage';
 import './App.css';
 
 import Auth from './hoc/auth';
@@ -19,7 +20,8 @@ function App() {
         <Route exact path= "/menu" component={Auth(MenuPage, null)} />
         <Route exact path= "/login" component={Auth(LoginPage, false)} />
         <Route exact path= "/register" component={Auth(RegisterPage, false)} />
-        <Route exact path= "/visitors" component={Auth(VisitorsPage, true)} />
+        <Route exact path= "/notice" component={Auth(NoticePage, null)} />
+        <Route exact path= "/visitors" component={Auth(VisitorsPage, null)} />
       </Switch>
     </div>
   );
