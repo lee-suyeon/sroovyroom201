@@ -9,7 +9,6 @@ import { loginUser } from '_actions/user_action';
 
 import Button from 'utils/Button';
 import TextInput from 'utils/TextInput';
-import Bar from 'utils/Bar';
 import PageContent from 'utils/PageContent';
 
 import { Menu } from 'react-feather';
@@ -115,7 +114,6 @@ function LoginPage(props) {
         desc={dayCounter}
       >
       </PageContent>
-      <Bar/>
 
       <InputForm onSubmit={onSubmitHandler}>
         <TextInput 

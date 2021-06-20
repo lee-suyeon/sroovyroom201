@@ -11,7 +11,8 @@ const sizes = {
   medium: {
     width: '50px',
     height: '50px',
-    fontSize: '1.25rem'
+    fontSize: '1.25rem',
+    marginBottom: '1.2rem'
   },
   small: {
     width: '30px',

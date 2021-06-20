@@ -90,8 +90,6 @@ function MenuPage(props) {
           title="방문을 진심으로 환영합니다."
           desc="🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️"
         />
-    
-        <Bar style={{ marginBottom: '1.5rem' }}/> 
           
         <MenuList>
           {Menus.map((menu, idx) => (
@@ -118,4 +116,4 @@ function MenuPage(props) {
   )
 }
 
-export default withRouter(MenuPage);
+export default withRouter(MenuPage)

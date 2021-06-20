@@ -7,7 +7,7 @@ import Bar from 'utils/Bar'
 import { Title } from 'utils/Typo'
 
 const StyledPageContent = styled.div`
-  padding: 1rem;
+  padding: 0.7rem 1rem;
 
   & .title {
     width: 60%;
@@ -15,19 +15,24 @@ const StyledPageContent = styled.div`
 
   & > .desc {
     text-align: right;
+    font-size: 0.9rem;
   }
 `
 
 function PageContent({ title, desc }) {
   return(
-    <StyledPageContent>
-      <Logo size="large"/>
-      <Title>
-        <TextLogo size="large"/><br />
-        <div className="title">{title}</div>
-      </Title>
-        <div className="desc">{desc}</div>
-    </StyledPageContent>
+    <React.Fragment>
+      <StyledPageContent>
+        <Logo size="large"/>
+        <Title>
+          <TextLogo size="large"/><br />
+          <div className="title">{title}</div>
+        </Title>
+          <div className="desc">{desc}</div>
+  
+      </StyledPageContent>
+      <Bar />
+    </React.Fragment>
   )
 }
 
