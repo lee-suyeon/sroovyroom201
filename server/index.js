@@ -24,6 +24,7 @@ app.use(cookieParser());
 // router
 app.use('/api/users', require('./routes/users'));
 app.use('/api/visitors', require('./routes/visitors'));
+app.use('/api/notice', require('./routes/notice'));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

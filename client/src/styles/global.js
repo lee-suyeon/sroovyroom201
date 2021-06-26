@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   article, aside, canvas, details, embed, 
   figure, figcaption, footer, header, hgroup, 
   menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
+  time, mark, audio, video, textarea {
     margin: 0;
     padding: 0;
     border: 0;
@@ -71,6 +71,10 @@ const GlobalStyle = createGlobalStyle`
   a {color: inherit; text-decoration: none; outline: none; display: block;}
 
   a:hover, a:active {text-decoration: none;}
+
+  ::placeholder{
+    font-size: 0.825rem;
+  }
 `
 
 export default GlobalStyle;
