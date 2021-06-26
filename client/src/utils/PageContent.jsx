@@ -11,6 +11,8 @@ const StyledPageContent = styled.div`
 
   & .title {
     width: 60%;
+    word-break: keep-all;
+    line-height: 1.3;
   }
 
   & > .desc {
@@ -25,7 +27,7 @@ function PageContent({ title, desc }) {
       <StyledPageContent>
         <Logo size="large"/>
         <Title>
-          <TextLogo size="large"/><br />
+          <TextLogo size="large" /><br />
           <div className="title">{title}</div>
         </Title>
           <div className="desc">{desc}</div>

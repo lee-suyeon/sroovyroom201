@@ -13,13 +13,6 @@ const StyledInput = styled.div`
 
   ${secondStyle}
 
-  label {
-    display: block;
-    color: ${({ theme }) => theme.mainColor };
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
   input {
     width: 100%;
     height: 2.5rem;
@@ -28,27 +21,29 @@ const StyledInput = styled.div`
     background: transparent;
     border: none;
     color: #333;
-    text-align: left;
     border-bottom: 1px solid ${({ theme }) => theme.mainColor };
     margin-bottom: 2rem;
   }
 
-  input::placeholder {
-    font-size: 0.825rem;
-  }
-
-  input: focus {
+  input:focus {
     border-bottom: 2px solid ${({ theme }) => theme.mainColor };
   }
-
 `
 
-function TextInput({ children, label, type, placeholder, value, onChange, mode, ...rest }) {
+const InputLabel = styled.label`
+  display: block;
+  color: ${({ theme }) => theme.mainColor };
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+`
+
+function TextInput({ children, label, name, type, placeholder, value, onChange, mode, ...rest }) {
   return (
     <StyledInput>
-      {label && <label>{label}</label>}
-      <input 
+      {label && <InputLabel>{label}</InputLabel>}
+      <input
         type={type}
+        name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -56,6 +51,39 @@ function TextInput({ children, label, type, placeholder, value, onChange, mode, 
         {...rest}
       />
     </StyledInput>
+  )
+}
+
+const StyledTextArea = styled.div`
+  textarea {
+    width: 100%;
+    height: 15rem;
+    outline: none;
+    background: transparent;
+    color: #333;
+    line-height: 1.5;
+    border: 1px solid ${({ theme }) => theme.mainColor };
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    resize: none;
+  }
+
+  textarea:focus {
+    border: 2px solid ${({ theme }) => theme.mainColor };
+  }
+`
+
+export const TextArea = ({ label, name, value, onChange, placeholder }) => {
+  return (
+    <StyledTextArea>
+      {label && <InputLabel>{label}</InputLabel>}
+      <textarea
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
+    </StyledTextArea>
   )
 }
 

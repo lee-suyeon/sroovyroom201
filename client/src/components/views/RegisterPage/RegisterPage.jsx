@@ -6,12 +6,9 @@ import { registerUser } from '_actions/user_action';
 import styled from 'styled-components';
 import Button from 'utils/Button';
 import TextInput from 'utils/TextInput';
-import Logo from 'utils/Logo';
 import TextLogo from 'utils/TextLogo';
-import Bar from 'utils/Bar';
 import SelectBox from 'utils/SelectBox';
 import PageContent from 'utils/PageContent';
-import { Title, Text } from 'utils/Typo';
 
 import mbtiList from './mbti'
 
@@ -93,10 +90,7 @@ function RegisterPage(props) {
       <PageContent
         title="과 친구되기"
         desc={freeDrink}
-      >
-
-      </PageContent>
-      <Bar/>
+      />
 
       <InputForm onSubmit={onSubmitHandler}>
         <TextInput

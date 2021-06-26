@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledTitle = styled.h2`
   font-size: 1.5rem;

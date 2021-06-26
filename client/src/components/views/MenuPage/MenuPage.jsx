@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 import axios from 'axios';
 
-import Bar from 'utils/Bar';
 import Button from 'utils/Button';
 import PageContent from 'utils/PageContent';
 
@@ -23,7 +22,7 @@ const MenuList = styled.ul`
 
   a {
     display: block;
-    padding: 1rem;
+    padding: 1.2rem;
     position: relative;
     z-index: 10;
   }
@@ -93,8 +92,8 @@ function MenuPage(props) {
           
         <MenuList>
           {Menus.map((menu, idx) => (
-            <Link to={menu.path}>
-              <li key={`menu${idx}`}>
+            <Link to={menu.path} key={`menu${idx}`}>
+              <li>
                 {menu.name}
                 <span>{menu.desc}</span>
               </li>
