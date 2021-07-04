@@ -8,6 +8,7 @@ import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
 import VisitorsPage from './components/views/VisitorsPage/VisitorsPage';
 import NoticePage from './components/views/NoticePage/NoticePage';
+import GalleryPage from './components/views/GalleryPage/GalleryPage';
 import './App.css';
 
 import Auth from './hoc/auth';
@@ -21,6 +22,7 @@ function App() {
         <Route exact path= "/login" component={Auth(LoginPage, false)} />
         <Route exact path= "/register" component={Auth(RegisterPage, false)} />
         <Route exact path= "/notice" component={Auth(NoticePage, null)} />
+        <Route exact path= "/gallery" component={Auth(GalleryPage, null)} />
         <Route exact path= "/visitors" component={Auth(VisitorsPage, null)} />
       </Switch>
     </div>
