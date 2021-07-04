@@ -14,11 +14,24 @@ const Menus = [
   { name: "Notice", desc: "우리집 소식", path: "/notice" },
   { name: "Visitors", desc: "방명록", path: "/visitors" },
   { name: "Roomtour", desc: "랜선 집들이", path: "/roomtour" },
-  { name: "Instagram", desc: "인스타그램", path: "/instagram" },
+  { name: "Gallery", desc: "갤러리", path: "/gallery" },
 ]
+
+const MenuPageWrapper = styled.div`
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+`
 
 const MenuList = styled.ul`
   text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 4rem;
 
   a {
     display: block;
@@ -80,8 +93,8 @@ function MenuPage(props) {
   };
 
   return (
-    <div>
-      <div style={{ padding: '2rem' }}>
+    <div style={{ height: '100vh' }}>
+      <MenuPageWrapper>
         <Link to='/'>
           <HomeIcon><Home /></HomeIcon>
         </Link>
@@ -101,7 +114,7 @@ function MenuPage(props) {
           ))}
         </MenuList>
 
-      </div>
+      </MenuPageWrapper>
       {(userData && userData.isAuth) ?
         <Button 
           onClick={logoutHandler}
