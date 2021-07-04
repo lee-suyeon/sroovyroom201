@@ -9,7 +9,7 @@ import Button from 'utils/Button'
 
 import NoticeForm from './NoticeForm';
 
-import { MessageSquare, X } from 'react-feather';
+import { Hash, X, Delete, Edit, Trash2, Edit3 } from 'react-feather';
 import moment from 'moment';
 
 const NoticeWrapper = styled.div`
@@ -19,11 +19,10 @@ const NoticeWrapper = styled.div`
 const NoticeBox = styled.div`
   display: flex;
   font-size: 0.9rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   padding: 0 1rem;
 
   & .icon-box {
-    // border : 1px solid ${({ theme }) => theme.mainColor }; 
     margin-right: 1rem;
     position: relative;
   }
@@ -31,7 +30,7 @@ const NoticeBox = styled.div`
   & .icon-box::after {
     content: "";
     width: 1px;
-    height: 100%;
+    height: 85%;
     background-color: ${({ theme }) => theme.mainColor };
     position: absolute;
     top: 30px; 
@@ -39,24 +38,15 @@ const NoticeBox = styled.div`
     transform: translateX(-50%); 
   }
 
-  & .notice-order {
-    position: absolute;
-    top: 5px; left: 50%;
-    transform: translateX(-50%);
-    font-weight: bold;
-    font-size: 10px;
-    color: #fff;
-  }
-
   & .notice-box {
     width: 100%;
     position: relative;
-    padding: 0.5rem 0;
+    padding: 0.3rem 0;
   }
 
   & svg {
+    width: 21px;
     color: ${({ theme }) => theme.mainColor };
-    fill: ${({ theme }) => theme.mainColor };
   }
 
   & .title {
@@ -68,20 +58,26 @@ const NoticeBox = styled.div`
   & .content {
     color: ${({ theme }) => theme.textColor };
     line-height: 1.2;
+    min-height: 50px;
   }
 
   & .date {
-    color: ${({ theme }) => theme.light };
+    color: ${({ theme }) => theme.lightGray};
     line-height: 1.2;
+    text-align: right;
+    font-size: 0.8rem;
   }
 `
 
 const DeleteButton = styled.div`
   position: absolute;
-  top: 0; 
+  top: 3px; 
   right: 0;
 
-  & svg { width: 20px }
+  & svg { 
+    width: 18px;
+    margin-right: 5px;
+  }
 `
 
 function NoticePage() {
@@ -95,6 +91,8 @@ function NoticePage() {
     content: "",
   })
   const [ notices, setNotices ] = useState("");
+  const [ showDeleteButton, setShowDeleteButton ] = useState(false);
+  const [ selectedIndex, setSelectedIndex ] = useState("");
   const { title, content } = inputs;
 
   useEffect(() => {
@@ -122,6 +120,15 @@ function NoticePage() {
 
   const onClickWrite = () => {
     setShowNoticeForm(prev => !prev);
+  }
+
+  const toggleDeleteButton = (idx) => {
+    setSelectedIndex(idx)
+    setShowDeleteButton(prev => !prev)
+  }
+
+  const onClickDelete = (idx) => {
+    
   }
 
   const onClickSubmit = () => {
@@ -160,14 +167,19 @@ function NoticePage() {
     notices && notices.map((notice, idx) => 
       <NoticeBox key={`notice${idx}`}>
         <div className="icon-box">
-          <MessageSquare />
-          <div className="notice-order">{idx + 1}</div>
+          <Hash />
         </div>
-        <div className="notice-box">
-          {/* <DeleteButton><X /></DeleteButton> */}
+        <div className="notice-box" onClick={() => toggleDeleteButton(idx)}>
+          { 
+            showDeleteButton && (selectedIndex === idx) &&
+              <DeleteButton>
+                <Edit3 />
+                <Trash2 />
+              </DeleteButton>
+          }
           <div className="title">{notice.title}</div>
           <div className="content">{notice.content}</div>
-          <div className="date">{moment(notice.createAt).format("YY-MM-DD")}</div>
+          <div className="date">{moment(notice.createAt).format("YYYY-MM-DD")}</div>
         </div>
       </NoticeBox>
     )
