@@ -5,6 +5,8 @@ import Button from 'utils/Button';
 import CheckBox from 'utils/CheckBox';
 import PageContent from 'utils/PageContent';
 import SelectBox from 'utils/SelectBox';
+import { ShabuShabu } from './Menu';
+import Tabs, { TabPanel } from 'utils/Tabs';
 import { default as DatePicker }  from 'utils/Calendar';
 
 import { Calendar, Users, Clipboard } from 'react-feather';
@@ -33,7 +35,7 @@ const FormTitle = styled.div`
   align-items: center;
   font-weight: 500;
   font-size: 1.1rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 
   & svg {
     width: 20px;
@@ -54,6 +56,12 @@ const headCountList = [
   { idx: 0, name: "1명"},
   { idx: 1, name: "2명"},
   { idx: 2, name: "3명"},
+]
+
+const menuList = [
+  { key: 1, name: "샤브샤브", component: <ShabuShabu />},
+  { key: 2, name: "스루비정식" },
+  { key: 3, name: "외식하자" }
 ]
 
 function ReservationPage(props) {
@@ -87,16 +95,16 @@ function ReservationPage(props) {
               <Calendar />
               <div>날짜</div>
             </FormTitle>
+            <div style={{ display: "flex", marginBottom: "0.5rem" }}>
             <CheckBox
               id="oneday" 
               name="집에 갈거에요"
+              gap={1}
             />
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <CheckBox 
                 id="overnight"
                 name="자고 갈거에요"
                 />
-              <span>1박</span>
             </div>
             <div className="datepicker">
               <div>
@@ -136,9 +144,14 @@ function ReservationPage(props) {
               <Clipboard />
               <span>메뉴</span>
             </FormTitle>
-            {/* <span>Sukiyaki</span>
-            <span>스루비정식</span>
-            <span>eatout</span> */}
+            {/* <Tabs defaultActiveKey={1}>
+              {menuList.map(menu => 
+                <TabPanel title={menu.name} key={menu.key}>
+                  {menu.component}
+                </TabPanel>
+                )}
+            </Tabs> */}
+            <ShabuShabu />
           </Menu>
         </ReservationForm>
       </div>
