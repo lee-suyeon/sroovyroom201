@@ -13,7 +13,7 @@ import { Home } from 'react-feather';
 const Menus = [
   { name: "Notice", desc: "우리집 소식", path: "/notice" },
   { name: "Visitors", desc: "방명록", path: "/visitors" },
-  { name: "Roomtour", desc: "랜선 집들이", path: "/roomtour" },
+  { name: "Reservation", desc: "예약하기", path: "/reservation" },
   { name: "Gallery", desc: "갤러리", path: "/gallery" },
 ]
 
