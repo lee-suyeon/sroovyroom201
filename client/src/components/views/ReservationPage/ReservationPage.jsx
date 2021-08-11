@@ -5,7 +5,7 @@ import Button from 'utils/Button';
 import CheckBox from 'utils/CheckBox';
 import PageContent from 'utils/PageContent';
 import SelectBox from 'utils/SelectBox';
-import { ShabuShabu } from './Menu';
+import { ShabuShabu, EatOut, SroovyMeal } from './Menu';
 import Tabs, { TabPanel } from 'utils/Tabs';
 import { default as DatePicker }  from 'utils/Calendar';
 
@@ -152,6 +152,8 @@ function ReservationPage(props) {
                 )}
             </Tabs> */}
             <ShabuShabu />
+            <EatOut />
+            <SroovyMeal />
           </Menu>
         </ReservationForm>
       </div>
