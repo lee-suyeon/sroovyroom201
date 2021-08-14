@@ -12,8 +12,8 @@ const sizes = {
     fontSize: '1.25rem'
   },
   small: {
-    height: '3rem',
-    fontSize: '1.25rem'
+    height: '2.7rem',
+    fontSize: '1rem'
   },
 }
 
@@ -60,6 +60,12 @@ const StyledButton = styled.button`
       width: 100%;
     `}
 
+  ${props =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+    `}
+
   /* 크기 */
   ${sizeStyle}
 
@@ -71,9 +77,16 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ children, color, ...rest }) {
+function Button({ children, color, disabled, ...rest }) {
+  console.log()
   return (
-  <StyledButton color={color} {...rest} >{children}</StyledButton>
+  <StyledButton 
+    color={color}
+    disabled={disabled}
+    {...rest}
+  >
+    {children}
+  </StyledButton>
   )
 }
 

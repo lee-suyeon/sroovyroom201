@@ -5,14 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { Bell } from 'react-feather';
 import Modal from './Modal';
 
-const DoorWrap = styled.div`
-
+const DoorFrame = styled.div`
   background: ${({ theme }) => theme.baseColor };
   border: 1.5rem solid ${({ theme }) => theme.mainColor };
   border-bottom: none;
   width: 100vw;
   height: 100vh;
-  // padding: 1.5rem 1.5rem 0;
 `
 
 const openDoor = keyframes`
@@ -41,15 +39,17 @@ const Door = styled.div`
   width: 100%;
   height: 100%;
   background: ${({ theme }) => theme.mainColor };
-  color: #fff;
+  color: ${({ theme }) => theme.white };
   padding-top: 9rem;
   border: 1.5px solid ${({ theme }) => theme.baseColor };
+  border-bottom: 0;
   transform-origin: 0% 0%;
   transform: perspective(300px) rotate(0deg);
+  z-index: 10;
+
   ${(props) => props.active && css`
     animation: ${openDoor} 2s linear;
   `}
-  z-index: 10;
 
   & > .room {
     font-family: 'Montserrat', sans-serif;
@@ -105,7 +105,7 @@ const Handle = styled.div`
 
 const Cat = styled.div`
   position: absolute;
-  bottom: -5px; 
+  bottom: 0px;
   right: 25px;
 
   & > div {
@@ -122,7 +122,6 @@ const Cat = styled.div`
 `
 
 function LandingPage(props) {
-
   const [ open, setOpen ] = useState(false);
   const [ ringTheBell, setRingTheBell] = useState(false);
 
@@ -133,14 +132,16 @@ function LandingPage(props) {
   const openTheDoor = (name) => {
     localStorage.setItem('temporaryUser', JSON.stringify(name));
     setOpen(true);
+
     setTimeout(() => {
       setOpen(false);
       props.history.push('/door-lock');
     }, 2000)
   }
 
+
   return (
-    <DoorWrap>
+    <DoorFrame>
       <Door active={open} >
         <div className="room">201</div>
         <div className="bell">
@@ -157,13 +158,12 @@ function LandingPage(props) {
         </Cat>
       {
         ringTheBell && 
-        <Modal 
+        <Modal
           toggleModal={onClickDoorBell}
           openTheDoor={openTheDoor}
         />
       }
-    </DoorWrap>
-    
+    </DoorFrame>
   )
 }
 
