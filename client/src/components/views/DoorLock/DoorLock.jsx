@@ -3,8 +3,9 @@ import styled, { css } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { Key, HelpCircle, Heart, Delete } from 'react-feather';
-import TextLogo from '../../../utils/TextLogo'
-import Button from '../../../utils/Button'
+import TextLogo from 'utils/TextLogo'
+import Button from 'utils/Button'
+import { Modal } from 'utils/Modal'
 
 const dial =  Array(9).fill().map((v, i) => i + 1);
 const defaultPassword = Array(4).fill().map(v => v);
@@ -65,28 +66,31 @@ const DialNumber = styled.div`
 `
 
 const HelpWrapper = styled.div`
-  width: 100%;
   color: ${({ theme }) => theme.mainColor };
-
-  & > div {
-    display: flex;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   `
 
 const HelpMessage = styled.div`
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  background: #e2e8e4;
-  color: ${({ theme }) => theme.textColor };
-  border-radius: 5px;
+  position: relative;
 
-  &::before {
+  & .message {
+    position: absolute;
+    top: -0.6rem;
+    right: 2rem;
+    width: 250px;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.825rem;
+    line-height: 1.6;
+    background: #e2e8e4;
+    color: ${({ theme }) => theme.textColor };
+    border-radius: 3px;
+
+  }
+
+  & .message::before {
     content: "";
     position: absolute;
     top: 1rem;
@@ -137,6 +141,7 @@ function DoorLock( props ) {
   const [ numbers, setNumbers ] = useState(defaultPassword);
   const [ showMessage, setShowMessage ] = useState(false);
   const [ heart, setHeart ] = useState(false);
+  const [ showWelcome, setShowWelcome ] = useState(false);
 
   const onClickDial = (dial) => {
     let inputNumbers = [ ...numbers ]
@@ -158,8 +163,8 @@ function DoorLock( props ) {
   }
 
   const onClickAlohomora = () => {
-    alert('정답');
-    props.history.push('/menu');
+    setShowWelcome(true);
+    // props.history.push('/menu');
   }
 
   const onClickHelpCircle = useCallback(() => {
@@ -174,8 +179,7 @@ function DoorLock( props ) {
     let arrToStr = pwd.join('');
 
     if(PASSWORD === arrToStr) {
-      alert("환영합니다!");
-      props.history.push('/menu');
+      setShowWelcome(true);
     } else {
       alert('틀렸습니다. 다시 한번 입력해주세요. ')
       setNumbers(defaultPassword);
@@ -186,19 +190,24 @@ function DoorLock( props ) {
     setHeart(prev => !prev)
   }
 
+  const onClickConfirm = () => {
+    setShowWelcome(false);
+    props.history.push('/menu');
+  }
+
   return (
     <Layout>
       <HelpWrapper>
-          <div>
-            <Key />
-            <HelpCircle onClick={onClickHelpCircle}/>
+        <Key />
+        <HelpMessage>
+          <HelpCircle onClick={onClickHelpCircle}/>
+        {showMessage &&
+          <div className="message">
+            착한 사람 눈에는 문을 여는 주문이 보여요! <br />
+            Hint: ⚡️🦉🪶🔮
           </div>
-          {showMessage &&
-            <HelpMessage>
-              착한 사람 눈에는 문을 여는 주문이 보여요! <br />
-              Hint: ⚡️🦉🪶🔮
-            </HelpMessage>
-          }
+        }
+        </HelpMessage>
         </HelpWrapper>
 
       <DoorLockWrapper>
@@ -239,6 +248,13 @@ function DoorLock( props ) {
       <Alohomora onClick={onClickAlohomora}>
         Alohomora
       </Alohomora>
+      
+      {showWelcome &&
+        <Modal onClose={onClickConfirm}>
+          🤗 👐 🤗 <br />
+          환영합니다!!!!!🥳
+        </Modal>
+      }
     </Layout>
   )
 }
