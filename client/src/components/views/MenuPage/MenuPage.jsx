@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, withRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import Button from 'utils/Button';
 import PageContent from 'utils/PageContent';
+import TextLogo from 'utils/TextLogo';
 
 import { Home } from 'react-feather';
 
@@ -45,22 +46,6 @@ const MenuList = styled.ul`
     font-size: 1.2rem;
     font-weight: 500;
     cursor: pointer;
-    transition: 0.3s;
-  
-    &:after {
-      content: "";
-      position: absolute;
-      top: 50%; left: 60%;
-      transform: translate(-50%, -50%) rotate(135deg);
-      width: 0;
-      height: 6px;
-      transition: 0.3s;
-      background: ${({ theme }) => theme.mainColor };
-    }
-
-    &:hover:after {
-      width: 25%;
-    }
   }
 
   span {
@@ -91,17 +76,40 @@ function MenuPage(props) {
       }
     });
   };
+  
+  const parseTemporaryUser = () => {
+    try {
+      let userName = JSON.parse(localStorage.getItem('temporaryUser'));
+      return userName;
+    } catch (e) {
+      let neighbor = "Guest";
+      return neighbor;
+    }
+  }
+
+  let temporaryUser = parseTemporaryUser();
+
+  const welcome = (
+    <React.Fragment>
+      <p style={{ marginBottom: ".2rem"}}>
+        {temporaryUser}님, 웰컴 🙋🏻‍♀️
+      </p>
+      <TextLogo size="large"/>을
+      <p>둘러보세요!</p>
+    </React.Fragment>
+  )
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div>
       <MenuPageWrapper>
         <Link to='/'>
           <HomeIcon><Home /></HomeIcon>
         </Link>
         <PageContent 
-          title="방문을 진심으로 환영합니다."
-          desc="🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️🙇🏻‍♀️"
-        />
+          title={welcome}
+          desc="💌 방명록 잊지 말아주세요...😹"
+        >
+        </PageContent>
           
         <MenuList>
           {Menus.map((menu, idx) => (
