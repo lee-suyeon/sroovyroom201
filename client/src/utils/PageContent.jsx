@@ -10,14 +10,14 @@ const StyledPageContent = styled.div`
   padding: 0.7rem 1rem;
 
   & .title {
-    width: 60%;
+    width: 70%;
     word-break: keep-all;
     line-height: 1.3;
   }
 
   & > .desc {
     text-align: right;
-    font-size: 0.9rem;
+    font-size: 0.825rem;
   }
 `
 
@@ -27,11 +27,9 @@ function PageContent({ title, desc }) {
       <StyledPageContent>
         <Logo size="large"/>
         <Title>
-          <TextLogo size="large" /><br />
-          <div className="title">{title}</div>
+          {title}
         </Title>
           <div className="desc">{desc}</div>
-  
       </StyledPageContent>
       <Bar />
     </React.Fragment>
