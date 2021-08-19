@@ -57,10 +57,8 @@ const GlobalStyle = createGlobalStyle`
 
   input{
     font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
-    -webkit-appearance: none;
+    -webkit-border-radius: 0;
     border-radius: 0;
-    border: none;
-    padding: 0.3rem;
   }
 
   button {

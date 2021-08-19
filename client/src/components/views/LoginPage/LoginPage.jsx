@@ -10,17 +10,18 @@ import { loginUser } from '_actions/user_action';
 import Button from 'utils/Button';
 import TextInput from 'utils/TextInput';
 import PageContent from 'utils/PageContent';
+import TextLogo from 'utils/TextLogo';
 
 import { Menu } from 'react-feather';
 
 import { PhoneCall, UserPlus } from 'react-feather';
 
 const ContentPage = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: 100%;
   padding: 2rem;
 `
 
@@ -98,6 +99,13 @@ function LoginPage(props) {
       });
   }
 
+  const checkInTitle = (
+    <div>
+      <TextLogo size="large" />
+      <p>체크인하기</p>
+    </div>
+  )
+
   const dayCounter = (
     <DayCounter>
       🏡 독립 
@@ -110,7 +118,7 @@ function LoginPage(props) {
     <ContentPage>
         <NavIcon><Menu /></NavIcon>
       <PageContent
-        title="체크인하기"
+        title={checkInTitle}
         desc={dayCounter}
       >
       </PageContent>

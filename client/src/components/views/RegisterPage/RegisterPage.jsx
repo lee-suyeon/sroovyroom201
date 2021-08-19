@@ -9,6 +9,7 @@ import TextInput from 'utils/TextInput';
 import TextLogo from 'utils/TextLogo';
 import SelectBox from 'utils/SelectBox';
 import PageContent from 'utils/PageContent';
+import Nav from 'utils/Nav'
 
 import mbtiList from './mbti'
 
@@ -79,16 +80,30 @@ function RegisterPage(props) {
       });
   }
 
+  const registerTitle = (
+    <React.Fragment>
+      <TextLogo size="large" />과
+      <p>친구되기 👫🏻</p>
+    </React.Fragment>
+  )
+
   const freeDrink = (
     <FreeDrink>
       <TextLogo size="small" color="text" />과 친구하면 웰컴 드링크🍹를 드려요!
     </FreeDrink>
   )
 
+  const toMessage = (
+    <React.Fragment>
+      To. <TextLogo size="medium" />
+    </React.Fragment>
+  )
+
   return (
     <ContentPage>
+      <Nav />
       <PageContent
-        title="과 친구되기"
+        title={registerTitle}
         desc={freeDrink}
       />
 
@@ -97,7 +112,7 @@ function RegisterPage(props) {
           label="E-mail"
           type="email"
           name="email"
-          placeholder="이메일을 입력해주세요"
+          placeholder="이메일을 입력해주세요."
           value={email}
           onChange={onChangeInput}
         />
@@ -105,7 +120,7 @@ function RegisterPage(props) {
           label="Name"
           type="text"
           name="name"
-          placeholder="이름 또는 별명을 알려주세요"
+          placeholder="이름 또는 별명을 알려주세요."
           value={name}
           onChange={onChangeInput}
         />
@@ -122,18 +137,18 @@ function RegisterPage(props) {
           datas={mbtiList}
           value={mbti}
           onChange={onChangeSelect}
-          placeholder="MBTI 알려주시겠어요?"
+          placeholder="나의 MBTI를 알려주세요."
           showPlaceholder={true}
         />
         <TextInput
-          label={`To SROOVYROOM`}
+          label={toMessage}
           name="message"
           type="text"
           placeholder="하고싶은 말을 적어주세요. 없으면 서운해요.😢"
           value={message}
           onChange={onChangeInput}
         />
-        <Button fullWidth size="medium">FRIEND</Button>
+        <Button fullWidth size="medium">OK</Button>
       </InputForm>
     </ContentPage>
   )
