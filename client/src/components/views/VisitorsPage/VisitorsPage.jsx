@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import Message from './Message';
 
 import TextInput from 'utils/TextInput';
+import TextLogo from 'utils/TextLogo';
 import PageContent from 'utils/PageContent';
 import Nav from 'utils/Nav';
+import Loading from 'utils/Loading';
 
 import { Send, Meh } from 'react-feather';
 
 import Axios from 'axios';
-import TextLogo from 'utils/TextLogo';
 
 const GuestCount = styled.div`
   text-align: right;
@@ -73,21 +74,30 @@ const NoDataMessage = styled.div`
   }
 `
 
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+`
+
 function VisitorsPage(props) {
   const [ guestComment, setGuestComment ] = useState("");
   const [ messages, setMessages ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
-
+    setLoading(true);
     Axios.post('/api/visitors/messages')
-      .then(res => {
-        if(res.data.success){
-          setMessages(res.data.messages.reverse())
-        } else {
-          alert('방명록을 불러오는 데 실패했습니다. ')
-        }
-      })
-  }, [messages])
+    .then(res => {
+      if(res.data.success){
+        setLoading(false);
+        setMessages(res.data.messages.reverse())
+      } else {
+        alert('방명록을 불러오는 데 실패했습니다. ')
+      }
+    })
+  }, [])
 
   const GuestCommentHandler = e => {
     setGuestComment(e.target.value)
@@ -119,57 +129,70 @@ function VisitorsPage(props) {
 
   const guestCount = (
     <GuestCount>
-      <div>다녀간 손님🙆🏻 <span className="count-number">12</span>명</div>
+      <div>다녀간 손님🙆🏻 
+        <span className="count-number">{messages.length}</span>명
+      </div>
     </GuestCount>
   )
 
+  const visitorTitle = (
+    <div>
+      <TextLogo size="large"/>에
+      <p>흔적남기기 🐾</p>
+    </div>
+  )
+
   return(
-    <div className="visitors-page">
-      <div style={{ padding: '2rem'}}>
+    <div style={{ padding: '2rem' }}>
+      <div>
         <Nav />
         <PageContent 
-            title="흔적 남기기"
-            desc={guestCount}
+          title={visitorTitle}
+          desc={guestCount}
         />
-
-        <MessageWrapper>
-          {messages.length > 0 ?
-            messages.map((message, idx) => 
-            <Message 
-              key={`${idx}mgs`}
-              message={message}
-              />
-            ) : 
-            <NoDataMessage>
-              <Meh />
-              <p>
-                <TextLogo 
-                  size="medium"
-                  color="text"
-                  /> is lonely.
-              </p>
-            </NoDataMessage>
-            }
-        </MessageWrapper>
       </div>
 
-        <VisitorsForm onSubmit={SubmitHandler}>
-          <TextInput
-            value={guestComment}
-            onChange={GuestCommentHandler}
-            placeholder="방명록을 남겨주세요."
-            maxLength="200"
-            style={{ marginBottom: '1rem' }}
-            
-          />
-          <button 
-            className="send-btn" 
-            type="submit"
-            onClick={SubmitHandler} 
-          >
-            <Send />
-          </button>
-        </VisitorsForm>
+      <div style={{ height: "300px" }}>
+        {loading ? 
+          <Loader>
+            <Loading />
+          </Loader> :
+          <MessageWrapper>
+            {messages.length > 0 ?
+              messages.map((message, idx) => 
+              <Message 
+                key={`${idx}mgs`}
+                message={message}
+                />
+              ) : 
+              <NoDataMessage>
+                <Meh />
+                <p>
+                  <TextLogo size="medium" color="text"/> is lonely.
+                </p>
+              </NoDataMessage>
+            }
+          </MessageWrapper>
+        }
+      </div>
+      
+      <VisitorsForm onSubmit={SubmitHandler}>
+        <TextInput
+          value={guestComment}
+          onChange={GuestCommentHandler}
+          placeholder="방명록을 남겨주세요."
+          maxLength="200"
+          style={{ marginBottom: '1rem' }}
+          
+        />
+        <button 
+          className="send-btn" 
+          type="submit"
+          onClick={SubmitHandler} 
+        >
+          <Send />
+        </button>
+      </VisitorsForm>
     </div>
   );
 }
