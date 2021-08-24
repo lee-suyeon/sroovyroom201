@@ -1,54 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import PageContent from 'utils/PageContent'
 import Button from 'utils/Button'
+import TextLogo from 'utils/TextLogo'
 
-import { API_TOKEN, API_URL, MEDIA_BASE_URL } from 'config'
+import { Instagram } from 'react-feather';
+
+import { API_TOKEN, MEDIA_BASE_URL } from 'config'
 
 const FeedWrapper = styled.div`
+  padding: 0.7rem;
   margin-bottom: 2rem;
 `
 
 const Feed = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
+  padding-bottom: 0;
   border: 1px solid ${({ theme }) => theme.mainColor };
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   & > img {
     display: block;
     width: 100%;
-    margin-bottom: 0.5rem;
   }
 
   & p {
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.8rem;
+    line-height: 1.5;
     color: ${({ theme }) => theme.textColor };
+  }
+
+  &:last-child {
+    margin-bottom: 3rem;
   }
 `
 
+const EndMessage = styled.div`
+  color: ${({ theme }) => theme.textColor };
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.5;
+
+  & .move-to-insta {
+    margin-top: 1rem;
+  }
+`
+
+const LOAD_COUNT = 6;
 
 function GalleryPage(props) {
-
   const [ feeds, setFeeds ] = useState([]);
-
-  // const tokenProp = useRef(token);
-  // tokenProp.current = token;
+  const [ loadPost, setLoadPost ] = useState(LOAD_COUNT);
 
   useEffect(() => {
-    const abortController = new AbortController();
-
     getInstagramPost();
-  }, [])
+  }, [loadPost])
 
   const getInstagramPost = () => {
     try {
       axios
-        .get(`${MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption&limit=${6}&access_token=${API_TOKEN}`)
+        .get(`${MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption&limit=${loadPost}&access_token=${API_TOKEN}`)
         .then(res => setFeeds(res.data.data))
     } catch (err){
       console.log('error', err)
@@ -56,50 +70,61 @@ function GalleryPage(props) {
   }
 
   const renderCaption = (caption) => {
-
-    const captionStr = caption.split('\n')
+    const captionStr = caption.split('\n');
     const dotIndex = captionStr.findIndex(c => c === '.');
-    
+
     captionStr.splice(dotIndex, captionStr.length);
 
-    let result = captionStr.map(line => {
-      return (
-        <p>
-          {line}
-          <br />
-        </p>
-      )
-    })
-
+    let result = captionStr.map((line, idx) => 
+      <p key={idx}> 
+        {line}<br />
+      </p>
+    );
+    
     return result;
   }
 
-  console.log('feed', feeds)
+  const loadMorePost = () => {
+    setLoadPost(prev => prev + LOAD_COUNT)
+  }
+
+  const galleryTitle = (
+    <div>
+      <TextLogo size="large"/>
+      <p>랜선 집들이 🏡</p>
+    </div>
+  )
   
   return (
-    <div>
-      <div style={{ padding: '2rem' }}>
-        <PageContent 
-          title="일상을 공유합니다."
-          desc="총 20개의 일상이 있습니다."
-        />
-        <FeedWrapper>
-          {feeds && feeds.map(feed => (
-            <Feed>
-              <img src={feed.media_url}/>
-              <div style={{ padding: '0 0.5rem' }}>{renderCaption(feed.caption)}</div>
-            </Feed>
-        ))}
-
-        <Button fullWidth>
+    <div style={{ padding: '2rem' }}>
+      <PageContent 
+        title={galleryTitle}
+        desc="총 20개의 일상이 있습니다."
+      />
+      <FeedWrapper>
+        {feeds && feeds.map((feed, idx) => (
+          <Feed key={`feed${idx}`}>
+            <img src={feed.media_url}/>
+            <div style={{ padding: '0.7rem' }}>{renderCaption(feed.caption)}</div>
+          </Feed>
+      ))}
+      </FeedWrapper>
+      
+      {/* {feeds.length === 0 && (
+        <EndMessage>
+          <p>
+          오늘의 랜선 집들이는 <br/> 종료되었습니다 😔 <br />
+          내일 다시 방문해주세요
+          </p>
+          <div className="move-to-insta">
+            나는 못 기다리겠다. <br />
+            여기 <Instagram />
+          </div>
+        </EndMessage> 
+      )} */}
+        <Button fullWidth onClick={loadMorePost}>
           일상 더 보기
         </Button>
-
-        </FeedWrapper>
-
-          
-
-      </div>
     </div>
   )
 }
