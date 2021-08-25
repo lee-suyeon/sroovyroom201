@@ -7,7 +7,7 @@ import Bar from 'utils/Bar'
 import { Title } from 'utils/Typo'
 
 const StyledPageContent = styled.div`
-  padding: 0.7rem 1rem;
+  padding: 0 0.7rem 0.7rem;
 
   & .title {
     width: 70%;
