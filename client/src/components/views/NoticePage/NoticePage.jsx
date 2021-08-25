@@ -6,6 +6,7 @@ import Axios from 'axios'
 import PageContent from 'utils/PageContent'
 import Nav from 'utils/Nav'
 import Button from 'utils/Button'
+import TextLogo from 'utils/TextLogo'
 
 import NoticeForm from './NoticeForm';
 
@@ -66,6 +67,7 @@ const NoticeBox = styled.div`
     line-height: 1.2;
     text-align: right;
     font-size: 0.8rem;
+    margin-top: 1rem;
   }
 `
 
@@ -90,14 +92,14 @@ function NoticePage() {
     title: "",
     content: "",
   })
-  const [ notices, setNotices ] = useState("");
+  const [ notices, setNotices ] = useState([]);
   const [ showDeleteButton, setShowDeleteButton ] = useState(false);
   const [ selectedIndex, setSelectedIndex ] = useState("");
   const { title, content } = inputs;
 
   useEffect(() => {
     getNoticesData();
-  }, [notices])
+  }, [])
 
   const getNoticesData = () => {
     Axios.post('/api/notice/notice')
@@ -125,10 +127,6 @@ function NoticePage() {
   const toggleDeleteButton = (idx) => {
     setSelectedIndex(idx)
     setShowDeleteButton(prev => !prev)
-  }
-
-  const onClickDelete = (idx) => {
-    
   }
 
   const onClickSubmit = () => {
@@ -184,13 +182,20 @@ function NoticePage() {
       </NoticeBox>
     )
 
+    const noticeTitle = (
+      <React.Fragment>
+        <TextLogo size="large"/>의
+        <p>소식을 확인하세요 📢</p>
+      </React.Fragment>
+    )
+
   return(
-    <div>
+    <div style={{ height: '100vh' }}>
       <div style={{ padding: '2rem' }}>
         <Nav />
         <PageContent 
-          title="소식을 확인하세요."
-          desc="📢 1건의 새로운 소식이 있습니다."
+          title={noticeTitle}
+          desc={`📮 ${notices.length}건의 새로운 소식이 있습니다.`}
         />
         <NoticeWrapper>
           {showNoticeForm ?
