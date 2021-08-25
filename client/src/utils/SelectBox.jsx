@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledSelectBox = styled.div`
   margin-bottom: 2rem;
+  width: ${props => `${props.size}%` || "100%"};
 
   label {
     display: block;
@@ -51,9 +52,11 @@ const Selectbox = ({
   value,
   showPlaceholder,
   placeholder,
-  label
+  label,
+  size,
+  style
 }) => {
-  const dataList = datas.map((data) => {
+  const dataList = (datas||[]).map((data) => {
     return (
       <option 
         key={data.idx} 
@@ -65,7 +68,7 @@ const Selectbox = ({
   });
 
   return (
-    <StyledSelectBox>
+    <StyledSelectBox size={size}>
       <label>{label}</label>
       <div className="dropdown">
         <select
@@ -73,6 +76,7 @@ const Selectbox = ({
           value={value}
           onChange={onChange}
           disabled={disabled}
+          style={style}
         >
           {showPlaceholder && (
             <option value={-1} hidden>

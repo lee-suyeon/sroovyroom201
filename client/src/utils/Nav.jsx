@@ -5,7 +5,7 @@ import { Menu } from 'react-feather';
 
 const NavIcon = styled.div`
   position: absolute;
-  top: 2rem;
+  top: 2.5rem;
   right: 2rem;
   color: ${({ theme }) => theme.mainColor };
 `
