@@ -89,15 +89,19 @@ function VisitorsPage(props) {
   useEffect(() => {
     setLoading(true);
     Axios.post('/api/visitors/messages')
-    .then(res => {
-      if(res.data.success){
-        setLoading(false);
-        setMessages(res.data.messages.reverse())
-      } else {
-        alert('방명록을 불러오는 데 실패했습니다. ')
-      }
-    })
+      .then(res => {
+        if(res.data.success){
+          setLoading(false);
+          setMessages(res.data.messages.reverse())
+        } else {
+          alert('방명록을 불러오는 데 실패했습니다. ')
+        }
+      })
   }, [])
+
+  // useEffect(() => {
+  //   renderingMessages(messages)
+  // }, [messages])
 
   const GuestCommentHandler = e => {
     setGuestComment(e.target.value)
@@ -110,8 +114,11 @@ function VisitorsPage(props) {
       return alert("내용을 입력해주세요.")
     }
 
+    let temporaryUser = JSON.parse(localStorage.getItem("temporaryUser"))
+
     let body = {
       writer: props.user.userData._id,
+      temporaryUser: temporaryUser,
       content: guestComment,
     }
 
@@ -142,6 +149,14 @@ function VisitorsPage(props) {
     </div>
   )
 
+  const renderingMessages = (messages) => 
+    messages.map((message, idx) => 
+      <Message 
+        key={`${idx}mgs`}
+        message={message}
+        />
+      )
+
   return(
     <div style={{ padding: '2rem' }}>
       <div>
@@ -156,7 +171,7 @@ function VisitorsPage(props) {
         {loading ? 
           <Loader>
             <Loading />
-          </Loader> :
+          </Loader> : 
           <MessageWrapper>
             {messages.length > 0 ?
               messages.map((message, idx) => 

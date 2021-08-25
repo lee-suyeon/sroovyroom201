@@ -6,6 +6,9 @@ const visitorsSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  temporaryUser: {
+    type: String,
+  }, // 게스트일경우
   privacy: {
     type: Number,
   },

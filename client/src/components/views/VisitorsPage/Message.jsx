@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
-import { Heart } from 'react-feather';
-
 const MessageForm = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.mainColor };
   margin-bottom: 1.5rem;
@@ -48,6 +46,10 @@ const MessageForm = styled.div`
     display: flex;
     justify-content: flex-end;
   }
+
+  &:last-child{
+    margin-bottom: 4rem;
+  }
 `
 
 const changeTimeFormat = (time) => {
@@ -56,13 +58,13 @@ const changeTimeFormat = (time) => {
 }
 
 function Message({ message }) {
-  const { writer, content, createdAt } = message;
+  const { writer, content, createdAt, temporaryUser } = message;
 
   return (
     <MessageForm>
       <div>
         <h5>
-          💌 {writer.name}
+          💌 {writer ? writer.name : temporaryUser }
         </h5>
         {/* <Heart /> */}
       </div>
