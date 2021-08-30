@@ -22,7 +22,7 @@ router.post('/saveVisitors', (req, res) => {
 });
 
 // 방명록 불러오기
-router.post('/messages', (req, res) => {
+router.post('/getMessages', (req, res) => {
 
   // visitors의 모든 정보 가져오기. 
   Visitors.find()
