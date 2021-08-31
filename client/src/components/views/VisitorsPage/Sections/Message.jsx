@@ -74,7 +74,7 @@ function Message({ messageList, refreshMessage }) {
           alert("다음에 또 놀러오실거죠?😉")
           setGuestComment("");
           refreshMessage(res.data.result);
-          // window.scrollTo(0, 0);
+          window.scrollTo(0, 0);
         } else {
           alert("방명록 작성에 실패했습니다.")
         }

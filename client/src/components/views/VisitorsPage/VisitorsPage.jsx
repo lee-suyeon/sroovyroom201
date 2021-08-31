@@ -53,7 +53,7 @@ function VisitorsPage() {
       .then(res => {
         if(res.data.success){
           setLoading(false);
-          setMessages(res.data.messages)
+          setMessages(res.data.messages.reverse())
         } else {
           alert('방명록을 불러오는 데 실패했습니다. ')
         }
@@ -61,7 +61,8 @@ function VisitorsPage() {
   }, [])
 
   const refreshMessage = (newMessage) => {
-    setMessages(messages.concat(newMessage))
+    let newList = messages.reverse().concat(newMessage);
+    setMessages(newList.reverse());
   }
 
   const guestCount = (
