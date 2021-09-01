@@ -9,8 +9,6 @@ import TextLogo from 'utils/TextLogo'
 
 import { Instagram } from 'react-feather';
 
-import { API_TOKEN, MEDIA_BASE_URL } from 'config'
-
 const FeedWrapper = styled.div`
   padding: 0.7rem;
   margin-bottom: 2rem;
@@ -62,7 +60,7 @@ function GalleryPage(props) {
   const getInstagramPost = () => {
     try {
       axios
-        .get(`${MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption&limit=${loadPost}&access_token=${API_TOKEN}`)
+        .get(`${process.env.REACT_APP_MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption&limit=${loadPost}&access_token=${process.env.REACT_APP_INSTA_API_TOKEN}`)
         .then(res => setFeeds(res.data.data))
     } catch (err){
       console.log('error', err)
