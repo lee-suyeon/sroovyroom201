@@ -7,8 +7,6 @@ import PageContent from 'utils/PageContent';
 import Nav from 'utils/Nav';
 import Loading from 'utils/Loading';
 
-import { Meh } from 'react-feather';
-
 import Axios from 'axios';
 
 const GuestCount = styled.div`
@@ -21,19 +19,8 @@ const GuestCount = styled.div`
 
 const MessageWrapper = styled.div`
   width: 100%;
-  min-height: 250px;
   color: ${({ theme }) => theme.textColor };
-  padding: 0 0.8rem 3.5rem;
-`
-
-const NoDataMessage = styled.div`
-  text-align: center;
-  margin-top: 3rem;
-
-  & > svg {
-    margin-bottom: 0.4rem;
-    color: ${({ theme }) => theme.mainColor };
-  }
+  //padding: 0 0.8rem 3.5rem;
 `
 
 const Loader = styled.div`
@@ -90,21 +77,13 @@ function VisitorsPage() {
         />
       </div>
 
-      <div style={{ height: "300px" }}>
+      <div style={{ height: "300px", overflowY: "auto" }}>
         {loading ? 
           <Loader>
             <Loading />
           </Loader> : 
           <MessageWrapper>
-            {messages.length > 0 ? 
-              <Message messageList={messages} refreshMessage={refreshMessage}/> : 
-              <NoDataMessage>
-                <Meh />
-                <p>
-                  <TextLogo size="medium" color="text"/> is lonely.
-                </p>
-              </NoDataMessage>
-            }
+            <Message messageList={messages} refreshMessage={refreshMessage}/> 
           </MessageWrapper>
         }
       </div>

@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux';
 import TextInput from 'utils/TextInput'
 import moment from 'moment'
 import Axios from 'axios';
-import { Heart, Send } from 'react-feather';
+import { Heart, Send, CornerDownRight } from 'react-feather';
 
 const MessageForm = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.mainColor };
-  margin-bottom: 1.5rem;
+  //border-bottom: 1px solid ${({ theme }) => theme.mainColor };
+  margin-bottom: 2rem;
+  padding: 0 0.8rem;
 
   & > div {
     display: flex;
@@ -19,6 +20,26 @@ const MessageForm = styled.div`
     margin-bottom: 1rem;
   }
 
+
+  p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+  }
+
+  svg {
+    width: 15px;
+    color: ${({ theme }) => theme.mainColor };
+  }
+
+
+
+  &:last-child {
+    margin-bottom: 4rem;
+  }
+`
+
+const MessageHeader = styled.div`
   h5 {
     font-size: 0.9rem;
     font-weight: 500;
@@ -35,26 +56,70 @@ const MessageForm = styled.div`
     }
   }
 
-  p {
-    font-size: 0.8rem;
-    line-height: 1.4;
-    margin-bottom: 1.2rem;
-  }
-
-  svg {
-    width: 15px;
-    color: ${({ theme }) => theme.mainColor };
-  }
-
-  .timestamp {
-    font-size: 0.65rem;
+  & .timestamp {
+    font-size: 0.7rem;
     color: #555;
+    font-weight: 500;
     display: flex;
     justify-content: flex-end;
+    font-family: 'Montserrat', sans-serif;
+  }
+`
+
+const MessageFooter = styled.div`
+  display: flex;
+  color: ${({ theme }) => theme.mainColor };
+  justify-content: space-between;
+
+  & > div {
+    display: flex;
+    font-size: 0.8rem;
   }
 
-  &:last-child {
-    margin-bottom: 4rem;
+  & .reply {
+    margin-right: 0.5rem;
+  }
+`
+
+const Reply = styled.div`
+  display: flex;
+  //background-color: ${({ theme }) => theme.lightGreen };
+
+  & .avatar {
+    text-align: center;
+    margin-right: 0.5rem;
+  }
+
+  & .avatar > div {
+    width: 40px;
+    height: 40px;
+    background: ${({ theme }) => theme.mainColor };
+    border-radius: 50%;
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  & .avatar > p {
+    font-size: 0.5rem;
+  }
+
+  & .reply-input {
+    // width: 100%;
+    position: relative;
+
+    & > input {
+      width: 100%;
+      border: none;
+      background: transparent;
+    }
+  }
+
+  & button {
+    border: none;
+    color: ${({ theme }) => theme.mainColor };
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 `
 
@@ -73,8 +138,10 @@ function SingleMessage({ message, refreshMessage }) {
   }
 
   const changeTimeFormat = (time) => {
-    const timeFormat = moment(time).format("YYYY년 MM월 DD일에 다녀감")
-    return timeFormat;
+    const now = moment()
+    const days = now.diff(time, "days")
+
+    return days;
   }
 
   const onSubmitComment = (e) => {
@@ -99,37 +166,46 @@ function SingleMessage({ message, refreshMessage }) {
   }
 
   return (
-    <React.Fragment>
       <MessageForm>
-        <div>
+        <MessageHeader>
           <h5>
             {writer ? `💌 ${writer.name}` : `🥷🏼 ${temporaryUser}`}
           </h5>
-            <div onClick={replyHandler}>reply</div>
-            <Heart />
-        </div>
+          <div className="timestamp">{`${changeTimeFormat(createdAt)} days ago`}</div>
+        </MessageHeader>
         <p>{content}</p>
-      <div className="timestamp">{changeTimeFormat(createdAt)}</div>
-      </MessageForm>
-        { openReply &&
+        <MessageFooter>
           <div>
-            <TextInput
-              value={comment}
-              onChange={onChangeComment}
-              placeholder="방명록을 남겨주세요."
-              maxLength="200"
-              style={{ marginBottom: '1rem' }}
-            />
-            <button 
-              className="send-btn" 
-              type="submit"
-              // onClick={SubmitHandler} 
-            >
-              <Send />
-            </button>
+            <div className="reply" onClick={replyHandler}> Reply</div>
+            <div className="like">Like</div>
           </div>
+          <Heart />
+        </MessageFooter>
+        { openReply &&
+          <Reply>
+            <div className="avatar">
+              <div>👩🏻</div>
+              <p>SROOVY</p>
+            </div>
+            <div className="reply-input">
+              <TextInput
+                value={comment}
+                onChange={onChangeComment}
+                placeholder="방명록을 남겨주세요."
+                maxLength="200"
+                style={{ marginBottom: '1rem' }}
+              />
+              <button 
+                className="send-btn" 
+                type="submit"
+                onClick={onSubmitComment} 
+              >
+                <Send />
+              </button>
+            </div>
+          </Reply>
         }
-    </React.Fragment>
+      </MessageForm>
   )
 }
 

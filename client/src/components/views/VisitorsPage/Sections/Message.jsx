@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import Axios from 'axios';
 import TextInput from 'utils/TextInput';
+import TextLogo from 'utils/TextLogo';
 import { Send, Meh } from 'react-feather';
 
 import SingleMessage from './SingleMessage';
@@ -45,6 +46,16 @@ const VisitorsForm = styled.form`
   }
 `
 
+const NoDataMessage = styled.div`
+  text-align: center;
+  margin-top: 3rem;
+
+  & > svg {
+    margin-bottom: 0.4rem;
+    color: ${({ theme }) => theme.mainColor };
+  }
+`
+
 function Message({ messageList, refreshMessage }) {
   const user = useSelector(state => state.user);
   const [ guestComment, setGuestComment ] = useState("");
@@ -81,13 +92,22 @@ function Message({ messageList, refreshMessage }) {
       })
   }
 
+  const renderNoData = () => (
+    <NoDataMessage>
+      <Meh />
+      <p>
+        <TextLogo size="medium" color="text"/> is lonely.
+      </p>
+    </NoDataMessage>
+  )
+
   return (
     <div style={{ marginBottom: '4rem' }}>
-      {messageList && messageList.map(( message, index ) => (
+      {messageList.map(( message, index ) => (
         (!message.responseTo &&
           <SingleMessage key={`message${index}`} message={message} refreshMessage={refreshMessage}/>)
       ))}
-
+      {messageList.length < 1 && renderNoData()} 
       <VisitorsForm onSubmit={SubmitHandler}>
         <TextInput
           value={guestComment}
