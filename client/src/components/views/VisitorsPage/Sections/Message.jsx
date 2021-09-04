@@ -56,7 +56,7 @@ const NoDataMessage = styled.div`
   }
 `
 
-function Message({ messageList, refreshMessage }) {
+function Message({ messageList, refreshMessage, isAdmin }) {
   const user = useSelector(state => state.user);
   const [ guestComment, setGuestComment ] = useState("");
 
@@ -95,17 +95,23 @@ function Message({ messageList, refreshMessage }) {
   const renderNoData = () => (
     <NoDataMessage>
       <Meh />
-      <p>
+      <div>
         <TextLogo size="medium" color="text"/> is lonely.
-      </p>
+      </div>
     </NoDataMessage>
   )
 
   return (
-    <div style={{ marginBottom: '4rem' }}>
+    <div style={{ marginBottom: '5rem' }}>
       {messageList.map(( message, index ) => (
         (!message.responseTo &&
-          <SingleMessage key={`message${index}`} message={message} refreshMessage={refreshMessage}/>)
+          <SingleMessage 
+            key={`message${index}`} 
+            message={message} 
+            isAdmin={isAdmin}
+            refreshMessage={refreshMessage} 
+          />
+        )
       ))}
       {messageList.length < 1 && renderNoData()} 
       <VisitorsForm onSubmit={SubmitHandler}>

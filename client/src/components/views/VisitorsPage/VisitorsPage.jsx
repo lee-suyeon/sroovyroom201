@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
 import styled from 'styled-components';
 
 import Message from './Sections/Message';
@@ -20,7 +21,6 @@ const GuestCount = styled.div`
 const MessageWrapper = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.textColor };
-  //padding: 0 0.8rem 3.5rem;
 `
 
 const Loader = styled.div`
@@ -31,6 +31,8 @@ const Loader = styled.div`
 `
 
 function VisitorsPage() {
+  const userData = useSelector(state => state.user.userData);
+  const isAdmin = userData && userData.isAdmin;
   const [ messages, setMessages ] = useState([]);
   const [ loading, setLoading ] = useState(false);
 
@@ -41,6 +43,7 @@ function VisitorsPage() {
         if(res.data.success){
           setLoading(false);
           setMessages(res.data.messages.reverse())
+          // setMessages([])
         } else {
           alert('방명록을 불러오는 데 실패했습니다. ')
         }
@@ -69,26 +72,20 @@ function VisitorsPage() {
 
   return(
     <div style={{ padding: '2rem' }}>
-      <div>
-        <Nav />
-        <PageContent 
-          title={visitorTitle}
-          desc={guestCount}
-        />
-      </div>
+      <Nav />
+      <PageContent 
+        title={visitorTitle}
+        desc={guestCount}
+      />
 
-      <div style={{ height: "300px", overflowY: "auto" }}>
-        {loading ? 
-          <Loader>
-            <Loading />
-          </Loader> : 
-          <MessageWrapper>
-            <Message messageList={messages} refreshMessage={refreshMessage}/> 
-          </MessageWrapper>
-        }
-      </div>
-      
-      
+      {loading ? 
+        <Loader>
+          <Loading />
+        </Loader> :
+        <MessageWrapper>
+          <Message messageList={messages} refreshMessage={refreshMessage} isAdmin={isAdmin}/> 
+        </MessageWrapper>
+      }
     </div>
   );
 }
