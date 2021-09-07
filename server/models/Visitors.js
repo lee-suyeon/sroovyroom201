@@ -15,6 +15,10 @@ const visitorsSchema = mongoose.Schema({
   content: { // 댓글 내용
     type: String,
     maxlength: 300,
+  },
+  responseTo: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 }, {timestamps: true }); // 만든날짜, 업데이트 날짜 표시 
 
