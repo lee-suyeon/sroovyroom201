@@ -32,7 +32,6 @@ const Loader = styled.div`
 
 function VisitorsPage() {
   const userData = useSelector(state => state.user.userData);
-  const isAdmin = userData && userData.isAdmin;
   const [ messages, setMessages ] = useState([]);
   const [ loading, setLoading ] = useState(false);
 
@@ -83,7 +82,7 @@ function VisitorsPage() {
           <Loading />
         </Loader> :
         <MessageWrapper>
-          <Message messageList={messages} refreshMessage={refreshMessage} isAdmin={isAdmin}/> 
+          <Message messageList={messages} refreshMessage={refreshMessage} userData={userData}/> 
         </MessageWrapper>
       }
     </div>

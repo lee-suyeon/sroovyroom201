@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { useSelector } from 'react-redux';
-
 import Axios from 'axios';
+import moment from 'moment';
+
 import TextInput from 'utils/TextInput';
 import TextLogo from 'utils/TextLogo';
 import { Send, Meh } from 'react-feather';
 
-import SingleMessage from './SingleMessage';
+import SingleMessage from './SingleMessage'
+import ReplyMessage from './ReplyMessage'
 
 const VisitorsForm = styled.form`
   display: flex;
@@ -46,6 +47,19 @@ const VisitorsForm = styled.form`
   }
 `
 
+const MessageWrapper = styled.div`
+  padding: 1rem 1rem 0.5rem;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 4rem;
+  }
+
+  &:nth-child(2n) {
+    background: ${({ theme }) => theme.paleGray };
+  }
+`
+
 const NoDataMessage = styled.div`
   text-align: center;
   margin-top: 3rem;
@@ -56,8 +70,7 @@ const NoDataMessage = styled.div`
   }
 `
 
-function Message({ messageList, refreshMessage, isAdmin }) {
-  const user = useSelector(state => state.user);
+function Message({ messageList, refreshMessage, userData }) {
   const [ guestComment, setGuestComment ] = useState("");
 
   const commentHandler = e => {
@@ -71,10 +84,10 @@ function Message({ messageList, refreshMessage, isAdmin }) {
       return alert("내용을 입력해주세요.")
     }
 
-    let temporaryUser = JSON.parse(localStorage.getItem("temporaryUser"))
+    let temporaryUser = !userData._id ? JSON.parse(localStorage.getItem("temporaryUser")) : null
 
     let body = {
-      writer: user.userData._id,
+      writer: userData._id,
       temporaryUser: temporaryUser,
       content: guestComment,
     }
@@ -92,6 +105,18 @@ function Message({ messageList, refreshMessage, isAdmin }) {
       })
   }
 
+  const changeTimeFormat = (time) => {
+    const now = moment()
+    const days = now.diff(time, "days")
+    let message = `${days} days ago`
+
+    if(days === 0) {
+      message = "Today 🔥" 
+    }
+
+    return message;
+  }
+
   const renderNoData = () => (
     <NoDataMessage>
       <Meh />
@@ -104,13 +129,23 @@ function Message({ messageList, refreshMessage, isAdmin }) {
   return (
     <div style={{ marginBottom: '5rem' }}>
       {messageList.map(( message, index ) => (
+        // 대댓글이 아닌 메세지만 출력 - 첫번째 depth
         (!message.responseTo &&
-          <SingleMessage 
-            key={`message${index}`} 
-            message={message} 
-            isAdmin={isAdmin}
-            refreshMessage={refreshMessage} 
-          />
+          <MessageWrapper key={`message${index}`} >
+            <SingleMessage 
+              message={message} 
+              userData={userData}
+              refreshMessage={refreshMessage}
+              changeTimeFormat={changeTimeFormat}
+            />
+            <ReplyMessage
+              messageList={messageList}
+              parentMessageId={message._id}
+              userData={userData}
+              refreshMessage={refreshMessage}
+              changeTimeFormat={changeTimeFormat}
+            />
+          </MessageWrapper>
         )
       ))}
       {messageList.length < 1 && renderNoData()} 

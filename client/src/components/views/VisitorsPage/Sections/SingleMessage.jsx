@@ -1,29 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import { useSelector } from 'react-redux';
-
 import TextInput from 'utils/TextInput'
 import moment from 'moment'
 import Axios from 'axios';
 import { Heart, Send } from 'react-feather';
 
 const MessageForm = styled.div`
-  padding: 1rem 1rem 0.5rem;
-  margin-bottom: 0.5rem;
-
-  &:last-child {
-    margin-bottom: 4rem;
-  }
-
-  &:nth-child(2n) {
-    background: ${({ theme }) => theme.paleGray };
-  }
+  // margin-bottom: 0.8rem;
 `
 
 const MessageBody = styled.div`
   font-size: 0.8rem;
-  line-height: 1.4;
+  line-height: 1.6;
   margin-bottom: 1rem;
 `
 
@@ -40,9 +29,8 @@ const MessageHeader = styled.div`
 
   & .timestamp {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: ${({ theme }) => theme.lightGray };
-    font-weight: 500;
   }
 `
 
@@ -57,7 +45,7 @@ const MessageFooter = styled.div`
     font-size: 0.8rem;
   }
 
-  & .reply {
+  .reply, .like {
     margin-right: 0.5rem;
   }
 
@@ -115,11 +103,12 @@ const Reply = styled.div`
   }
 `
 
-function SingleMessage({ message, refreshMessage, isAdmin }) {
-  const user = useSelector(state => state.user);
+function SingleMessage({ message, refreshMessage, userData, changeTimeFormat }) {
   const [ openReply, setOpenReply ] = useState(false);
   const [ comment, setComment ] = useState("");
   const { writer, temporaryUser, content, createdAt } = message;
+
+  const isAuth = userData && userData.isAuth;
   
   const replyHandler = () => {
     setOpenReply(prev => !prev)
@@ -129,24 +118,11 @@ function SingleMessage({ message, refreshMessage, isAdmin }) {
     setComment(e.currentTarget.value)
   }
 
-  const changeTimeFormat = (time) => {
-    const now = moment()
-    const days = now.diff(time, "days")
-    let message = `${days} days ago`
-
-    if(days === 0) {
-      message = "Today🔥" 
-    }
-
-    return message;
-  }
-
   const onSubmitComment = (e) => {
     e.preventDefault();
 
     let body = {
-      writer: user.userData._id,
-      temporaryUser: temporaryUser,
+      writer: userData._id,
       content: comment,
       responseTo: message._id
     }
@@ -174,11 +150,12 @@ function SingleMessage({ message, refreshMessage, isAdmin }) {
           {content}
         </MessageBody>
 
-        { isAdmin && 
+        { isAuth && 
           <MessageFooter>
             <div>
               <div className="reply" onClick={replyHandler}> Reply</div>
               <div className="like">Like</div>
+              <div className="comment">Comment</div>
             </div>
             <Heart />
           </MessageFooter>
