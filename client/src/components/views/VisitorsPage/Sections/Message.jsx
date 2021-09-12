@@ -135,16 +135,18 @@ function Message({ messageList, refreshMessage, userData }) {
             <SingleMessage 
               message={message} 
               userData={userData}
+              messageList={messageList}
+              parentMessageId={message._id}
               refreshMessage={refreshMessage}
               changeTimeFormat={changeTimeFormat}
             />
-            <ReplyMessage
+            {/* <ReplyMessage
               messageList={messageList}
               parentMessageId={message._id}
               userData={userData}
               refreshMessage={refreshMessage}
               changeTimeFormat={changeTimeFormat}
-            />
+            /> */}
           </MessageWrapper>
         )
       ))}

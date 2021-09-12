@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Comment = styled.div`
+  width: 100%;
   display: flex;
   padding-left: 1rem;
   margin-top: 0.8rem;
@@ -69,7 +70,7 @@ function ReplyMessage ({ messageList, parentMessageId, refreshMessage, changeTim
             <Avatar>
               <div>🧑🏻‍🦰</div>
             </Avatar>
-            <div>
+            <div style={{ width: "100%" }}>
               <div className="reply">
                 <div className="writer">{message.writer.name}</div>
                 <div className="timestamp">{changeTimeFormat(message.createdAt)}</div>

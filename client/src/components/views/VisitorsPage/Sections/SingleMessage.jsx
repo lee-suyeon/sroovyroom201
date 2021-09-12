@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import TextInput from 'utils/TextInput'
+import ReplyMessage from './ReplyMessage'
+
 import moment from 'moment'
 import Axios from 'axios';
 import { Heart, Send } from 'react-feather';
@@ -103,15 +105,20 @@ const Reply = styled.div`
   }
 `
 
-function SingleMessage({ message, refreshMessage, userData, changeTimeFormat }) {
+function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, messageList, parentMessageId }) {
   const [ openReply, setOpenReply ] = useState(false);
   const [ comment, setComment ] = useState("");
+  const [ showComment, setShowComment ] = useState(false);
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
   
   const replyHandler = () => {
     setOpenReply(prev => !prev)
+  }
+
+  const showCommentHandler = () => {
+    setShowComment(prev => !prev);
   }
 
   const onChangeComment = (e) => {
@@ -155,7 +162,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat }) 
             <div>
               <div className="reply" onClick={replyHandler}> Reply</div>
               <div className="like">Like</div>
-              <div className="comment">Comment</div>
+              <div className="comment" onClick={showCommentHandler}>Comment</div>
             </div>
             <Heart />
           </MessageFooter>
@@ -183,6 +190,16 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat }) 
               </button>
             </div>
           </Reply>
+        }
+
+        { !openReply && showComment &&
+          <ReplyMessage
+            messageList={messageList}
+            parentMessageId={parentMessageId}
+            userData={userData}
+            refreshMessage={refreshMessage}
+            changeTimeFormat={changeTimeFormat}
+          />
         }
       </MessageForm>
   )
