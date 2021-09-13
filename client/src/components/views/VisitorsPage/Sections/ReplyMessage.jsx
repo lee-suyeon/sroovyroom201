@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Comment = styled.div`
@@ -47,21 +47,7 @@ const Avatar = styled.div`
   }
 `
 
-function ReplyMessage ({ messageList, parentMessageId, refreshMessage, changeTimeFormat }) {
-  const [ childeMessageNumber, setChildMessageNumber ] = useState(0)
-  
-  useEffect(() => {
-    let commentNumber = 0;
-
-    messageList.map(comment => {
-      if(comment.responseTo === parentMessageId) {
-        commentNumber++;
-      }
-    })
-
-    setChildMessageNumber(commentNumber);
-  }, [])
-
+function ReplyMessage ({ messageList, parentMessageId, changeTimeFormat }) {
   const renderReplyComment = (parentMessageId) => 
     messageList.map((message, idx) => {
       if(message.responseTo === parentMessageId) {

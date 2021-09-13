@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import TextInput from 'utils/TextInput'
@@ -49,6 +49,16 @@ const MessageFooter = styled.div`
 
   .reply, .like {
     margin-right: 0.5rem;
+  }
+
+  .comment-count {
+    color: ${({ theme }) => theme.white };
+    display: inline-block;
+    background: ${({ theme }) => theme.mainColor };
+    padding: 0 0.15rem 0.1rem;
+    border-radius: 2px;
+    font-size: 0.6rem;
+    font-weight: 500;
   }
 
   svg {
@@ -106,12 +116,25 @@ const Reply = styled.div`
 `
 
 function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, messageList, parentMessageId }) {
-  const [ openReply, setOpenReply ] = useState(false);
   const [ comment, setComment ] = useState("");
+  const [ openReply, setOpenReply ] = useState(false);
   const [ showComment, setShowComment ] = useState(false);
+  const [ commentNumber, setCommentNumber ] = useState(0)
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
+
+  useEffect(() => {
+    let commentNumber = 0;
+
+    messageList.map(comment => {
+      if(comment.responseTo === message._id) {
+        commentNumber++;
+      }
+    })
+
+    setCommentNumber(commentNumber)
+  }, [commentNumber])
   
   const replyHandler = () => {
     setOpenReply(prev => !prev)
@@ -138,6 +161,9 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       .then(res => {
         if(res.data.success){
           refreshMessage(res.data.result)
+          setComment("");
+          setOpenReply(false);
+          setComment(true);
         } else {
           alert("방명록 작성에 실패했습니다.")
         }
@@ -162,7 +188,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
             <div>
               <div className="reply" onClick={replyHandler}> Reply</div>
               <div className="like">Like</div>
-              <div className="comment" onClick={showCommentHandler}>Comment</div>
+              {commentNumber > 0 &&
+                <div className="comment" onClick={showCommentHandler}>
+                  Comment{' '}
+                  <span className="comment-count">{commentNumber}</span>
+                </div>
+              }
             </div>
             <Heart />
           </MessageFooter>
@@ -195,9 +226,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         { !openReply && showComment &&
           <ReplyMessage
             messageList={messageList}
-            parentMessageId={parentMessageId}
-            userData={userData}
-            refreshMessage={refreshMessage}
+            parentMessageId={message._id}
             changeTimeFormat={changeTimeFormat}
           />
         }

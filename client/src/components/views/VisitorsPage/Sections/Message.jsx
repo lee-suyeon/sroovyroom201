@@ -9,7 +9,6 @@ import TextLogo from 'utils/TextLogo';
 import { Send, Meh } from 'react-feather';
 
 import SingleMessage from './SingleMessage'
-import ReplyMessage from './ReplyMessage'
 
 const VisitorsForm = styled.form`
   display: flex;
@@ -136,17 +135,9 @@ function Message({ messageList, refreshMessage, userData }) {
               message={message} 
               userData={userData}
               messageList={messageList}
-              parentMessageId={message._id}
               refreshMessage={refreshMessage}
               changeTimeFormat={changeTimeFormat}
             />
-            {/* <ReplyMessage
-              messageList={messageList}
-              parentMessageId={message._id}
-              userData={userData}
-              refreshMessage={refreshMessage}
-              changeTimeFormat={changeTimeFormat}
-            /> */}
           </MessageWrapper>
         )
       ))}
