@@ -42,7 +42,6 @@ function VisitorsPage() {
         if(res.data.success){
           setLoading(false);
           setMessages(res.data.messages.reverse())
-          // setMessages([])
         } else {
           alert('방명록을 불러오는 데 실패했습니다. ')
         }
@@ -54,10 +53,21 @@ function VisitorsPage() {
     setMessages(newList.reverse());
   }
 
+  const countFor = () => {
+    let count = 0;
+
+    messages.forEach(message => {
+      if(!message.hasOwnProperty("responseTo")) {
+        count++;
+      }
+    })
+    return count
+  }
+
   const guestCount = (
     <GuestCount>
       <div>다녀간 손님🙆🏻 
-        <span className="count-number">{messages.length}</span>명
+        <span className="count-number">{countFor()}</span>명
       </div>
     </GuestCount>
   )
