@@ -115,7 +115,7 @@ const Reply = styled.div`
   }
 `
 
-function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, messageList, parentMessageId }) {
+function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, messageList }) {
   const [ comment, setComment ] = useState("");
   const [ openReply, setOpenReply ] = useState(false);
   const [ showComment, setShowComment ] = useState(false);
@@ -132,9 +132,8 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         commentNumber++;
       }
     })
-
     setCommentNumber(commentNumber)
-  }, [commentNumber])
+  }, [messageList])
   
   const replyHandler = () => {
     setOpenReply(prev => !prev)
@@ -160,10 +159,10 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     Axios.post('/api/visitors/saveVisitors', body)
       .then(res => {
         if(res.data.success){
-          refreshMessage(res.data.result)
           setComment("");
+          refreshMessage(res.data.result);
           setOpenReply(false);
-          setComment(true);
+          setShowComment(true);
         } else {
           alert("방명록 작성에 실패했습니다.")
         }
@@ -183,21 +182,19 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
           {content}
         </MessageBody>
 
-        { isAuth && 
           <MessageFooter>
             <div>
+            { isAuth && 
               <div className="reply" onClick={replyHandler}> Reply</div>
+            }
               <div className="like">Like</div>
-              {commentNumber > 0 &&
-                <div className="comment" onClick={showCommentHandler}>
-                  Comment{' '}
-                  <span className="comment-count">{commentNumber}</span>
-                </div>
-              }
+              <div className="comment" onClick={showCommentHandler}>
+                Comment{' '}
+                <span className="comment-count">{commentNumber}</span>
+              </div>
             </div>
             <Heart />
           </MessageFooter>
-        }
 
         { openReply &&
           <Reply>

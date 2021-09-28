@@ -41,7 +41,7 @@ function VisitorsPage() {
       .then(res => {
         if(res.data.success){
           setLoading(false);
-          setMessages(res.data.messages.reverse())
+          setMessages(res.data.messages)
         } else {
           alert('방명록을 불러오는 데 실패했습니다. ')
         }
@@ -49,8 +49,8 @@ function VisitorsPage() {
   }, [])
 
   const refreshMessage = (newMessage) => {
-    let newList = messages.reverse().concat(newMessage);
-    setMessages(newList.reverse());
+    let newList = messages.concat(newMessage);
+    setMessages(newList);
   }
 
   const countFor = () => {
