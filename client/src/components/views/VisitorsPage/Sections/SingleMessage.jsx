@@ -4,13 +4,8 @@ import styled from 'styled-components'
 import TextInput from 'utils/TextInput'
 import ReplyMessage from './ReplyMessage'
 
-import moment from 'moment'
 import Axios from 'axios';
 import { Heart, Send } from 'react-feather';
-
-const MessageForm = styled.div`
-  // margin-bottom: 0.8rem;
-`
 
 const MessageBody = styled.div`
   font-size: 0.8rem;
@@ -136,10 +131,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   }, [messageList])
   
   const replyHandler = () => {
+    if(showComment) setShowComment(false);
     setOpenReply(prev => !prev)
   }
-
+  
   const showCommentHandler = () => {
+    if(openReply) setOpenReply(false);
     setShowComment(prev => !prev);
   }
 
@@ -170,64 +167,67 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   }
 
   return (
-      <MessageForm>
-        <MessageHeader>
-          <h5>
-            {writer ? `💌 ${writer.name}` : `🥷🏼 ${temporaryUser}`}
-          </h5>
-          <div className="timestamp">{changeTimeFormat(createdAt)}</div>
-        </MessageHeader>
+    <div>
+      <MessageHeader>
+        <h5>
+          {writer ? `💌 ${writer.name}` : `🥷🏼 ${temporaryUser}`}
+        </h5>
+        <div className="timestamp">{changeTimeFormat(createdAt)}</div>
+      </MessageHeader>
 
-        <MessageBody>
-          {content}
-        </MessageBody>
+      <MessageBody>
+        {content}
+      </MessageBody>
 
-          <MessageFooter>
-            <div>
-            { isAuth && 
-              <div className="reply" onClick={replyHandler}> Reply</div>
-            }
-              <div className="like">Like</div>
-              <div className="comment" onClick={showCommentHandler}>
-                Comment{' '}
-                <span className="comment-count">{commentNumber}</span>
-              </div>
-            </div>
-            <Heart />
-          </MessageFooter>
-
-        { openReply &&
-          <Reply>
-            <div className="avatar">
-              <div>	&nbsp;👩🏻</div>
-            </div>
-            <div className="reply-input">
-              <TextInput
-                value={comment}
-                onChange={onChangeComment}
-                placeholder="댓글을 남겨주세요."
-                maxLength="200"
-                style={{ marginBottom: 0 }}
-              />
-              <button 
-                className="send-btn" 
-                type="submit"
-                onClick={onSubmitComment} 
-              >
-                <Send />
-              </button>
-            </div>
-          </Reply>
+      <MessageFooter>
+        <div>
+        { isAuth && 
+          <div className="reply" onClick={replyHandler}> Reply</div>
         }
+          <div className="like">Like</div>
 
-        { !openReply && showComment &&
-          <ReplyMessage
-            messageList={messageList}
-            parentMessageId={message._id}
-            changeTimeFormat={changeTimeFormat}
-          />
+        {commentNumber !== 0 &&
+          <div className="comment" onClick={showCommentHandler}>
+            Comment{' '}
+            <span className="comment-count">{commentNumber}</span>
+          </div>
         }
-      </MessageForm>
+        </div>
+        <Heart />
+      </MessageFooter>
+
+      { openReply &&
+        <Reply>
+          <div className="avatar">
+            <div>	&nbsp;👩🏻</div>
+          </div>
+          <div className="reply-input">
+            <TextInput
+              value={comment}
+              onChange={onChangeComment}
+              placeholder="댓글을 남겨주세요."
+              maxLength="200"
+              style={{ marginBottom: 0 }}
+            />
+            <button 
+              className="send-btn" 
+              type="submit"
+              onClick={onSubmitComment} 
+            >
+              <Send />
+            </button>
+          </div>
+        </Reply>
+      }
+
+      { !openReply && showComment &&
+        <ReplyMessage
+          messageList={messageList}
+          parentMessageId={message._id}
+          changeTimeFormat={changeTimeFormat}
+        />
+      }
+    </div>
   )
 }
 
