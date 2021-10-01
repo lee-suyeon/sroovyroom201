@@ -131,7 +131,6 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   }, [messageList])
   
   const replyHandler = () => {
-    if(showComment) setShowComment(false);
     setOpenReply(prev => !prev)
   }
   
@@ -196,6 +195,14 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         <Heart />
       </MessageFooter>
 
+      { showComment &&
+        <ReplyMessage
+          messageList={messageList}
+          parentMessageId={message._id}
+          changeTimeFormat={changeTimeFormat}
+        />
+      }
+
       { openReply &&
         <Reply>
           <div className="avatar">
@@ -218,14 +225,6 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
             </button>
           </div>
         </Reply>
-      }
-
-      { !openReply && showComment &&
-        <ReplyMessage
-          messageList={messageList}
-          parentMessageId={message._id}
-          changeTimeFormat={changeTimeFormat}
-        />
       }
     </div>
   )
