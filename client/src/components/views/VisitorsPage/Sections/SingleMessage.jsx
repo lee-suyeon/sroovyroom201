@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import TextInput from 'utils/TextInput'
 import ReplyMessage from './ReplyMessage'
@@ -35,12 +35,8 @@ const MessageFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.mainColor };
-
-  & > div {
-    display: flex;
-    font-size: 0.8rem;
-  }
 
   .reply, .like {
     margin-right: 0.5rem;
@@ -110,15 +106,43 @@ const Reply = styled.div`
   }
 `
 
+const Comment = styled.div`
+  display: flex;
+`
+
+const Likes = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > span {
+    margin-right: 0.3rem;
+  }
+
+  ${props =>
+    props.like &&
+    css`
+      & > svg {
+        fill: ${({ theme }) => theme.mainColor };
+      }
+    `}
+`
+
 function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, messageList }) {
   const [ comment, setComment ] = useState("");
   const [ openReply, setOpenReply ] = useState(false);
   const [ showComment, setShowComment ] = useState(false);
-  const [ commentNumber, setCommentNumber ] = useState(0)
+  const [ commentNumber, setCommentNumber ] = useState(0);
+  const [ likes, setLikes ] = useState(false);
+  const [ countLikes, setCountLikes ] = useState(0);
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
+  const variable = {
+    userId: userData._id,
+    messageId: message._id
+  }
 
+  // count comment
   useEffect(() => {
     let commentNumber = 0;
 
@@ -129,6 +153,23 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     })
     setCommentNumber(commentNumber)
   }, [messageList])
+
+  // getLike
+  useEffect(() => {
+    Axios.post('/api/like/getLikes', variable)
+      .then(res => {
+        if(res.data.success) {
+          setCountLikes(res.data.likes.length); // number of likes
+          res.data.likes.map(like => {
+            if(like.messageId === message._id) {
+              setLikes(true);
+            }
+          })
+        } else {
+          console.error('failed get like')
+        }
+      })
+  }, [])
   
   const replyHandler = () => {
     setOpenReply(prev => !prev)
@@ -165,6 +206,30 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       })
   }
 
+  const onLike = () => {
+    if(likes) { // unlike
+      Axios.post('/api/like/unLike', variable)
+      .then(res => {
+        if(res.data.success) {
+          setLikes(false);
+          setCountLikes(countLikes - 1);
+        } else {
+          console.error('failed unlike')
+        }
+      })
+    } else { // uplike 
+      Axios.post('/api/like/upLike', variable)
+      .then(res => {
+        if(res.data.success) {
+          setLikes(true);
+          setCountLikes(countLikes + 1);
+        } else {
+          console.error('failed like')
+        }
+      })
+    }
+  }
+
   return (
     <div>
       <MessageHeader>
@@ -179,20 +244,19 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       </MessageBody>
 
       <MessageFooter>
-        <div>
+        <Comment>
         { isAuth && 
           <div className="reply" onClick={replyHandler}> Reply</div>
         }
-          <div className="like">Like</div>
-
-        {commentNumber !== 0 &&
           <div className="comment" onClick={showCommentHandler}>
             Comment{' '}
-            <span className="comment-count">{commentNumber}</span>
+            {commentNumber !== 0 && <span className="comment-count">{commentNumber}</span>}
           </div>
-        }
-        </div>
-        <Heart />
+        </Comment>
+        <Likes onClick={onLike} like={likes}>
+          <span>{countLikes}</span>
+          <Heart />
+        </Likes>
       </MessageFooter>
 
       { showComment &&
