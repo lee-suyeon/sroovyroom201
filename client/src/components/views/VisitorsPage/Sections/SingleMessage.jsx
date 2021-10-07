@@ -161,7 +161,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         if(res.data.success) {
           setCountLikes(res.data.likes.length); // number of likes
           res.data.likes.map(like => {
-            if(like.messageId === message._id) {
+            if(like.userId === userData._id) {
               setLikes(true);
             }
           })
@@ -207,26 +207,36 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   }
 
   const onLike = () => {
-    if(likes) { // unlike
-      Axios.post('/api/like/unLike', variable)
-      .then(res => {
-        if(res.data.success) {
-          setLikes(false);
-          setCountLikes(countLikes - 1);
-        } else {
-          console.error('failed unlike')
-        }
-      })
-    } else { // uplike 
-      Axios.post('/api/like/upLike', variable)
-      .then(res => {
-        if(res.data.success) {
-          setLikes(true);
-          setCountLikes(countLikes + 1);
-        } else {
-          console.error('failed like')
-        }
-      })
+    if(!isAuth) {
+      if(likes) {
+        setLikes(false);
+        setCountLikes(countLikes - 1);
+      } else {
+        setLikes(true);
+        setCountLikes(countLikes + 1);
+      }
+    } else {
+      if(likes) { // unlike
+        Axios.post('/api/like/unLike', variable)
+        .then(res => {
+          if(res.data.success) {
+            setLikes(false);
+            setCountLikes(countLikes - 1);
+          } else {
+            console.error('failed unlike')
+          }
+        })
+      } else { // uplike 
+        Axios.post('/api/like/upLike', variable)
+        .then(res => {
+          if(res.data.success) {
+            setLikes(true);
+            setCountLikes(countLikes + 1);
+          } else {
+            console.error('failed like')
+          }
+        })
+      }
     }
   }
 
