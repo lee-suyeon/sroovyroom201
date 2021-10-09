@@ -3,3 +3,4 @@
 yarn-error.log
 dev.js
 client/debug.log
+*.swp
