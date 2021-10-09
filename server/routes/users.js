@@ -13,6 +13,7 @@ router.get('/auth', auth, (req, res) => {
     isAuth: true,
     name: req.user.name,
     email: req.user.email,
+    avatar: req.user.avatar,
     role: req.user.role,
     image: req.user.image,
   })

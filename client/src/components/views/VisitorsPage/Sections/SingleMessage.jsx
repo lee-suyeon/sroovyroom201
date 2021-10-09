@@ -6,6 +6,7 @@ import ReplyMessage from './ReplyMessage'
 
 import Axios from 'axios';
 import { Heart, Send } from 'react-feather';
+import { avatarList } from 'components/views/RegisterPage/selectList'
 
 const MessageBody = styled.div`
   font-size: 0.8rem;
@@ -69,9 +70,9 @@ const Reply = styled.div`
   & .avatar > div {
     width: 35px;
     height: 35px;
-    background: ${({ theme }) => theme.mainColor };
+    background: ${({ theme }) => theme.lightGreen };
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,9 +135,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   const [ commentNumber, setCommentNumber ] = useState(0);
   const [ likes, setLikes ] = useState(false);
   const [ countLikes, setCountLikes ] = useState(0);
+  const [ avatar, setAvatar ] = useState("👻");
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
+  const userAvatar = userData && userData.avatar;
+
   const variable = {
     userId: userData._id,
     messageId: message._id
@@ -169,6 +173,8 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
           console.error('failed get like')
         }
       })
+
+      renderAvatar();
   }, [])
   
   const replyHandler = () => {
@@ -240,6 +246,13 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     }
   }
 
+  const renderAvatar = () => {
+    if(userAvatar) { 
+      let findEmoji = avatarList.find(list => list.idx === userAvatar);
+      setAvatar(findEmoji.emoji);
+    }
+  }
+
   return (
     <div>
       <MessageHeader>
@@ -280,7 +293,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       { openReply &&
         <Reply>
           <div className="avatar">
-            <div>	&nbsp;👩🏻</div>
+            <div>&nbsp;{avatar}</div>
           </div>
           <div className="reply-input">
             <TextInput
