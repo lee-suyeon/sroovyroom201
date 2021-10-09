@@ -17,6 +17,9 @@ const userSchema = mongoose.Schema({
     type: String,
     maxlength: 100
   },
+  avatar: {
+    type: Number
+  },
   mbti: {
     type: String
   },

@@ -11,7 +11,7 @@ import SelectBox from 'utils/SelectBox';
 import PageContent from 'utils/PageContent';
 import Nav from 'utils/Nav'
 
-import mbtiList from './mbti'
+import { mbtiList, avatarList } from './selectList'
 
 const ContentPage = styled.div`
   display: flex;
@@ -32,6 +32,50 @@ const InputForm = styled.form`
   overflow: auto;
   padding: 0 1rem 3rem;
 `
+const AvatarSelect = styled.div`
+  margin-bottom: 2rem;
+
+  .title {
+    color: ${({ theme }) => theme.mainColor };
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 0.825rem;
+    color: #666;
+    margin-bottom: 1rem; 
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.lightGreen };
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+  }
+
+  .preview > span {
+    margin-bottom: 0.2rem;
+    margin-left: 0.1rem;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 23px;
+    grid-gap: 0.7rem;
+  }
+`
 
 function RegisterPage(props) {
 
@@ -43,6 +87,7 @@ function RegisterPage(props) {
     message: "",
   })
   const [ mbti, setMbti ] = useState(-1);
+  const [ avatar, setAvatar ] = useState(0);
   const { name, email, password, message } = inputs;
 
   const onChangeInput = (e) => {
@@ -57,6 +102,10 @@ function RegisterPage(props) {
     setMbti(e.target.value);
   }
 
+  const onChangeAvatart = (idx) => {
+    setAvatar(idx);
+  }
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
   
@@ -64,10 +113,10 @@ function RegisterPage(props) {
       email,
       name,
       password,
+      avatar,
       mbti,
       message,
     }
-
 
     dispatch(registerUser(body))
       .then(response => {
@@ -78,6 +127,11 @@ function RegisterPage(props) {
           alert('Failed to be friend');
         }
       });
+  }
+
+  const renderAvatar = () => {
+    let findEmoji = avatarList.find(list => list.idx === avatar);
+    return findEmoji && findEmoji.emoji;
   }
 
   const registerTitle = (
@@ -132,6 +186,23 @@ function RegisterPage(props) {
           value={password}
           onChange={onChangeInput}
         />
+        <AvatarSelect>
+          <div className="title">Avatar</div>
+          <p> 본인에게 가장 어울리는 아바타를 선택해주세요.</p>
+          <div className="avatar">
+            <div className="preview">
+              <span>{renderAvatar()}</span>
+            </div>
+            <ul>
+              {avatarList.map((list, idx) => 
+                <li 
+                  key={`avatar${idx}`}
+                  onClick={() => onChangeAvatart(list.idx)}
+                >{list.emoji}</li>
+              )}
+            </ul>
+          </div>
+        </AvatarSelect>
         <SelectBox
           label="MBTI"
           datas={mbtiList}

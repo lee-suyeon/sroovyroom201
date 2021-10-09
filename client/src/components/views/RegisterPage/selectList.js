@@ -1,4 +1,4 @@
-const mbtiList = [
+export const mbtiList = [
   { idx: 0, name: "모르겠어요.", desc: "" },
   { idx: 1, name: "ISTJ", desc: "청렴결백 논리주의자" },
   { idx: 2, name: "ISFJ", desc: "용감한 수호자" },
@@ -16,6 +16,17 @@ const mbtiList = [
   { idx: 14, name: "ESFP", desc: "자유로운 영혼의 연예인" },
   { idx: 15, name: "ENFP", desc: "재기발랄한 활동가" },
   { idx: 16, name: "ENTP", desc: "논쟁을 즐기는 변론가" },
-]
+];
 
-export default mbtiList;
+export const avatarList = [
+  { idx: 0, emoji: "👩🏻"},
+  { idx: 1, emoji: "🧔🏻"},
+  { idx: 2, emoji: "🧑🏻‍🦰"},
+  { idx: 3, emoji: "👱🏻‍♀️"},
+  { idx: 4, emoji: "👱🏻"},
+  { idx: 5, emoji: "🧑🏽‍💻"},
+  { idx: 6, emoji: "🧛🏻"},
+  { idx: 7, emoji: "🧚🏻‍♀️"},
+  { idx: 8, emoji: "🧞‍♂️"},
+  { idx: 9, emoji: "🧝🏻‍♀️"},
+]
