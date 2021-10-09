@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Link, withRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux';
@@ -64,7 +64,6 @@ const HomeIcon = styled.div`
 `
 
 function MenuPage(props) {
-
   const userData = useSelector(state => state.user.userData);
 
   const logoutHandler = () => {
@@ -76,23 +75,21 @@ function MenuPage(props) {
       }
     });
   };
-  
-  const parseTemporaryUser = () => {
-    try {
-      let userName = JSON.parse(localStorage.getItem('temporaryUser'));
-      return userName;
-    } catch (e) {
-      let neighbor = "Guest";
-      return neighbor;
-    }
-  }
 
-  let temporaryUser = parseTemporaryUser();
+  const userFor = () => {
+    let user = "";
+    if(userData) {
+      user = userData.name;
+    } else {
+      user = JSON.parse(localStorage.getItem('temporaryUser'));
+    }
+    return user ? user : "Guest";
+  }
 
   const welcome = (
     <React.Fragment>
       <p style={{ marginBottom: ".2rem"}}>
-        {temporaryUser}님, 웰컴 🙋🏻‍♀️
+        {userFor()}님, 웰컴 🙋🏻‍♀️
       </p>
       <TextLogo size="large"/>을
       <p>둘러보세요!</p>
