@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Axios from 'axios';
@@ -69,7 +69,11 @@ const NoDataMessage = styled.div`
   }
 `
 
-function Message({ messageList, refreshMessage, userData }) {
+function Message({ 
+  messageList,
+  refreshMessage,
+  userData
+}) {
   const [ guestComment, setGuestComment ] = useState("");
 
   const commentHandler = e => {
@@ -127,7 +131,7 @@ function Message({ messageList, refreshMessage, userData }) {
 
   return (
     <div style={{ marginBottom: '5rem' }}>
-      {messageList.map(( message, index ) => (
+      {messageList.slice(0).reverse().map(( message, index ) => (
         // 대댓글이 아닌 메세지만 출력 - 첫번째 depth
         (!message.responseTo &&
           <MessageWrapper key={`message${index}`} >
@@ -158,6 +162,7 @@ function Message({ messageList, refreshMessage, userData }) {
           <Send />
         </button>
       </VisitorsForm>
+      {/* <div ref={messageEndRef}/> */}
     </div>
   )
 }
