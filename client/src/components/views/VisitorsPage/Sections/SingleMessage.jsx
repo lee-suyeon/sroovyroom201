@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import TextInput from 'utils/TextInput'
+import Avatar from 'utils/Avatar'
 import ReplyMessage from './ReplyMessage'
 
 import Axios from 'axios';
-import { Heart, Send } from 'react-feather';
+import { Heart, CornerDownLeft } from 'react-feather';
 import { avatarList } from 'components/views/RegisterPage/selectList'
+
+const Message = styled.div`
+  font-size: 0.8rem;
+`
 
 const MessageBody = styled.div`
   font-size: 0.8rem;
   line-height: 1.6;
-  margin-bottom: 1rem;
 `
 
 const MessageHeader = styled.div`
@@ -36,7 +40,7 @@ const MessageFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  margin-top: 1rem;
   color: ${({ theme }) => theme.mainColor };
 
   .reply, .like {
@@ -47,7 +51,7 @@ const MessageFooter = styled.div`
     color: ${({ theme }) => theme.white };
     display: inline-block;
     background: ${({ theme }) => theme.mainColor };
-    padding: 0 0.15rem 0.1rem;
+    padding: 0.05rem 0.15rem 0.1rem;
     border-radius: 2px;
     font-size: 0.6rem;
     font-weight: 500;
@@ -61,10 +65,10 @@ const MessageFooter = styled.div`
 const Reply = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
 
   & .avatar {
-    margin-right: 0.5rem;
+    margin-right: 0.7rem;
   }
   
   & .avatar > div {
@@ -102,7 +106,6 @@ const Reply = styled.div`
 
     svg {
       width: 18px;
-      stroke-width: 1.5px;
     }
   }
 `
@@ -135,7 +138,6 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   const [ commentNumber, setCommentNumber ] = useState(0);
   const [ likes, setLikes ] = useState(false);
   const [ countLikes, setCountLikes ] = useState(0);
-  const [ avatar, setAvatar ] = useState("👻");
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
@@ -172,9 +174,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         } else {
           console.error('failed get like')
         }
-      })
-
-      renderAvatar();
+      });
   }, [])
   
   const replyHandler = () => {
@@ -246,15 +246,8 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     }
   }
 
-  const renderAvatar = () => {
-    if(userAvatar) { 
-      let findEmoji = avatarList.find(list => list.idx === userAvatar);
-      setAvatar(findEmoji.emoji);
-    }
-  }
-
   return (
-    <div>
+    <Message>
       <MessageHeader>
         <h5>
           {writer ? `💌 ${writer.name}` : `🥷🏼 ${temporaryUser}`}
@@ -271,10 +264,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         { isAuth && 
           <div className="reply" onClick={replyHandler}> Reply</div>
         }
+        { commentNumber !== 0 &&
           <div className="comment" onClick={showCommentHandler}>
             Comment{' '}
-            {commentNumber !== 0 && <span className="comment-count">{commentNumber}</span>}
+            <span className="comment-count">{commentNumber}</span>
           </div>
+        }
         </Comment>
         <Likes onClick={onLike} like={likes}>
           <span>{countLikes}</span>
@@ -286,6 +281,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
         <ReplyMessage
           messageList={messageList}
           parentMessageId={message._id}
+          avatar={userAvatar}
           changeTimeFormat={changeTimeFormat}
         />
       }
@@ -293,7 +289,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       { openReply &&
         <Reply>
           <div className="avatar">
-            <div>&nbsp;{avatar}</div>
+            <Avatar avatar={userAvatar}/>
           </div>
           <div className="reply-input">
             <TextInput
@@ -308,12 +304,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
               type="submit"
               onClick={onSubmitComment} 
             >
-              <Send />
+              <CornerDownLeft />
             </button>
           </div>
         </Reply>
       }
-    </div>
+    </Message>
   )
 }
 

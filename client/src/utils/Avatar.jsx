@@ -18,7 +18,7 @@ function Avatar({ avatar, ...rest}) {
   const findEmoji = avatarList.find(a => a.idx === avatar);
 
   return (
-    <div>{avatar ? findEmoji.emoji : "👻"}</div>
+    <div>&nbsp;{avatar ? findEmoji.emoji : "👻"}</div>
   )
 }
 

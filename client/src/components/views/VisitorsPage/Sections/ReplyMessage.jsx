@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Avatar from 'utils/Avatar'
 
 const Comment = styled.div`
   width: 100%;
@@ -28,34 +29,32 @@ const Comment = styled.div`
     font-size: 0.7rem;
     line-height: 1.6;
   }
-`
 
-const Avatar = styled.div`
-  position: relative;
-  width: 25px;
-  height: 25px;
-  background: ${({ theme }) => theme.mainColor };
-  border-radius: 50%;
-  padding: 0.8rem;
-  margin-right: 0.5rem;
+  & .avatar {
+    margin-right: 0.7rem;
 
-  & > div {
-    position: absolute;
-    top: 45%;
-    left: 58%;
-    transform: translate(-50%, -50%);
+    div {
+      width: 35px;
+      height: 35px;
+      background: ${({ theme }) => theme.mainColor };
+      border-radius: 50%;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `
 
-function ReplyMessage ({ messageList, parentMessageId, changeTimeFormat }) {
+function ReplyMessage ({ messageList, parentMessageId, avatar, changeTimeFormat }) {
   const renderReplyComment = (parentMessageId) => 
     messageList.map((message, idx) => {
       if(message.responseTo === parentMessageId) {
         return (
           <Comment key={`comment${idx}`}>
-            <Avatar>
-              <div>🧑🏻‍🦰</div>
-            </Avatar>
+            <div className="avatar">
+              <Avatar avatar={avatar}/>
+            </div>
             <div style={{ width: "100%" }}>
               <div className="reply">
                 <div className="writer">{message.writer.name}</div>
