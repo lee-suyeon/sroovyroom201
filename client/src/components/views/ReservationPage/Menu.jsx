@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Checkbox from 'utils/CheckBox';
+import { CheckBox } from 'utils';
 import { vegitableList, noodleList, mealList, eatOutList } from './menuList';
 
 const MenuWrapper = styled.div`
@@ -29,11 +29,11 @@ export const ShabuShabu = () => {
       <MenuWrapper>
         <SelectTitle>1. 샤브샤브를 선택해주세요. </SelectTitle>
         <MenuSelect>
-          <Checkbox 
+          <CheckBox 
             id="sukiyaki"
             name="스키야키"
           />
-          <Checkbox 
+          <CheckBox 
             id="nabe"
             name="밀푀유나베"
           />
@@ -44,11 +44,11 @@ export const ShabuShabu = () => {
       <MenuWrapper>
         <SelectTitle>2. 육수를 선택해주세요.</SelectTitle>
         <MenuSelect>
-          <Checkbox 
+          <CheckBox 
             id="basic"
             name="맑은육수"
           />
-          <Checkbox 
+          <CheckBox 
             id="spicy"
             name="얼큰육수"
           />
@@ -60,7 +60,7 @@ export const ShabuShabu = () => {
         <SelectTitle>3. 야채 5가지를 선택해주세요.</SelectTitle>
         <MenuSelect>
           {vegitableList.map(vegi => 
-            <Checkbox key={vegi.idx} id={vegi.idx} name={vegi.name} />
+            <CheckBox key={vegi.idx} id={vegi.idx} name={vegi.name} />
           )}
         </MenuSelect>
       </MenuWrapper>
@@ -70,7 +70,7 @@ export const ShabuShabu = () => {
         <SelectTitle>4. 면을 선택해주세요.</SelectTitle>
         <MenuSelect>
           {noodleList.map(noodle => 
-            <Checkbox key={noodle.idx} id={noodle.idx} name={noodle.name} />
+            <CheckBox key={noodle.idx} id={noodle.idx} name={noodle.name} />
           )}
         </MenuSelect>
       </MenuWrapper>
@@ -86,7 +86,7 @@ export const EatOut = () => {
         {eatOutList.map(eat =>
           <MenuList key={eat.idx}>
             <div className="menu-list">
-              <Checkbox id={eat.idx} name={`${eat.name} ${eat.type}`} />
+              <CheckBox id={eat.idx} name={`${eat.name} ${eat.type}`} />
             </div>
             <div className="info">
               <p className="desc">{eat.desc}</p>
@@ -118,7 +118,7 @@ export const SroovyMeal = () => {
         {mealList.map(meal =>
           <MenuList key={meal.idx}>
             <div className="menu-list">
-              <Checkbox id={meal.idx} name={meal.name} />
+              <CheckBox id={meal.idx} name={meal.name} />
               <div className="price">{meal.price}</div>
             </div>
             <p className="desc">{meal.desc}</p>

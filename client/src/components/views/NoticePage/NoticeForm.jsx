@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import TextInput from 'utils/TextInput'
-import { TextArea } from 'utils/TextInput'
+import { TextInput } from 'utils';
+import { TextArea } from 'utils/TextInput';
 
 function NoticeForm({ onChange, title, content }) {
   return(

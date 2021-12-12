@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Button from 'utils/Button';
-import TextLogo from 'utils/TextLogo';
-import TextInput from 'utils/TextInput';
 
+import { Button, TextLogo, TextInput } from 'utils';
 import { X } from 'react-feather';
 
 const Overlay = styled.div`

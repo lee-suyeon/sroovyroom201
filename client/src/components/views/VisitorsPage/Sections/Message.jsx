@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Axios from 'axios';
 import moment from 'moment';
 
-import TextInput from 'utils/TextInput';
-import TextLogo from 'utils/TextLogo';
+import { TextInput, TextLogo } from 'utils';
 import { Send, Meh } from 'react-feather';
-
 import SingleMessage from './SingleMessage'
 
 const VisitorsForm = styled.form`

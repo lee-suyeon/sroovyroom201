@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 
 import axios from 'axios';
 
-import Button from 'utils/Button';
-import PageContent from 'utils/PageContent';
-import TextLogo from 'utils/TextLogo';
-
+import { Button, PageContent, TextLogo } from 'utils'
 import { Home } from 'react-feather';
 
 const Menus = [

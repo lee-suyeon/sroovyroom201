@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { Key, HelpCircle, Heart, Delete } from 'react-feather';
-import TextLogo from 'utils/TextLogo'
-import Button from 'utils/Button'
-import { Modal } from 'utils/Modal'
+import { TextLogo, Button, Modal } from 'utils';
 
 const dial =  Array(9).fill().map((v, i) => i + 1);
 const defaultPassword = Array(4).fill().map(v => v);

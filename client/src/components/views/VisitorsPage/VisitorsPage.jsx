@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import styled from 'styled-components';
+import Axios from 'axios';
 
 import Message from './Sections/Message';
-import TextLogo from 'utils/TextLogo';
-import PageContent from 'utils/PageContent';
-import Nav from 'utils/Nav';
-import Loading from 'utils/Loading';
-
-import Axios from 'axios';
+import { TextLogo, PageContent, Nav, Loading } from 'utils'
 
 const GuestCount = styled.div`
   text-align: right;

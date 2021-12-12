@@ -3,11 +3,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import PageContent from 'utils/PageContent'
-import Button from 'utils/Button'
-import TextLogo from 'utils/TextLogo'
-
-import { Instagram } from 'react-feather';
+import { PageContent, Button, TextLogo } from 'utils'
 
 const FeedWrapper = styled.div`
   padding: 0.7rem;
@@ -49,7 +45,7 @@ const EndMessage = styled.div`
 
 const LOAD_COUNT = 6;
 
-function GalleryPage(props) {
+function GalleryPage() {
   const [ feeds, setFeeds ] = useState([]);
   const [ loadPost, setLoadPost ] = useState(LOAD_COUNT);
 

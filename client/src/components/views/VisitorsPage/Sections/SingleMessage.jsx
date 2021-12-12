@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-import TextInput from 'utils/TextInput'
-import Avatar from 'utils/Avatar'
-import ReplyMessage from './ReplyMessage'
-
 import Axios from 'axios';
+
+import ReplyMessage from './ReplyMessage'
+import { TextInput, Avatar } from 'utils';
 import { Heart, CornerDownLeft } from 'react-feather';
-import { avatarList } from 'components/views/RegisterPage/selectList'
 
 const Message = styled.div`
   font-size: 0.8rem;

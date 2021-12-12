@@ -3,7 +3,7 @@ import styled, { keyframes, css } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { Bell } from 'react-feather';
-import Modal from './Modal';
+import { Modal } from 'utils';
 
 const DoorFrame = styled.div`
   background: ${({ theme }) => theme.baseColor };

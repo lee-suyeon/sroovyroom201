@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import Avatar from 'utils/Avatar'
+import React from 'react';
+import styled from 'styled-components';
+import { Avatar } from 'utils';
 
 const Comment = styled.div`
   width: 100%;

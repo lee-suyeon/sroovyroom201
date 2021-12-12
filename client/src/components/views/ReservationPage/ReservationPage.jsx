@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Button from 'utils/Button';
-import CheckBox from 'utils/CheckBox';
-import PageContent from 'utils/PageContent';
-import SelectBox from 'utils/SelectBox';
+import { CheckBox, PageContent, SelectBox } from 'utils';
 import { ShabuShabu, EatOut, SroovyMeal } from './Menu';
-import Tabs, { TabPanel } from 'utils/Tabs';
 import { default as DatePicker }  from 'utils/Calendar';
-
 import { Calendar, Users, Clipboard } from 'react-feather';
 
 const ReservationForm = styled.div`

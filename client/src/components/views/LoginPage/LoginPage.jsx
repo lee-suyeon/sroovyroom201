@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import styled from 'styled-components';
 
+import styled from 'styled-components';
 import moment from 'moment';
 
 import { loginUser } from '_actions/user_action';
-
-import Button from 'utils/Button';
-import TextInput from 'utils/TextInput';
-import PageContent from 'utils/PageContent';
-import TextLogo from 'utils/TextLogo';
-
-import { Menu } from 'react-feather';
-
-import { PhoneCall, UserPlus } from 'react-feather';
+import { Button, TextInput, PageContent, TextLogo } from 'utils'
+import { Menu, PhoneCall, UserPlus } from 'react-feather';
 
 const ContentPage = styled.div`
   height: 100vh;

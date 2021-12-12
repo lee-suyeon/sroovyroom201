@@ -2,15 +2,9 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '_actions/user_action';
-
 import styled from 'styled-components';
-import Button from 'utils/Button';
-import TextInput from 'utils/TextInput';
-import TextLogo from 'utils/TextLogo';
-import SelectBox from 'utils/SelectBox';
-import PageContent from 'utils/PageContent';
-import Nav from 'utils/Nav'
 
+import { Button, TextInput, TextLogo, SelectBox, PageContent, Nav } from 'utils';
 import { mbtiList, avatarList } from './selectList'
 
 const ContentPage = styled.div`
@@ -78,7 +72,6 @@ const AvatarSelect = styled.div`
 `
 
 function RegisterPage(props) {
-
   const dispatch = useDispatch();
   const [ inputs, setInputs ] = useState({
     name: "",

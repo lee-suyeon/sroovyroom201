@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+
 import Axios from 'axios'
-
-import PageContent from 'utils/PageContent'
-import Nav from 'utils/Nav'
-import Button from 'utils/Button'
-import TextLogo from 'utils/TextLogo'
-
-import NoticeForm from './NoticeForm';
-
-import { Hash, X, Delete, Edit, Trash2, Edit3 } from 'react-feather';
 import moment from 'moment';
+
+import { PageContent, Nav, Button, TextLogo } from 'utils'
+import NoticeForm from './NoticeForm';
+import { Hash, X, Delete, Edit, Trash2, Edit3 } from 'react-feather';
 
 const NoticeWrapper = styled.div`
 
