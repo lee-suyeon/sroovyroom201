@@ -18,7 +18,7 @@ const Overlay = styled.div`
   `
   
 const ModalWrapper = styled.div`
-  width: 60%;
+  width: 240px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,19 +41,26 @@ const ModalHeader = styled.div`
 `
 
 const ModalBody = styled.div`
-  height: 150px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem 2rem;
+  width: 100%;
+  font-size: 0.9rem;
 
-  p {
+  & > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.8rem 1.5rem;
+  }
+
+  & p {
     margin-bottom: 0.5rem;
   }
 
   input {
-    text-align: center;
+    width: 100%;
+    font-size: 0.9rem;
+    height: 2rem;
+    margin-bottom: 0;
   }
 `
 
@@ -88,29 +95,30 @@ function Modal({ toggleModal, openTheDoor }) {
           <X onClick={toggleModal}/>
         </ModalHeader>
         <ModalBody>
-          <p>누...누구세요? 🙊</p>
-          <form 
-            style={{ textAlign: "center" }}
-            onKeyDown={handleKeyDown}
-            >
-            <TextInput 
-              type="text"
-              maxLength="10"
-              placeholder="이름을 입력해주세요"
-              value={name}
-              onChange={onChangeName}
-              style={{ width: '90%' }}
-            />
-            <Button
-              fullWidth
-              size="small"
-              color={name ? "mainColor" : "lightGreen"}
-              disabled={!name ? true : false}
-              onClick={() => enterTheRoom(name)}
-            >
-              들어가기
-            </Button>
-          </form>
+          <div>
+            <p>누...누구세요? 정체를 밝혀라🕵🏻‍♀️</p>
+            <form 
+              style={{ textAlign: "center" }}
+              onKeyDown={handleKeyDown}
+              >
+              <TextInput 
+                type="text"
+                maxLength="10"
+                placeholder="이름을 입력해주세요"
+                value={name}
+                onChange={onChangeName}
+              />
+            </form>
+          </div>
+          <Button
+            fullWidth
+            size="small"
+            color={name ? "mainColor" : "lightGreen"}
+            disabled={!name ? true : false}
+            onClick={() => enterTheRoom(name)}
+          >
+            들어가기
+          </Button>
         </ModalBody>
       </ModalWrapper>
     </Overlay>

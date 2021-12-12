@@ -3,11 +3,11 @@ import styled, { keyframes, css } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { Bell } from 'react-feather';
-import { Modal } from 'utils';
+import Modal from './Modal';
 
 const DoorFrame = styled.div`
   background: ${({ theme }) => theme.baseColor };
-  border: 1.5rem solid ${({ theme }) => theme.mainColor };
+  border: 1.2rem solid ${({ theme }) => theme.mainColor };
   border-bottom: none;
   width: 100vw;
   height: 100vh;
@@ -82,18 +82,18 @@ const Door = styled.div`
 
 const Handle = styled.div`
   position: absolute;
-  top: 55%;
+  top: 53%;
   right: 1rem;
   transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background-color: #fff;
 
   &::after {
     content: "";
-    width: 70px;
-    height: 10px;
+    width: 66px;
+    height: 9px;
     border-radius: 5px;
     background-color: #fff;
     position: absolute;
