@@ -40,10 +40,6 @@ const colorStyle = css`
 `
 
 const StyledButton = styled.button`
-  /* 공통 */
-  // display: inline-flex;
-  // justify-content: center;
-  // align-items: center;
   outline: none;
   border: none;
   color: #fff;
@@ -51,13 +47,18 @@ const StyledButton = styled.button`
   cursor: pointer;
   padding: 0 1rem;
   transition: 0.2s;
-  position: absolute;
-  left: 0; bottom: 0;
   
   ${props =>
     props.fullWidth &&
     css`
       width: 100%;
+    `}
+
+  ${props =>
+    props.float &&
+    css`
+      position: absolute;
+      left: 0; bottom: 0;
     `}
 
   ${props =>
@@ -77,12 +78,12 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button({ children, color, disabled, ...rest }) {
-  console.log()
+function Button({ children, color, disabled, float, ...rest }) {
   return (
   <StyledButton 
     color={color}
     disabled={disabled}
+    float={float}
     {...rest}
   >
     {children}
