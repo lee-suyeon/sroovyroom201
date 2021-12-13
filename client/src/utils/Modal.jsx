@@ -43,7 +43,6 @@ const Header = styled.div`
 `
 
 const Content = styled.div`
-  height: 150px;
   position: relative;
   text-align: center;
   padding: 1.5rem;

@@ -2,13 +2,8 @@ import React, { useState, useCallback } from 'react'
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { Key, HelpCircle, Heart, Delete } from 'react-feather';
+import { Key, HelpCircle, Delete } from 'react-feather';
 import { TextLogo, Button, Modal } from 'utils';
-
-const dial =  Array(9).fill().map((v, i) => i + 1);
-const defaultPassword = Array(4).fill().map(v => v);
-
-const PASSWORD = '1234';
 
 const Layout = styled.div`
   padding: 2rem;
@@ -30,9 +25,14 @@ const Guide = styled.div`
   font-weight: 500;
   line-height: 1.5;
 
+  span {
+    font-size: 0.8rem;
+    color: ${({ theme }) => theme.lightGreen };
+  }
   svg {
-    margin: 0 auto;
-    display: block;
+    vertical-align: middle;
+    width: 14px;
+    margin-right: 0.2rem;
   }
 `
 
@@ -53,13 +53,12 @@ const DialNumber = styled.div`
     cursor: pointer;
   }
 
-  $ > .number {
+  & > .number {
     transition: 0.3s;
   }
 
-  & > .number:hover {
-    background: ${({ theme }) => theme.mainColor };
-    color: ${({ theme }) => theme.baseColor };
+  & .clover {
+    position: relative;
   }
 `
 
@@ -72,23 +71,22 @@ const HelpWrapper = styled.div`
 
 const HelpMessage = styled.div`
   position: relative;
+`
 
-  & .message {
-    position: absolute;
-    top: -0.6rem;
-    right: 2rem;
-    width: 250px;
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.825rem;
-    line-height: 1.6;
-    background: #e2e8e4;
-    color: ${({ theme }) => theme.textColor };
-    border-radius: 3px;
+const BubbleMessage = styled.div`
+  position: absolute;
+  top: -0.5rem;
+  right: 2.2rem;
+  width: 200px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.825rem;
+  line-height: 1.6;
+  background: #e2e8e4;
+  color: ${({ theme }) => theme.textColor };
+  border-radius: 3px;
 
-  }
-
-  & .message::before {
+  &::before {
     content: "";
     position: absolute;
     top: 1rem;
@@ -98,17 +96,6 @@ const HelpMessage = styled.div`
     background: #e2e8e4;
     transform: rotate(45deg);
   }
-`
-
-const Alohomora = styled.div`
-  position: absolute;
-  bottom: 8rem;
-  right: -2.5rem;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: ${({ theme }) => theme.mainColor };
-  opacity: 0.08;
-  transform: rotate(270deg);
 `
 
 const NumberCell = styled.div`
@@ -135,10 +122,20 @@ const NumberCell = styled.div`
   }
 `
 
+const dial =  Array(9).fill().map((v, i) => i + 1);
+const defaultPassword = Array(4).fill().map(v => v);
+const generatePassword = () => {
+  let result = [];
+  for(var i = 0; i < 4; i++){
+    result.push(Math.floor(Math.random() * dial.length));
+  }
+  return result;
+}
+const PASSWORD = generatePassword();
+
 function DoorLock( props ) {
   const [ numbers, setNumbers ] = useState(defaultPassword);
   const [ showMessage, setShowMessage ] = useState(false);
-  const [ heart, setHeart ] = useState(false);
   const [ showWelcome, setShowWelcome ] = useState(false);
 
   const onClickDial = (dial) => {
@@ -160,23 +157,16 @@ function DoorLock( props ) {
     setNumbers(inputNumbers)
   }
 
-  const onClickAlohomora = () => {
-    setShowWelcome(true);
-    // props.history.push('/menu');
-  }
-
   const onClickHelpCircle = useCallback(() => {
     setShowMessage(prev => !prev);
 
     setTimeout(() => {
       setShowMessage(false);
-    }, 3000)
+    }, 2000)
   },[]);
 
   const onClickEnter = (pwd) => {
-    let arrToStr = pwd.join('');
-
-    if(PASSWORD === arrToStr) {
+    if(PASSWORD.join('') === pwd.join('')) {
       setShowWelcome(true);
     } else {
       alert('틀렸습니다. 다시 한번 입력해주세요. ')
@@ -184,9 +174,12 @@ function DoorLock( props ) {
     }
   }
 
-  const onClickHeart = () => {
-    setHeart(prev => !prev)
-  }
+  const onClickClover = useCallback(() => {
+    setNumbers(PASSWORD);
+    setTimeout(() => {
+      setNumbers(defaultPassword);
+    }, 100)
+  }, [numbers])
 
   const onClickConfirm = () => {
     setShowWelcome(false);
@@ -199,12 +192,11 @@ function DoorLock( props ) {
         <Key />
         <HelpMessage>
           <HelpCircle onClick={onClickHelpCircle}/>
-        {showMessage &&
-          <div className="message">
-            착한 사람 눈에는 문을 여는 주문이 보여요! <br />
-            Hint: ⚡️🦉🪶🔮
-          </div>
-        }
+          {showMessage &&
+            <BubbleMessage>
+              행운을 빌어요! Good Luck 🍀
+            </BubbleMessage>
+          }
         </HelpMessage>
         </HelpWrapper>
 
@@ -212,8 +204,7 @@ function DoorLock( props ) {
         <Guide>
           <TextLogo style={{ marginBottom: 0 }}/>에 <br />
           입장하려면 비밀번호가 필요해요. <br />
-          문을 여는 주문을 알고 있다면 <br />
-          비밀번호는 필요 없어요.
+          <span>🧚🏻 진짜 모르겠으면 <HelpCircle />버튼을 눌러보세요.</span>
         </Guide>
 
         <div style={{ display: "flex", marginBottom: '1rem' }}>
@@ -230,22 +221,19 @@ function DoorLock( props ) {
               onClick={() => onClickDial(d)}
               >{d}</div>
           ))}
-          <div onClick={onClickHeart}>{
-            heart ?
-            "❤️" : 
-            <Heart />
-          }</div>
+          <div onClick={onClickClover}>🍀</div>
           <div onClick={() => onClickDial(0)}>0</div>
           <div onClick={() => onClickDial("delete")}><Delete /></div>
         </DialNumber>
 
-        <Button fullWidth onClick={() => onClickEnter(numbers)}>들어가기</Button>
-
+        <Button 
+          fullWidth 
+          float 
+          onClick={() => onClickEnter(numbers)}
+        >
+          들어가기
+        </Button>
       </DoorLockWrapper>
-
-      <Alohomora onClick={onClickAlohomora}>
-        Alohomora
-      </Alohomora>
       
       {showWelcome &&
         <Modal onClose={onClickConfirm}>
