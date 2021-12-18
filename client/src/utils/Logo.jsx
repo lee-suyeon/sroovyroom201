@@ -11,7 +11,7 @@ const sizes = {
   medium: {
     width: '50px',
     height: '50px',
-    fontSize: '1.25rem',
+    fontSize: '1.1rem',
     marginBottom: '1.2rem'
   },
   small: {
@@ -64,8 +64,8 @@ const MainLogo = styled.div`
     ${props =>
       props.size === "medium" &&
       css`
-        top: 0;
-        left: 0;
+        top: 8px;
+        left: 12px;
       `}
     ${props =>
       props.size === "small" &&
@@ -80,14 +80,14 @@ const MainLogo = styled.div`
     ${props =>
       props.size === "large" &&
       css`
-        right: 18px;
-        bottom: 12px;
+        right: 16px;
+        bottom: 10px;
       `}
     ${props =>
       props.size === "medium" &&
       css`
-        top: 0;
-        left: 0;
+        right: 12px;
+        bottom: 8px;
       `}
     ${props =>
       props.size === "small" &&

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import { Link } from 'react-router-dom'
 import { X } from 'react-feather';
@@ -19,6 +19,15 @@ const SideNavWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 1.5rem;
+  transition: 0.2s;
+
+  &.show {
+    right: 0;
+  }
+
+  &.hide {
+    right: -80%;
+  }
 
   svg {
     color: ${({ theme }) => theme.white };
@@ -63,10 +72,10 @@ const menuList = [
   { id: 4, name: 'Gallery', path: '/gallery'},
 ]
 
-function SideNav () {
+function SideNav ({ visible, toggleSideNav }) {
   return (
-    <SideNavWrapper>
-      <X />
+    <SideNavWrapper className={visible ? "show" : "hide"}>
+      <X onClick={toggleSideNav}/>
       <div>
         <Logo size="large" color="white" />
         <MenuList>
