@@ -33,8 +33,8 @@ const MainLogo = styled.div`
   position: relative;
   border-radius: 50%;
   font-weight: bold;
-  color: #fff;
-  background-color: ${props => props.theme.mainColor};
+  color: ${({ theme }) => theme.white };
+  background-color: ${({ theme }) => theme.mainColor };
 
   /* size*/
   ${sizeStyle}
@@ -46,7 +46,7 @@ const MainLogo = styled.div`
     transform: translate(-50%, -50%) rotate(45deg);
     width: 1.5px;
     height: 80%;
-    background: #fff;
+    background: ${({ theme }) => theme.white };
   }
 
   span {
@@ -99,10 +99,10 @@ const MainLogo = styled.div`
   }
 `
 
-function Logo({ size, ...rest }) {
+function Logo({ size, color }) {
   return (
-    <MainLogo size={size} >
-      <span className="sroovy" >S</span>
+    <MainLogo className="logo" size={size} >
+      <span className="sroovy">S</span>
       <span className="room">R</span>
     </MainLogo>
   )
