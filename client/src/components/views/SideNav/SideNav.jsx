@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom'
-import { X } from 'react-feather';
+import { Menu, X} from 'react-feather';
 
 import { Logo } from 'utils'
+
+import { toggleSideNav } from '_actions/menu_action';
+
+const NavIcon = styled.div`
+  position: absolute;
+  top: 2.5rem;
+  right: 2rem;
+  color: ${({ theme }) => theme.mainColor };
+`
 
 const SideNavWrapper = styled.div`
   width: 80%;
@@ -72,26 +82,38 @@ const menuList = [
   { id: 4, name: 'Gallery', path: '/gallery'},
 ]
 
-function SideNav ({ visible, toggleSideNav }) {
+function SideNav () {
+  const visible = useSelector(state => state.menu.showSideNav)
+  const dispatch = useDispatch();
+
+  const onClickSideNav = () => {
+    dispatch(toggleSideNav());
+  }
+
   return (
-    <SideNavWrapper className={visible ? "show" : "hide"}>
-      <X onClick={toggleSideNav}/>
-      <div>
-        <Logo size="large" color="white" />
-        <MenuList>
-          {menuList.map(list =>
-            <Link to={list.path} key={`menu${list.id}`}>
-              <li>{list.name}</li>
-            </Link> 
-          )}
-        </MenuList>
-      </div>
-      <Footer>
-        <span>Sign up</span>
-        <span> | </span>
-        <span>Sign in</span>
-      </Footer>
-    </SideNavWrapper>
+    <React.Fragment>
+      <NavIcon className="nav-icon" onClick={onClickSideNav}>
+        <Menu />
+      </NavIcon>
+      <SideNavWrapper className={visible ? "show" : "hide"}>
+        <X onClick={onClickSideNav}/>
+        <div>
+          <Logo size="large" color="white" />
+          <MenuList>
+            {menuList.map(list =>
+              <Link to={list.path} key={`menu${list.id}`}>
+                <li>{list.name}</li>
+              </Link> 
+            )}
+          </MenuList>
+        </div>
+        <Footer>
+          <span>Sign up</span>
+          <span> | </span>
+          <span>Sign in</span>
+        </Footer>
+      </SideNavWrapper>
+    </React.Fragment>
   )
 }
 

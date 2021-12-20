@@ -6,7 +6,6 @@ import CheckBox from './CheckBox';
 import Loading from './Loading';
 import Logo from './Logo';
 import Modal from './Modal';
-import Nav from './Nav';
 import PageContent from './PageContent';
 import SelectBox from './SelectBox';
 import Tabs from './Tabs';
@@ -23,7 +22,6 @@ export {
   Loading,
   Logo,
   Modal,
-  Nav,
   PageContent,
   SelectBox,
   Tabs,

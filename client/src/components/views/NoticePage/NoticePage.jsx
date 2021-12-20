@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import Axios from 'axios'
 import moment from 'moment';
 
-import { PageContent, Nav, Button, TextLogo } from 'utils'
+import SideNav from 'components/views/SideNav/SideNav';
+import { PageContent, Button, TextLogo } from 'utils'
 import NoticeForm from './NoticeForm';
 import { Hash, X, Delete, Edit, Trash2, Edit3 } from 'react-feather';
 
@@ -188,7 +189,7 @@ function NoticePage() {
   return(
     <div style={{ height: '100vh' }}>
       <div style={{ padding: '2rem' }}>
-        <Nav />
+        <SideNav />
         <PageContent 
           title={noticeTitle}
           desc={`📮 ${notices.length}건의 새로운 소식이 있습니다.`}

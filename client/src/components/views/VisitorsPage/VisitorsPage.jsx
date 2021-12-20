@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components';
 import Axios from 'axios';
 
+import SideNav from 'components/views/SideNav/SideNav'
 import Message from './Sections/Message';
-import { TextLogo, PageContent, Nav, Loading } from 'utils'
+import { TextLogo, PageContent, Loading } from 'utils'
 
 const GuestCount = styled.div`
   text-align: right;
@@ -77,7 +78,7 @@ function VisitorsPage() {
 
   return(
     <div style={{ padding: '2rem' }}>
-      <Nav />
+      <SideNav />
       <PageContent 
         title={visitorTitle}
         desc={guestCount}

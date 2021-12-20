@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { registerUser } from '_actions/user_action';
 import styled from 'styled-components';
 
-import { Button, TextInput, TextLogo, SelectBox, PageContent, Nav } from 'utils';
+import SideNav from 'components/views/SideNav/SideNav';
+import { Button, TextInput, TextLogo, SelectBox, PageContent } from 'utils';
 import { mbtiList, avatarList } from './selectList'
 
 const ContentPage = styled.div`
@@ -148,7 +149,7 @@ function RegisterPage(props) {
 
   return (
     <ContentPage>
-      <Nav />
+      <SideNav />
       <PageContent
         title={registerTitle}
         desc={freeDrink}
