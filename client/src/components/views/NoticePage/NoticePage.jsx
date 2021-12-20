@@ -55,8 +55,10 @@ const NoticeBox = styled.div`
 
   & .content {
     color: ${({ theme }) => theme.textColor };
-    line-height: 1.2;
+    line-height: 1.3;
     min-height: 50px;
+    white-space: pre-line;
+    font-size: 0.85rem;
   }
 
   & .date {
@@ -149,7 +151,7 @@ function NoticePage() {
   }
 
   const renderButton = () => {
-    let button = <Button fullWidth onClick={onClickWrite}>WRITE</Button>
+    let button = <Button fullWidth float onClick={onClickWrite}>WRITE</Button>
 
     if(showNoticeForm) { // 입력폼일 때 버튼
       button = <Button fullWidth onClick={onClickSubmit}>SUBMIT</Button>
@@ -174,7 +176,7 @@ function NoticePage() {
           }
           <div className="title">{notice.title}</div>
           <div className="content">{notice.content}</div>
-          <div className="date">{moment(notice.createAt).format("YYYY-MM-DD")}</div>
+          <div className="date">{moment(notice.createdAt).format("YYYY-MM-DD")}</div>
         </div>
       </NoticeBox>
     )
