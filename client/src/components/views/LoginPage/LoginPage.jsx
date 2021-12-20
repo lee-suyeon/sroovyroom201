@@ -153,7 +153,8 @@ function LoginPage(props) {
         </IconButton>
       </ButtonGroup>
       <Button 
-        fullWidth 
+        fullWidth
+        float
         size="medium"
         onClick={onSubmitHandler}
         >ENTER</Button>

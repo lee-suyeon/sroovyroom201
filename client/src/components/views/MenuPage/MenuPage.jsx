@@ -120,7 +120,10 @@ function MenuPage(props) {
       {(userData && userData.isAuth) ?
         <Button 
           onClick={logoutHandler}
-          fullWidth size="medium">CHECK-OUT
+          fullWidth size="medium"
+          float
+        >
+          CHECK-OUT
         </Button> :
         <Link to='/login'>
           <Button fullWidth size="medium">CHECK-IN</Button>

@@ -213,7 +213,7 @@ function RegisterPage(props) {
           value={message}
           onChange={onChangeInput}
         />
-        <Button fullWidth size="medium">OK</Button>
+        <Button fullWidth float size="medium">OK</Button>
       </InputForm>
     </ContentPage>
   )
