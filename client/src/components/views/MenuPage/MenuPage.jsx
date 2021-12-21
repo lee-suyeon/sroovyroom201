@@ -74,13 +74,14 @@ function MenuPage(props) {
   };
 
   const userFor = () => {
-    let user = "";
-    if(userData) {
-      user = userData.name;
+    if(userData?.isAuth) return userData.name;
+    
+    let temporaryUser = JSON.parse(localStorage.getItem('temporaryUser'));
+    if(temporaryUser) {
+      return temporaryUser;
     } else {
-      user = JSON.parse(localStorage.getItem('temporaryUser'));
+      return "Guest";
     }
-    return user ? user : "Guest";
   }
 
   const welcome = (
