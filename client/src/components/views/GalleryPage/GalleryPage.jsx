@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import moment from 'moment';
 
 import { PageContent, Button, TextLogo } from 'utils'
 
 const FeedWrapper = styled.div`
   padding: 0.7rem;
-  margin-bottom: 2rem;
 `
 
 const Feed = styled.div`
-  padding: 0.5rem;
-  padding-bottom: 0;
+  padding: 0.5rem 0.5rem 0;
   border: 1px solid ${({ theme }) => theme.mainColor };
-  margin-bottom: 2rem;
+  margin-bottom: 2.3rem;
+  font-size: 0.75rem;
+  text-align: center;
 
   & > img {
     display: block;
@@ -22,29 +23,21 @@ const Feed = styled.div`
   }
 
   & p {
-    font-size: 0.8rem;
-    line-height: 1.5;
+    line-height: 1.4;
     color: ${({ theme }) => theme.textColor };
   }
 
   &:last-child {
     margin-bottom: 3rem;
   }
-`
 
-const EndMessage = styled.div`
-  color: ${({ theme }) => theme.textColor };
-  font-size: 0.9rem;
-  text-align: center;
-  line-height: 1.5;
-
-  & .move-to-insta {
-    margin-top: 1rem;
+  .timestamp {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
   }
 `
 
 const LOAD_COUNT = 6;
-
 function GalleryPage() {
   const [ feeds, setFeeds ] = useState([]);
   const [ loadPost, setLoadPost ] = useState(LOAD_COUNT);
@@ -56,7 +49,7 @@ function GalleryPage() {
   const getInstagramPost = () => {
     try {
       axios
-        .get(`${process.env.REACT_APP_MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption&limit=${loadPost}&access_token=${process.env.REACT_APP_INSTA_API_TOKEN}`)
+        .get(`${process.env.REACT_APP_MEDIA_BASE_URL}me/media?fields=id,media_type,media_url,media_count,caption,timestamp&limit=${loadPost}&access_token=${process.env.REACT_APP_INSTA_API_TOKEN}`)
         .then(res => setFeeds(res.data.data))
     } catch (err){
       console.log('error', err)
@@ -93,32 +86,20 @@ function GalleryPage() {
     <div style={{ padding: '2rem' }}>
       <PageContent 
         title={galleryTitle}
-        desc="총 20개의 일상이 있습니다."
+        desc="👍🏻 스루비룸 팔로우하기"
       />
       <FeedWrapper>
         {feeds && feeds.map((feed, idx) => (
           <Feed key={`feed${idx}`}>
             <img src={feed.media_url}/>
+            <div className="timestamp">{moment(feed.timestamp).format("YYYY.MM.DD")}</div>
             <div style={{ padding: '0.7rem' }}>{renderCaption(feed.caption)}</div>
           </Feed>
       ))}
       </FeedWrapper>
-      
-      {/* {feeds.length === 0 && (
-        <EndMessage>
-          <p>
-          오늘의 랜선 집들이는 <br/> 종료되었습니다 😔 <br />
-          내일 다시 방문해주세요
-          </p>
-          <div className="move-to-insta">
-            나는 못 기다리겠다. <br />
-            여기 <Instagram />
-          </div>
-        </EndMessage> 
-      )} */}
-        <Button fullWidth onClick={loadMorePost}>
-          일상 더 보기
-        </Button>
+      <Button fullWidth float onClick={loadMorePost}>
+        일상 더 보기
+      </Button>
     </div>
   )
 }
