@@ -8,9 +8,10 @@ import { normalize } from 'polished';
 const DateSelectButton = styled.button`
   width: 90px;
   height: 30px;
-  border: 1px solid ${({ theme }) => theme.mainColor };
-  color: ${({ theme }) => theme.textColor };
-  font-size: 0.9rem;
+  border: none;
+  color: ${({ theme }) => theme.mainColor };
+  font-weight: 500;
+  font-size: 1.1rem;
   padding: 0.2rem;
   font-family: 'Montserrat', sans-serif;
 `
@@ -25,7 +26,7 @@ function Calendar ({ selectedDate, onChange, ...rest}) {
 
   return (
     <DatePicker
-    dateFormat="yyyy-MM-dd"
+      dateFormat="MM월 dd일"
       selected={selectedDate}
       onChange={onChange}
       customInput={<DatePickerInput/>}
