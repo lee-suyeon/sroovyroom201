@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { default as DatePicker }  from 'utils/Calendar';
-import { Calendar } from 'react-feather';
+import moment from 'moment';
 
 const CustomDateForm = styled.div`
   font-size: 0.9rem;
@@ -34,42 +34,16 @@ const CustomDateForm = styled.div`
   }
 `
 
-const FormTitle = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  
-  .sub-title {
-    color: ${({ theme }) => theme.textColor };
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.1rem;
-  }
-
-  & svg {
-    width: 18px;
-    margin-right: 0.3rem;
-    color: ${({ theme }) => theme.textColor };
-  }
-`
-
 const DateForm = ({ startDate, endDate, nights, onChange }) => {
   return (
     <CustomDateForm>
-      <FormTitle>
-        <Calendar />
-        <div className="sub-title">방문날짜를 선택해주세요.</div>
-        {/* <CheckBox 
-          id="overnight"
-          name="자고 갈거에요"
-          /> */}
-      </FormTitle>
       <div className="datepicker">
         <div className="check-in">
           <span>체크인</span>
           <DatePicker
             selectedDate={startDate}
             onChange={(e) => onChange('startDate', e)}
+            minDate={moment().toDate()}
             />
         </div>
         <div className="check-out">
@@ -77,6 +51,7 @@ const DateForm = ({ startDate, endDate, nights, onChange }) => {
           <DatePicker 
             selectedDate={endDate}
             onChange={(e) => onChange('endDate', e)}
+            maxDate={moment().add('2', 'M').toDate()}
           />
         </div>
         <div className="period">

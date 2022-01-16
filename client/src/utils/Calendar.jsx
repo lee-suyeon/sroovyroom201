@@ -16,7 +16,7 @@ const DateSelectButton = styled.button`
   font-family: 'Montserrat', sans-serif;
 `
 
-function Calendar ({ selectedDate, onChange, ...rest}) {
+function Calendar ({ selectedDate, onChange, maxDate, minDate, ...rest}) {
 
   const DatePickerInput = forwardRef(({ value, onClick }, ref) => (
     <DateSelectButton className="example-custom-input" onClick={onClick} ref={ref}>
@@ -30,6 +30,8 @@ function Calendar ({ selectedDate, onChange, ...rest}) {
       selected={selectedDate}
       onChange={onChange}
       customInput={<DatePickerInput/>}
+      maxDate={maxDate}
+      minDate={minDate}
     />
   )
 }
