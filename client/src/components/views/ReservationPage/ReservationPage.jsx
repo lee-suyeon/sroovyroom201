@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SideNav from 'components/views/SideNav/SideNav';
 import { PageContent, TextLogo } from 'utils';
 
-import { Calendar } from 'react-feather';
+import { Calendar, Users } from 'react-feather';
 import moment from 'moment';
 import DateForm from './DateForm';
 
@@ -40,10 +40,47 @@ const FormTitle = styled.div`
   }
 `
 
+const HeadCount = styled.div`
+  margin-bottom: 1.5rem;
+
+  .select-head {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .select-head > button {
+    border: none;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  button.selected {
+    background-color: ${({ theme }) => theme.mainColor };
+    color: ${({ theme }) => theme.white };
+    border-radius: 5px;
+  }
+
+  .select-head span {
+    font-size: 2rem;
+    letter-spacing: -5px;
+  }
+
+  .select-head p {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+`
+const headCountList = [
+  { value: 1, desc: "혼자 갈게요.", emoji: "🧍🏻", emoji2: "🕺🏻"},
+  { value: 2, desc: "둘이 갈게요.", emoji: "🧍🏻🧍🏻", emoji2: "🕺🏻🕺🏻"},
+  { value: 3, desc: "셋이 갈게요.", emoji: "🧍🏻🧍🏻🧍🏻", emoji2: "🕺🏻🕺🏻🕺🏻"},
+]
+
 function ReservationPage(props) {
   const [ startDate, setStartDate ] = useState(new Date());
   const [ endDate, setEndDate ] = useState(new Date());
   const [ nights, setNights ] = useState(0);
+  const [ headCount, setHeadCount ] = useState(1);
 
   useEffect(() => {
     setNights(moment(endDate).diff(startDate, 'days'));
@@ -55,6 +92,10 @@ function ReservationPage(props) {
     } else {
       setEndDate(e);
     }
+  }
+
+  const headCountChangeHandler = (count) => {
+    setHeadCount(count);
   }
 
   const reservationTitle = (
@@ -85,6 +126,27 @@ function ReservationPage(props) {
           />
         </div>
       </ReservationForm>
+
+      {/* 인원수 */}
+      <HeadCount>
+        <FormTitle>
+          <Users />
+          <span className="sub-title">몇 명이서 오시나요?</span>
+        </FormTitle>
+        <div className="select-head">
+          {headCountList.map((head, idx) => 
+            <button 
+              key={`head${idx}`}
+              onClick={() => headCountChangeHandler(head.value)}
+              value={headCount}
+              className={ headCount == head.value ? 'selected' : "" }
+            >
+              <span>{ headCount == head.value ? head.emoji2 : head.emoji }</span>
+              <p>{head.desc}</p>
+            </button> 
+          )}
+        </div>
+      </HeadCount>
     </ContentPage>
   )
 }
