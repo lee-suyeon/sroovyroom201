@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import SideNav from 'components/views/SideNav/SideNav';
 import { PageContent, TextLogo } from 'utils';
 
-import { Calendar, Users } from 'react-feather';
+import { Calendar } from 'react-feather';
 import moment from 'moment';
-import HeadCount from './HeadCount';
 import DateForm from './DateForm';
+import HeadCount from './HeadCount';
+import VisitTime from './VisitTime';
 
 const ContentPage = styled.div`
   height: 100vh;
@@ -46,6 +47,7 @@ function ReservationPage(props) {
   const [ endDate, setEndDate ] = useState(new Date());
   const [ nights, setNights ] = useState(0);
   const [ headCount, setHeadCount ] = useState(1);
+  const [ visitTime, setVisitTime ] = useState(1);
 
   useEffect(() => {
     setNights(moment(endDate).diff(startDate, 'days'));
@@ -61,6 +63,10 @@ function ReservationPage(props) {
 
   const handleHeadCountClick = (count) => {
     setHeadCount(count);
+  }
+
+  const handleVisitTimeClick = (time) => {
+    setVisitTime(time);
   }
 
   const reservationTitle = (
@@ -92,6 +98,12 @@ function ReservationPage(props) {
         </div>
       </ReservationForm>
 
+      {/* 방문시간 */}
+      <VisitTime 
+        visitTime={visitTime}
+        onClick={handleVisitTimeClick}
+      />
+  
       {/* 인원수 */}
       <HeadCount 
         headCount={headCount}
