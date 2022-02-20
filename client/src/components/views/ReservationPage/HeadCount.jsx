@@ -24,9 +24,7 @@ const HeadCountForm = styled.div`
   }
 
   button.selected {
-    background-color: ${({ theme }) => theme.mainColor };
-    color: ${({ theme }) => theme.white };
-    border-radius: 5px;
+    background-color: ${({ theme }) => theme.lightGreen };
   }
 
   .select-head span {
