@@ -46,7 +46,7 @@ function VisitTime ({ visitTime, onClick }) {
           <button 
             key={`time${list.value}`}
             onClick={() => onClick(list.value)}
-            className={ visitTime == list.value && 'selected' }
+            className={ visitTime == list.value ? 'selected' : "" }
           >
             {list.time}
           </button>
