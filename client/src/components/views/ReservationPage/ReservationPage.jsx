@@ -9,6 +9,7 @@ import moment from 'moment';
 import DateForm from './DateForm';
 import HeadCount from './HeadCount';
 import VisitTime from './VisitTime';
+import DinnerMenu from './DinnerMenu';
 
 const ContentPage = styled.div`
   height: 100vh;
@@ -48,6 +49,7 @@ function ReservationPage(props) {
   const [ nights, setNights ] = useState(0);
   const [ headCount, setHeadCount ] = useState(1);
   const [ visitTime, setVisitTime ] = useState(1);
+  const [ dinnerMenu, setDinnerMenu ] = useState(1);
 
   useEffect(() => {
     setNights(moment(endDate).diff(startDate, 'days'));
@@ -67,6 +69,10 @@ function ReservationPage(props) {
 
   const handleVisitTimeClick = (time) => {
     setVisitTime(time);
+  }
+
+  const handleDinnerMenuChange = (menu) => {
+    setDinnerMenu(menu);
   }
 
   const reservationTitle = (
@@ -109,6 +115,13 @@ function ReservationPage(props) {
         headCount={headCount}
         onClick={handleHeadCountClick}
       />
+
+      {/* 메뉴 */}
+      <DinnerMenu 
+        dinnerMenu={dinnerMenu}
+        onChange={handleDinnerMenuChange}
+      />
+
     </ContentPage>
   )
 }
