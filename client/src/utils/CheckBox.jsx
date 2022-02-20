@@ -7,14 +7,12 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   position: relative;
-  margin-bottom: 12px;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
-  margin-right: ${props => `${props.gap}rem` || "1rem"};
+  margin-right: 1rem;
 `
 
 const CustomCheckbox = styled.input`
@@ -26,10 +24,14 @@ const CustomCheckbox = styled.input`
 `
 
 const CheckMark = styled.div`
-  width: 14px;
-  height: 14px;
-  border: 1px solid ${({ theme }) => theme.mainColor };
-  margin: 0 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: ${({ theme }) => theme.lightGreen };
+  margin-right: 0.5rem;
 
   & > svg {
     display:none;
@@ -50,13 +52,13 @@ const CheckMark = styled.div`
     `}
 `
 
-function Checkbox({ props, checked, onChange, color, name, id, gap, ...rest}) {
+function Checkbox({ props, checked, onChange, name, id }) {
   return (
-    <Label htmlFor={id} gap={gap}>
+    <Label htmlFor={id}>
       <CustomCheckbox 
         type="checkbox"
         checked={checked}
-        onClick={onChange}
+        onChange={onChange}
         name={name}
         id={id}
         {...props}
@@ -64,7 +66,7 @@ function Checkbox({ props, checked, onChange, color, name, id, gap, ...rest}) {
       <CheckMark checked={checked}>
         <Check/>
       </CheckMark>
-      <span>{name}</span>
+      <span className="check-name">{name}</span>
     </Label>
   )
 }
