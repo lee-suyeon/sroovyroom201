@@ -1,7 +1,7 @@
 import React  from 'react';
 import styled from 'styled-components';
 
-import { FormTitle } from './ReservationPage';
+import { FormTitle } from './BookingPage';
 import { default as DatePicker }  from 'utils/Calendar';
 import moment from 'moment';
 

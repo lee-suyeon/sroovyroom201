@@ -1,7 +1,7 @@
 import React  from 'react';
 import styled from 'styled-components';
 
-import { FormTitle } from './ReservationPage';
+import { FormTitle } from './BookingPage';
 import { ShoppingCart } from 'react-feather'; 
 import { CheckBox } from 'utils';
 

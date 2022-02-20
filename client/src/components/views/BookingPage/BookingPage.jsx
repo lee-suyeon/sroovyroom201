@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
-import { PageContent, TextLogo, Button } from 'utils';
+import { PageContent, TextLogo, Button, Modal } from 'utils';
 
 import moment from 'moment';
 import VisitDate from './VisitDate';
@@ -21,7 +21,7 @@ const ContentPage = styled.div`
   padding: 2rem;
 `
 
-const ReservationForm = styled.div`
+const BookingForm = styled.div`
   padding: 0 0.5rem;
 
   & > div {
@@ -66,6 +66,7 @@ function ReservationPage(props) {
     email: "",
   });
   const [ infoAgreement, setInfoAgreement ] = useState(false);
+  const [ confirmModal, setConfirmModal ] = useState(false);
 
   useEffect(() => {
     const { startDate, endDate } = visitDate;
@@ -104,7 +105,7 @@ function ReservationPage(props) {
     setInfoAgreement(prev => !prev);
   }
 
-  const reservationTitle = (
+  const BookingTitle = (
     <div>
       <TextLogo size="large" />
       <p>예약하기</p>
@@ -115,10 +116,10 @@ function ReservationPage(props) {
     <ContentPage>
       <SideNav />
       <PageContent 
-        title={reservationTitle}
+        title={BookingTitle}
         desc="📒 방문전에 예약해주세요."
       />
-      <ReservationForm>
+      <BookingForm>
         {/* 방문날짜 */}
         <VisitDate 
           visitDate={visitDate}
@@ -155,7 +156,7 @@ function ReservationPage(props) {
           infoAgreement={infoAgreement}
           onChange={handleInfoAgreementChange}
         />
-      </ReservationForm>
+      </BookingForm>
 
       <Button 
         fullWidth={true}
@@ -163,7 +164,12 @@ function ReservationPage(props) {
       >
         예약하기
       </Button>
+
+      {true &&
+        <Modal />
+      }
     </ContentPage>
+
   )
 }
 
