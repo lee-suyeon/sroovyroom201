@@ -11,6 +11,7 @@ import VisitTime from './VisitTime';
 import DinnerMenu from './DinnerMenu';
 import BookerInfo from './BookerInfo';
 import InfoAgreement from './InfoAgreement';
+import BookingConfirmModal from './BookingConfirmModal'
 
 const ContentPage = styled.div`
   height: 100%;
@@ -105,6 +106,10 @@ function ReservationPage(props) {
     setInfoAgreement(prev => !prev);
   }
 
+  const handleConfirmModalToggle = () => {
+    setConfirmModal(prev => !prev);
+  }
+
   const BookingTitle = (
     <div>
       <TextLogo size="large" />
@@ -165,8 +170,10 @@ function ReservationPage(props) {
         예약하기
       </Button>
 
-      {true &&
-        <Modal />
+      {confirmModal &&
+        <BookingConfirmModal 
+          onToggle={handleConfirmModalToggle}
+        />
       }
     </ContentPage>
 
