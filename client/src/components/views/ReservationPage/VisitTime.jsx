@@ -12,8 +12,6 @@ const visitTimeList = [
 ]
 
 const VisitTimeForm = styled.div`
-  margin-bottom: 1.5rem; 
-
   .time-buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

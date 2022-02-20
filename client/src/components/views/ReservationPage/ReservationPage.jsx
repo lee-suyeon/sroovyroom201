@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
-import { PageContent, TextLogo } from 'utils';
+import { PageContent, TextLogo, Button } from 'utils';
 
 import moment from 'moment';
 import VisitDate from './VisitDate';
@@ -23,6 +23,14 @@ const ContentPage = styled.div`
 
 const ReservationForm = styled.div`
   padding: 0 0.5rem;
+
+  & > div {
+    margin-bottom: 2rem;
+  }
+
+  & > div:last-child {
+    margin-bottom: 5rem;
+  }
 `
 
 export const FormTitle = styled.div`
@@ -148,6 +156,13 @@ function ReservationPage(props) {
           onChange={handleInfoAgreementChange}
         />
       </ReservationForm>
+
+      <Button 
+        fullWidth={true}
+        float={true}
+      >
+        예약하기
+      </Button>
     </ContentPage>
   )
 }

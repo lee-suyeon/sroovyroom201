@@ -12,8 +12,6 @@ const headCountList = [
 ]
 
 const HeadCountForm = styled.div`
-  margin-bottom: 1.5rem;
-
   .select-head {
     display: flex;
     justify-content: space-between;

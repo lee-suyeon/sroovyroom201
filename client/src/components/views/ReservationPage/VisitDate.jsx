@@ -13,7 +13,6 @@ const VisitDateForm = styled.div`
 
 const VisitDatePicker = styled.div`
   font-size: 0.9rem;
-  margin-bottom: 1.2rem;
   display: flex;
   justify-content: space-between;
 
