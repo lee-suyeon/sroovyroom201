@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
-import { PageContent, TextLogo } from 'utils';
+import { PageContent, TextLogo, CheckBox } from 'utils';
 
 import { Calendar } from 'react-feather';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import HeadCount from './HeadCount';
 import VisitTime from './VisitTime';
 import DinnerMenu from './DinnerMenu';
 import BookerInfo from './BookerInfo';
+import InfoAgreement from './InfoAgreement';
 
 const ContentPage = styled.div`
   height: 100%;
@@ -54,7 +55,8 @@ function ReservationPage(props) {
   const [ bookerInfo, setBookerInfo ] = useState({
     booker: "",
     email: "",
-  })
+  });
+  const [ infoAgreement, setInfoAgreement ] = useState(false);
 
   useEffect(() => {
     setNights(moment(endDate).diff(startDate, 'days'));
@@ -86,6 +88,10 @@ function ReservationPage(props) {
       ...bookerInfo,
       [name]: value
     })
+  }
+
+  const handleInfoAgreementChange = () => {
+    setInfoAgreement(prev => !prev);
   }
 
   const reservationTitle = (
@@ -139,8 +145,13 @@ function ReservationPage(props) {
       <BookerInfo 
         bookerInfo={bookerInfo}
         onChange={handleBookerInfoChange}
-        />
+      />
 
+      {/* 개인정보동의 */}
+      <InfoAgreement 
+        infoAgreement={infoAgreement}
+        onChange={handleInfoAgreementChange}
+      />
     </ContentPage>
   )
 }
