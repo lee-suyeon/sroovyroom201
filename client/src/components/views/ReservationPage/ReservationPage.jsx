@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
-import { PageContent, TextLogo, CheckBox } from 'utils';
+import { PageContent, TextLogo } from 'utils';
 
-import { Calendar } from 'react-feather';
 import moment from 'moment';
-import DateForm from './DateForm';
+import VisitDate from './VisitDate';
 import HeadCount from './HeadCount';
 import VisitTime from './VisitTime';
 import DinnerMenu from './DinnerMenu';
@@ -46,8 +45,10 @@ export const FormTitle = styled.div`
 `
 
 function ReservationPage(props) {
-  const [ startDate, setStartDate ] = useState(new Date());
-  const [ endDate, setEndDate ] = useState(new Date());
+  const [ visitDate, setVisitDate ] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  })
   const [ nights, setNights ] = useState(0);
   const [ headCount, setHeadCount ] = useState(1);
   const [ visitTime, setVisitTime ] = useState(1);
@@ -59,15 +60,16 @@ function ReservationPage(props) {
   const [ infoAgreement, setInfoAgreement ] = useState(false);
 
   useEffect(() => {
-    setNights(moment(endDate).diff(startDate, 'days'));
-  }, [endDate, startDate])
+    const { startDate, endDate } = visitDate;
 
-  const dateChangeHandler = (type, e) => {
-    if(type === "startDate") {
-      setStartDate(e);
-    } else {
-      setEndDate(e);
-    }
+    setNights(moment(endDate).diff(startDate, 'days'));
+  }, [visitDate.startDate, visitDate.endDate])
+
+  const handleVisitDateChange = (type, e) => {
+    setVisitDate({
+      ...visitDate,
+      [type]: e
+    })
   }
 
   const handleHeadCountClick = (count) => {
@@ -109,49 +111,43 @@ function ReservationPage(props) {
         desc="📒 방문전에 예약해주세요."
       />
       <ReservationForm>
-        <div>
-          <FormTitle>
-            <Calendar />
-            <div className="sub-title">방문날짜를 선택해주세요.</div>
-          </FormTitle>
-          <DateForm 
-            startDate={startDate}
-            endDate={endDate}
-            nights={nights}
-            onChange={dateChangeHandler}
-          />
-        </div>
+        {/* 방문날짜 */}
+        <VisitDate 
+          visitDate={visitDate}
+          nights={nights}
+          onChange={handleVisitDateChange}
+        />
+
+        {/* 방문시간 */}
+        <VisitTime 
+          visitTime={visitTime}
+          onClick={handleVisitTimeClick}
+        />
+    
+        {/* 인원수 */}
+        <HeadCount 
+          headCount={headCount}
+          onClick={handleHeadCountClick}
+        />
+
+        {/* 메뉴 */}
+        <DinnerMenu 
+          dinnerMenu={dinnerMenu}
+          onChange={handleDinnerMenuChange}
+        />
+
+        {/* 예약자 정보 */}
+        <BookerInfo 
+          bookerInfo={bookerInfo}
+          onChange={handleBookerInfoChange}
+        />
+
+        {/* 개인정보동의 */}
+        <InfoAgreement 
+          infoAgreement={infoAgreement}
+          onChange={handleInfoAgreementChange}
+        />
       </ReservationForm>
-
-      {/* 방문시간 */}
-      <VisitTime 
-        visitTime={visitTime}
-        onClick={handleVisitTimeClick}
-      />
-  
-      {/* 인원수 */}
-      <HeadCount 
-        headCount={headCount}
-        onClick={handleHeadCountClick}
-      />
-
-      {/* 메뉴 */}
-      <DinnerMenu 
-        dinnerMenu={dinnerMenu}
-        onChange={handleDinnerMenuChange}
-      />
-
-      {/* 예약자 정보 */}
-      <BookerInfo 
-        bookerInfo={bookerInfo}
-        onChange={handleBookerInfoChange}
-      />
-
-      {/* 개인정보동의 */}
-      <InfoAgreement 
-        infoAgreement={infoAgreement}
-        onChange={handleInfoAgreementChange}
-      />
     </ContentPage>
   )
 }
