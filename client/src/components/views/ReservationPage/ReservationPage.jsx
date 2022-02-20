@@ -10,9 +10,10 @@ import DateForm from './DateForm';
 import HeadCount from './HeadCount';
 import VisitTime from './VisitTime';
 import DinnerMenu from './DinnerMenu';
+import BookerInfo from './BookerInfo';
 
 const ContentPage = styled.div`
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -50,6 +51,10 @@ function ReservationPage(props) {
   const [ headCount, setHeadCount ] = useState(1);
   const [ visitTime, setVisitTime ] = useState(1);
   const [ dinnerMenu, setDinnerMenu ] = useState(1);
+  const [ bookerInfo, setBookerInfo ] = useState({
+    booker: "",
+    email: "",
+  })
 
   useEffect(() => {
     setNights(moment(endDate).diff(startDate, 'days'));
@@ -73,6 +78,14 @@ function ReservationPage(props) {
 
   const handleDinnerMenuChange = (menu) => {
     setDinnerMenu(menu);
+  }
+
+  const handleBookerInfoChange = (e) => {
+    const { name, value } = e.target;
+    setBookerInfo({
+      ...bookerInfo,
+      [name]: value
+    })
   }
 
   const reservationTitle = (
@@ -121,6 +134,12 @@ function ReservationPage(props) {
         dinnerMenu={dinnerMenu}
         onChange={handleDinnerMenuChange}
       />
+
+      {/* 예약자 정보 */}
+      <BookerInfo 
+        bookerInfo={bookerInfo}
+        onChange={handleBookerInfoChange}
+        />
 
     </ContentPage>
   )
