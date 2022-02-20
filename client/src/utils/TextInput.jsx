@@ -10,7 +10,6 @@ const secondStyle = css`
 `;
 
 const StyledInput = styled.div`
-
   ${secondStyle}
 
   input {
@@ -35,12 +34,21 @@ const InputLabel = styled.label`
   color: ${({ theme }) => theme.mainColor };
   font-weight: 500;
   margin-bottom: 0.5rem;
+
+  span {
+    color: ${({ theme }) => theme.pink };
+  }
 `
 
-function TextInput({ children, label, name, type, placeholder, value, onChange, mode, ...rest }) {
+function TextInput({ children, className, label, name, type, placeholder, required, value, onChange, mode, ...rest }) {
   return (
-    <StyledInput>
-      {label && <InputLabel>{label}</InputLabel>}
+    <StyledInput className={className}>
+      {label && 
+        <InputLabel>
+          {label}{' '}
+          {required && <span>*</span>}
+        </InputLabel>
+      }
       <input
         type={type}
         name={name}
