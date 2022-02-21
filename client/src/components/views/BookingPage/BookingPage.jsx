@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import SideNav from 'components/views/SideNav/SideNav';
 import { PageContent, TextLogo, Button, Modal } from 'utils';
 
+import Axios from 'axios'
 import moment from 'moment';
+
 import VisitDate from './VisitDate';
 import HeadCount from './HeadCount';
 import VisitTime from './VisitTime';
@@ -110,6 +112,32 @@ function ReservationPage(props) {
     setConfirmModal(prev => !prev);
   }
 
+  const confirmBooking = () => {
+    const { booker, email } = bookerInfo;
+    const { startDate, endDate } = visitDate;
+
+    let body = {
+      booker,
+      email,
+      checkIn: moment(startDate).format("YYYY-MM-DD"),
+      checkOut: moment(endDate).format("YYYY-MM-DD"),
+      nights,
+      visitTime,
+      headCount,
+      infoAgreement,
+    }
+
+    Axios.post('/api/booking', body)
+      .then(res => {
+        if(res.data.success) {
+          props.history('/menu');
+          handleConfirmModalToggle()
+        } else {
+          alert('예약 실패했습니다.')
+        }
+      })
+  }
+
   const BookingTitle = (
     <div>
       <TextLogo size="large" />
@@ -185,6 +213,7 @@ function ReservationPage(props) {
         <BookingConfirmModal
           bookingInfo={bookingInfo}
           onToggle={handleConfirmModalToggle}
+          onConfirm={confirmBooking}
         />
       }
     </ContentPage>
