@@ -5,7 +5,7 @@ import { FormTitle } from './BookingPage';
 import { ShoppingCart } from 'react-feather'; 
 import { CheckBox } from 'utils';
 
-const dinnerMenuList = [
+export const dinnerMenuList = [
   { value: 1, menu: "스루비의 요리조리~", desc: "💁🏻 게스트 이미지에 맞는 요리를 해드립니다." },
   { value: 2, menu: "외식하자!", desc: "💁🏻 스루비룸 주변 맛집을 탐방합니다." },
   { value: 3, menu: "배달시킬까?", desc: "💁🏻 배달의 민족 추천 맛집을 선보입니다." },

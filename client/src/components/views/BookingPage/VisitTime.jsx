@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FormTitle } from './BookingPage';
 import { Clock } from 'react-feather'; 
 
-const visitTimeList = [
+export const visitTimeList = [
   { value: 1, time: "17:00" },
   { value: 2, time: "18:00" },
   { value: 3, time: "19:00" },

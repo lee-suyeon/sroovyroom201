@@ -116,6 +116,16 @@ function ReservationPage(props) {
       <p>예약하기</p>
     </div>
   )
+  
+  let bookingInfo = {
+    booker : bookerInfo.booker,
+    checkIn: moment(visitDate.startDate).format("MM월 DD일"),
+    checkOut: moment(visitDate.endDate).format("MM월 DD일"),
+    nights,
+    visitTime,
+    headCount,
+    dinnerMenu,
+  }
 
   return(
     <ContentPage>
@@ -166,12 +176,14 @@ function ReservationPage(props) {
       <Button 
         fullWidth={true}
         float={true}
+        onClick={handleConfirmModalToggle}
       >
         예약하기
       </Button>
 
       {confirmModal &&
-        <BookingConfirmModal 
+        <BookingConfirmModal
+          bookingInfo={bookingInfo}
           onToggle={handleConfirmModalToggle}
         />
       }

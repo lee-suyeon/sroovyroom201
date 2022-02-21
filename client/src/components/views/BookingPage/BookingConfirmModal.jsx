@@ -2,12 +2,8 @@ import React  from 'react';
 import styled from 'styled-components';
 
 import { Modal } from 'utils';
-
-function BookingConfirmModal ({ onToggle }) {
-  return (
-    <Modal onClose={onToggle}><Content /></Modal>
-  )
-}
+import { visitTimeList } from './VisitTime';
+import { dinnerMenuList } from './DinnerMenu';
 
 const BookingContent = styled.div`
   text-align: left;
@@ -28,15 +24,35 @@ const BookingContent = styled.div`
   }
 `
 
-export const Content = () => {
-  return (
+function BookingConfirmModal ({ bookingInfo, onToggle, onConfirm }) {
+  const { booker, checkIn, checkOut, nights, visitTime, headCount, dinnerMenu } = bookingInfo;
+
+  const getVisitPeriod = () => {
+    let result = checkIn;
+    if(nights > 1) {
+      result = `${checkIn} ~ ${checkOut} (${nights + 1}일)`;
+    }
+
+    return result;
+  }
+
+  let time = visitTimeList.map(list => {
+    if(list.value === visitTime) return list.time;
+  })
+
+  let menu = dinnerMenuList.map(list => {
+    if(list.value === dinnerMenu) return list.menu;
+  })
+
+
+  let content = (
     <BookingContent>
-      <div><strong>guest</strong>님의 예약 정보를 확인할게요.</div>
+      <div><strong>{booker}</strong>님의 예약 정보를 확인할게요.</div>
       <div className="booking-info">
-        <div>날짜 : <strong>02월 12일 ( 1일 )</strong></div>
-        <div>방문시간 : <strong>17: 00</strong></div>
-        <div>인원수 : <strong>1명</strong></div>
-        <div>메뉴 : <strong>스루비의 요리조리</strong></div>
+        <div>날짜 : <strong>{getVisitPeriod()}</strong></div>
+        <div>방문시간 : <strong>{time}</strong></div>
+        <div>인원수 : <strong>{`${headCount}명`}</strong></div>
+        <div>메뉴 : <strong>{menu}</strong></div>
       </div>
       <div>
         💌 예약 내용은 이메일로 발송됩니다. <br />
@@ -44,6 +60,16 @@ export const Content = () => {
       </div>
       <div className="confirm">위의 내용으로 예약하실건가요? </div>
     </BookingContent>
+  )
+
+  return (
+    <Modal 
+      onClose={onToggle}
+      onConfirm={onConfirm}
+      width={"70%"}
+    >
+      {content}
+  </Modal>
   )
 }
 
