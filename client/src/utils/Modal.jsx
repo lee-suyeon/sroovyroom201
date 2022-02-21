@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 import TextLogo from './TextLogo';
@@ -24,11 +24,11 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: ${props => props.width || "60%"};
   background-color: ${({ theme }) => theme.baseColor };
 `
 
-const Header = styled.div`
+const ModalHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -42,35 +42,56 @@ const Header = styled.div`
   }
 `
 
-const Content = styled.div`
+const ModalBody = styled.div`
   position: relative;
   text-align: center;
   padding: 1.5rem;
   line-height: 1.5;
 `
 
-export const Modal = ({ children, onClose }) => {
+const ModalFooter = styled.div`
+  width: 100%;
+  display: flex;
+
+  .cancel {
+    margin-left: 0;
+    background: ${({ theme }) => theme.gray };
+  }
+`
+
+export const Modal = ({ children, onClose, onConfirm, width }) => {
   return (
     <Overlay>
-      <ModalWrapper>
-        <Header>
+      <ModalWrapper width={width}>
+        <ModalHeader>
         <TextLogo 
           size="medium" 
           roomNumber 
           style={{ marginBottom: 0}}
           />
         <X onClick={onClose}/>
-        </Header>
-        <Content>
-          <p>{children}</p>
-        </Content>
-        <Button
-          fullWidth
-          size="small"
-          onClick={onClose}
-        >
-          확인
-        </Button>
+        </ModalHeader>
+        <ModalBody>
+          <div>{children}</div>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            fullWidth
+            size="small"
+            className="confirm"
+            onClick={onConfirm}
+          >
+            확인
+          </Button>
+          <Button
+            fullWidth
+            size="small"
+            className="cancel"
+            onClick={onClose}
+          >
+            취소
+          </Button>
+        </ModalFooter>
       </ModalWrapper>
     </Overlay>
   )
