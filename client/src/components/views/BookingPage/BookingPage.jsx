@@ -112,25 +112,30 @@ function ReservationPage(props) {
     setConfirmModal(prev => !prev);
   }
 
-  const confirmBooking = () => {
+  const createBookingData = () => {
     const { booker, email } = bookerInfo;
     const { startDate, endDate } = visitDate;
 
-    let body = {
+    let result = {
       booker,
       email,
       checkIn: moment(startDate).format("YYYY-MM-DD"),
       checkOut: moment(endDate).format("YYYY-MM-DD"),
       nights,
-      visitTime,
+      visitTime: visitTimeList.find(list => list.value === visitTime).time,
       headCount,
+      dinnerMenu: dinnerMenuList.find(list => list.value === dinnerMenu).menu,
       infoAgreement,
-    }
+    };
 
-    Axios.post('/api/booking', body)
+    return result;
+  }
+
+  const confirmBooking = () => {
+    Axios.post('/api/booking', createBookingData())
       .then(res => {
         if(res.data.success) {
-          props.history('/menu');
+          props.history.push('/menu');
           handleConfirmModalToggle()
         } else {
           alert('예약 실패했습니다.')

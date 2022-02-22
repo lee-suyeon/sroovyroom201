@@ -2,8 +2,6 @@ import React  from 'react';
 import styled from 'styled-components';
 
 import { Modal } from 'utils';
-import { visitTimeList } from './VisitTime';
-import { dinnerMenuList } from './DinnerMenu';
 
 const BookingContent = styled.div`
   text-align: left;
@@ -36,23 +34,14 @@ function BookingConfirmModal ({ bookingInfo, onToggle, onConfirm }) {
     return result;
   }
 
-  let time = visitTimeList.map(list => {
-    if(list.value === visitTime) return list.time;
-  })
-
-  let menu = dinnerMenuList.map(list => {
-    if(list.value === dinnerMenu) return list.menu;
-  })
-
-
   let content = (
     <BookingContent>
       <div><strong>{booker}</strong>님의 예약 정보를 확인할게요.</div>
       <div className="booking-info">
         <div>날짜 : <strong>{getVisitPeriod()}</strong></div>
-        <div>방문시간 : <strong>{time}</strong></div>
+        <div>방문시간 : <strong>{dinnerMenu}</strong></div>
         <div>인원수 : <strong>{`${headCount}명`}</strong></div>
-        <div>메뉴 : <strong>{menu}</strong></div>
+        <div>메뉴 : <strong>{visitTime}</strong></div>
       </div>
       <div>
         💌 예약 내용은 이메일로 발송됩니다. <br />
