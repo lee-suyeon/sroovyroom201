@@ -12,7 +12,7 @@ const Menus = [
   { name: "Notice", desc: "우리집 소식", path: "/notice", open: true },
   { name: "Visitors", desc: "방명록", path: "/visitors", open: true },
   { name: "Gallery", desc: "랜선 집들이", path: "/gallery", open: true },
-  { name: "Reservation", desc: "서비스 준비중입니다.", path: "/menu", open: false },
+  { name: "Booking", desc: "예약하기", path: "/booking", open: true },
 ]
 
 const MenuPageWrapper = styled.div`
