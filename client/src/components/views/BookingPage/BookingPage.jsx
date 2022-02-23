@@ -9,8 +9,8 @@ import moment from 'moment';
 
 import VisitDate from './VisitDate';
 import HeadCount from './HeadCount';
-import VisitTime from './VisitTime';
-import DinnerMenu from './DinnerMenu';
+import VisitTime, { visitTimeList } from './VisitTime';
+import DinnerMenu, { dinnerMenuList } from './DinnerMenu';
 import BookerInfo from './BookerInfo';
 import InfoAgreement from './InfoAgreement';
 import BookingConfirmModal from './BookingConfirmModal'
@@ -132,13 +132,28 @@ function ReservationPage(props) {
   }
 
   const confirmBooking = () => {
+    booking();
+    sendMail();
+  }
+
+  const booking = () => {
     Axios.post('/api/booking', createBookingData())
       .then(res => {
         if(res.data.success) {
-          props.history.push('/menu');
-          handleConfirmModalToggle()
+          handleConfirmModalToggle();
         } else {
-          alert('예약 실패했습니다.')
+          alert('예약 실패했습니다.');
+        }
+      })
+  }
+
+  const sendMail = () => {
+    Axios.post('/api/booking/booking', createBookingData())
+      .then(res => {
+        if(res.data.success) {
+          alert('메일 전송')
+        } else {
+          alert('메일 실패');
         }
       })
   }
@@ -216,7 +231,7 @@ function ReservationPage(props) {
 
       {confirmModal &&
         <BookingConfirmModal
-          bookingInfo={bookingInfo}
+          bookingInfo={createBookingData()}
           onToggle={handleConfirmModalToggle}
           onConfirm={confirmBooking}
         />
