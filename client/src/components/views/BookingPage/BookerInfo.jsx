@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 import { FormTitle } from './BookingPage';
 import { TextInput } from 'utils';
-import { Edit } from 'react-feather'; 
+import { Edit } from 'react-feather';
+
+// interface, abstract, enum, class, type
 
 const BookerInfoForm = styled.div`
   label {

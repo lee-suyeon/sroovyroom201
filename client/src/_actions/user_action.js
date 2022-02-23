@@ -5,6 +5,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const REGISTER_USER = "REGISTER_USER";
 export const AUTH_USER = "AUTH_USER";
 
+
 export const temporaryUser = (userName) => {
   return {
     type: TEMPORARY_USER,
@@ -12,9 +13,42 @@ export const temporaryUser = (userName) => {
   }
 }
 
+const host = "http://localhost:5000";
+// 랩핑 한다.
+export const ApiService = async (headers, url, body, method) => {
+
+  // 확장성
+  // 공통처리
+
+  // 로그찍는것 끝.
+  log(body);
+
+  if (url.test(/google.api/)) {
+    headers = {...headers, key: "google-key"};
+  }
+
+
+  if (method === "GET") {
+    return await axios.get(headers, url, body);
+  } else if (method === "POST") {
+    return await axios.post(headers, url, body);
+  }
+}
+
+
+const log = console.log;
 export const loginUser = (userData) => {
-  
-  const request = axios.post('/api/users/login', userData)
+
+  const headers = {
+    "x-token" : "12312312123",
+    "user-login-yn" : "y"
+  }
+
+  const result = ApiService(headers, "/api/users/login", userData, "POST");
+
+  log(userData);
+
+  const request = axios.post(headers,  host + '/api/users/login', userData)
     .then(response => response.data );
 
   return {
@@ -24,6 +58,8 @@ export const loginUser = (userData) => {
 }
 
 export const registerUser = (userData) => {
+
+  log(userData);
   
   const request = axios.post('/api/users/register', userData)
     .then(response => response.data );
