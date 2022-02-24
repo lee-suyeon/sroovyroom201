@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
@@ -56,6 +57,7 @@ export const FormTitle = styled.div`
 `
 
 function ReservationPage(props) {
+  const userData = useSelector(state => state.user.userData);
   const [ visitDate, setVisitDate ] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -65,8 +67,8 @@ function ReservationPage(props) {
   const [ visitTime, setVisitTime ] = useState(1);
   const [ dinnerMenu, setDinnerMenu ] = useState(1);
   const [ bookerInfo, setBookerInfo ] = useState({
-    booker: "",
-    email: "",
+    booker: userData.isAuth ? userData.name : "",
+    email: userData.isAuth ? userData.email : "",
   });
   const [ infoAgreement, setInfoAgreement ] = useState(false);
   const [ confirmModal, setConfirmModal ] = useState(false);
