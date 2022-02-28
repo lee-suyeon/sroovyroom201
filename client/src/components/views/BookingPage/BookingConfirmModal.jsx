@@ -1,5 +1,6 @@
 import React  from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { Modal } from 'utils';
 
@@ -26,9 +27,9 @@ function BookingConfirmModal ({ bookingInfo, onToggle, onConfirm }) {
   const { booker, checkIn, checkOut, nights, visitTime, headCount, dinnerMenu } = bookingInfo;
 
   const getVisitPeriod = () => {
-    let result = checkIn;
+    let result = moment(checkIn).format("YYYY-MM-DD");
     if(nights > 1) {
-      result = `${checkIn} ~ ${checkOut} (${nights + 1}일)`;
+      result = `${moment(checkIn).format("YYYY-MM-DD")} ~ ${moment(checkOut).format("YYYY-MM-DD")} (${nights + 1}일)`;
     }
 
     return result;

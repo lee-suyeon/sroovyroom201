@@ -59,25 +59,24 @@ export const FormTitle = styled.div`
 function ReservationPage(props) {
   const userData = useSelector(state => state.user.userData);
   const [ visitDate, setVisitDate ] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    checkIn: new Date(),
+    checkOut: new Date(),
   })
   const [ nights, setNights ] = useState(0);
   const [ headCount, setHeadCount ] = useState(1);
   const [ visitTime, setVisitTime ] = useState(1);
   const [ dinnerMenu, setDinnerMenu ] = useState(1);
   const [ bookerInfo, setBookerInfo ] = useState({
-    booker: userData.isAuth ? userData.name : "",
-    email: userData.isAuth ? userData.email : "",
+    booker: userData?.isAuth ? userData.name : "",
+    email: userData?.isAuth ? userData.email : "",
   });
   const [ infoAgreement, setInfoAgreement ] = useState(false);
   const [ confirmModal, setConfirmModal ] = useState(false);
 
   useEffect(() => {
-    const { startDate, endDate } = visitDate;
-
-    setNights(moment(endDate).diff(startDate, 'days'));
-  }, [visitDate.startDate, visitDate.endDate])
+    const { checkIn, checkOut } = visitDate;
+    setNights(moment(checkOut).diff(moment(checkIn), 'days'));
+  }, [visitDate.checkIn, visitDate.checkOut])
 
   const handleVisitDateChange = (type, e) => {
     setVisitDate({
@@ -116,13 +115,13 @@ function ReservationPage(props) {
 
   const createBookingData = () => {
     const { booker, email } = bookerInfo;
-    const { startDate, endDate } = visitDate;
+    const { checkIn, checkOut } = visitDate;
 
     let result = {
       booker,
       email,
-      checkIn: moment(startDate).format("YYYY-MM-DD"),
-      checkOut: moment(endDate).format("YYYY-MM-DD"),
+      checkIn,
+      checkOut,
       nights,
       visitTime: visitTimeList.find(list => list.value === visitTime).time,
       headCount,
@@ -166,16 +165,6 @@ function ReservationPage(props) {
       <p>예약하기</p>
     </div>
   )
-  
-  let bookingInfo = {
-    booker : bookerInfo.booker,
-    checkIn: moment(visitDate.startDate).format("MM월 DD일"),
-    checkOut: moment(visitDate.endDate).format("MM월 DD일"),
-    nights,
-    visitTime,
-    headCount,
-    dinnerMenu,
-  }
 
   return(
     <ContentPage>

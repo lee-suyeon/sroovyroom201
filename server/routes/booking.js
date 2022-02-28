@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const moment = require("moment");
 const config = require('../config/key');
 
 const { Booking } = require('../models/Booking');
@@ -19,6 +20,9 @@ router.post('/', (req, res) => {
 router.post('/booking', (req, res) => {
   
   let data = req.body;
+  let checkIn = moment(data.checkIn).format("YYYY-MM-DD");
+  let checkOut = moment(data.checkOut).format("YYYY-MM-DD");
+
   let transporter = nodemailer.createTransport({
     service: 'Naver',
     host: 'smtp.naver.com',
@@ -37,7 +41,7 @@ router.post('/booking', (req, res) => {
     text: data.booker,
     html: `<h3>예약 확인 메일입니다.</h3>
       <ul>
-        <li>날짜 : <strong>${data.checkIn} ~ ${data.checkOut} (${data.nights + 1}일)</strong></li>
+        <li>날짜 : <strong>${checkIn} ~ ${checkOut} (${data.nights + 1}일)</strong></li>
         <li>방문시간 : <strong>${data.visitTime}</strong></li>
         <li>인원수 : <strong>${data.headCount}명</strong></li>
         <li>메뉴 : <strong>${data.dinnerMenu}</strong></li>

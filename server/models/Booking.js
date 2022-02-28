@@ -15,10 +15,10 @@ const BookingSchema = mongoose.Schema({
     trim: true,
   },
   checkIn: {
-    type: String,
+    type: Date,
   },
   checkOut: {
-    type: String,
+    type: Date,
   },
   nights: {
     type: Number,
