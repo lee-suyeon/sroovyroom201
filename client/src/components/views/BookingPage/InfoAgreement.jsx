@@ -45,7 +45,7 @@ const InfoAgreement = ({ infoAgreement, onChange }) => {
         <Lock />
           <div className="sub-title">개인정보수집에 동의해주세요.</div>
       </FormTitle>
-      <details>
+      <details open>
         <summary>
           <span>개인정보수집동의</span>
           <ChevronDown />

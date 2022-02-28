@@ -71,7 +71,8 @@ function BookingPage(props) {
   });
   const { checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement } = bookingInfo;
   const [ confirmModal, setConfirmModal ] = useState(false);
-  
+  const [ validate, setValidate ] = useState(false);
+
   useEffect(() => {
     setBookingInfo({
       ...bookingInfo,
@@ -79,18 +80,26 @@ function BookingPage(props) {
     })
   }, [checkIn, checkOut, nights])
 
+  useEffect(() => {
+    if(nights < 0 || !booker || !email || !infoAgreement) {
+      setValidate(true);
+    } else {
+      setValidate(false);
+    }
+  }, [ booker, email, infoAgreement, validate, nights ])
+
   const handleBookingInfoChange = useCallback((field, value) => {
     if(field === "infoAgreement") value = !value;
 
     setBookingInfo({
       ...bookingInfo,
       [field]: value,
-    })
-  }, [checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement])
+    });
+  }, [ checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement, validate])
 
-  const handleConfirmModalToggle = () => {
+  const handleConfirmModalToggle = useCallback(() => {
     setConfirmModal(prev => !prev);
-  }
+  }, [ confirmModal ])
 
   const createBookingData = () => {
     let result = {
@@ -104,7 +113,6 @@ function BookingPage(props) {
       dinnerMenu: dinnerMenuList.find(list => list.value === dinnerMenu).menu,
       infoAgreement,
     };
-
     return result;
   }
 
@@ -193,6 +201,7 @@ function BookingPage(props) {
       <Button 
         fullWidth={true}
         float={true}
+        disabled={validate}
         onClick={handleConfirmModalToggle}
       >
         예약하기

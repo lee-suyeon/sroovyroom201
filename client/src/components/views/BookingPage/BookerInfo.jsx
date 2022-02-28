@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState }  from 'react';
 import styled from 'styled-components';
 
 import { FormTitle } from './BookingPage';
@@ -28,9 +28,30 @@ const BookerInfoForm = styled.div`
     align-items: center;
     margin-bottom: 0.7rem;
   }
+
+  .invalid {
+    color: ${({ theme }) => theme.pink };
+    text-align: center;
+    margin-top: -0.2rem;
+  }
 `
+const emailValidation = (email) => {
+  let reg = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  return reg.test(email);
+}
 
 function BookerInfo ({ booker, email, onChange }) {
+  const [ emailVaidate, setEmailVaidate ] = useState(true);
+
+  const onChangeEmail = (e) => {
+    if(!emailValidation(e.target.value) ) {
+      setEmailVaidate(false);
+    } else {
+      setEmailVaidate(true);
+    }
+    onChange('email', e.target.value);
+  }
+
   return (
     <BookerInfoForm>
       <FormTitle>
@@ -43,6 +64,7 @@ function BookerInfo ({ booker, email, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이름을 입력해주세요."}
+        maxlength={20}
         value={booker}
         onChange={(e) => onChange('booker', e.target.value)}
       />
@@ -52,9 +74,13 @@ function BookerInfo ({ booker, email, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이메일을 입력해주세요."}
+        maxlength={50}
         value={email}
-        onChange={(e) => onChange('email',  e.target.value)}
+        onChange={onChangeEmail}
       />
+      {!emailVaidate &&
+        <div className="invalid">❗️이메일 형식으로 적어주세요.❗️</div>
+      }
     </BookerInfoForm>
   )
 }

@@ -8,7 +8,11 @@ import moment from 'moment';
 import { Calendar } from 'react-feather'; 
 
 const VisitDateForm = styled.div`
-
+  & > .invalid {
+    color: ${({ theme }) => theme.pink };
+    text-align: center;
+    margin-top: 0.3rem;
+  }
 `
 
 const VisitDatePicker = styled.div`
@@ -41,7 +45,7 @@ const VisitDatePicker = styled.div`
   }
 `
 
-function VisitDate ({ visitDate, nights, onChange }) {
+function VisitDate ({ checkIn, checkOut, nights, onChange }) {
   let validNights = nights >= 0
 
   return (
@@ -78,6 +82,11 @@ function VisitDate ({ visitDate, nights, onChange }) {
           </div>
         </div>
       </VisitDatePicker>
+      {!validNights &&
+        <div className={`${validNights ? "" : "invalid"}`}>
+          ❗️날짜를 다시 선택해주세요.❗️
+        </div>
+      }
     </VisitDateForm>
   )
 }
