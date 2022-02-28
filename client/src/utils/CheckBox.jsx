@@ -52,7 +52,7 @@ const CheckMark = styled.div`
     `}
 `
 
-function Checkbox({ props, checked, onChange, name, id }) {
+function Checkbox({ props, checked, onChange, name, label, id }) {
   return (
     <Label htmlFor={id}>
       <CustomCheckbox 
@@ -66,7 +66,7 @@ function Checkbox({ props, checked, onChange, name, id }) {
       <CheckMark checked={checked}>
         <Check/>
       </CheckMark>
-      <span className="check-name">{name}</span>
+      <span>{label}</span>
     </Label>
   )
 }

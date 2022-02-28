@@ -48,6 +48,12 @@ const StyledButton = styled.button`
   padding: 0 1rem;
   transition: 0.2s;
   
+  /* 크기 */
+  ${sizeStyle}
+
+  /* 색상 */
+  ${colorStyle}
+
   ${props =>
     props.fullWidth &&
     css`
@@ -65,13 +71,8 @@ const StyledButton = styled.button`
     props.disabled &&
     css`
       cursor: not-allowed;
+      background: ${({ theme }) => theme.gray };
     `}
-
-  /* 크기 */
-  ${sizeStyle}
-
-  /* 색상 */
-  ${colorStyle}
 
   & + & {
     margin-left: 1rem;
