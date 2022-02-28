@@ -41,8 +41,9 @@ function DinnerMenu ({ dinnerMenu, onChange }) {
           <li key={`menu-${list.value}`}>
             <CheckBox
               id={list.value}
-              name={list.menu}
-              onChange={() => onChange(list.value)}
+              name="dinnerMenu"
+              label={list.menu}
+              onChange={() => onChange('dinnerMenu', list.value)}
               checked={dinnerMenu === list.value ? true : false }
             />
               <p className="menu-desc">{list.desc}</p>

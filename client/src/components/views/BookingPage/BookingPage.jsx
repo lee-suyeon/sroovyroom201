@@ -56,67 +56,43 @@ export const FormTitle = styled.div`
   }
 `
 
-function ReservationPage(props) {
+function BookingPage(props) {
   const userData = useSelector(state => state.user.userData);
-  const [ visitDate, setVisitDate ] = useState({
+  const [ bookingInfo, setBookingInfo ] = useState({
     checkIn: new Date(),
     checkOut: new Date(),
-  })
-  const [ nights, setNights ] = useState(0);
-  const [ headCount, setHeadCount ] = useState(1);
-  const [ visitTime, setVisitTime ] = useState(1);
-  const [ dinnerMenu, setDinnerMenu ] = useState(1);
-  const [ bookerInfo, setBookerInfo ] = useState({
+    nights: 0,
+    headCount: 1,
+    visitTime: 1,
+    dinnerMenu: 1,
     booker: userData?.isAuth ? userData.name : "",
     email: userData?.isAuth ? userData.email : "",
+    infoAgreement: false,
   });
-  const [ infoAgreement, setInfoAgreement ] = useState(false);
+  const { checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement } = bookingInfo;
   const [ confirmModal, setConfirmModal ] = useState(false);
-
+  
   useEffect(() => {
-    const { checkIn, checkOut } = visitDate;
-    setNights(moment(checkOut).diff(moment(checkIn), 'days'));
-  }, [visitDate.checkIn, visitDate.checkOut])
-
-  const handleVisitDateChange = (type, e) => {
-    setVisitDate({
-      ...visitDate,
-      [type]: e
+    setBookingInfo({
+      ...bookingInfo,
+      nights: moment(checkOut).diff(moment(checkIn), 'days')
     })
-  }
+  }, [checkIn, checkOut, nights])
 
-  const handleHeadCountClick = (count) => {
-    setHeadCount(count);
-  }
+  const handleBookingInfoChange = useCallback((field, value) => {
+    if(field === "infoAgreement") value = !value;
 
-  const handleVisitTimeClick = (time) => {
-    setVisitTime(time);
-  }
-
-  const handleDinnerMenuChange = (menu) => {
-    setDinnerMenu(menu);
-  }
-
-  const handleBookerInfoChange = (e) => {
-    const { name, value } = e.target;
-    setBookerInfo({
-      ...bookerInfo,
-      [name]: value
+    setBookingInfo({
+      ...bookingInfo,
+      [field]: value,
     })
-  }
-
-  const handleInfoAgreementChange = () => {
-    setInfoAgreement(prev => !prev);
-  }
+  }, [checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement])
 
   const handleConfirmModalToggle = () => {
     setConfirmModal(prev => !prev);
   }
 
   const createBookingData = () => {
-    const { booker, email } = bookerInfo;
-    const { checkIn, checkOut } = visitDate;
-
     let result = {
       booker,
       email,
@@ -176,39 +152,41 @@ function ReservationPage(props) {
       <BookingForm>
         {/* 방문날짜 */}
         <VisitDate 
-          visitDate={visitDate}
+          checkIn={checkIn}
+          checkOut={checkOut}
           nights={nights}
-          onChange={handleVisitDateChange}
+          onChange={handleBookingInfoChange}
         />
 
         {/* 방문시간 */}
         <VisitTime 
           visitTime={visitTime}
-          onClick={handleVisitTimeClick}
+          onClick={handleBookingInfoChange}
         />
     
         {/* 인원수 */}
         <HeadCount 
           headCount={headCount}
-          onClick={handleHeadCountClick}
+          onClick={handleBookingInfoChange}
         />
 
         {/* 메뉴 */}
         <DinnerMenu 
           dinnerMenu={dinnerMenu}
-          onChange={handleDinnerMenuChange}
+          onChange={handleBookingInfoChange}
         />
 
         {/* 예약자 정보 */}
         <BookerInfo 
-          bookerInfo={bookerInfo}
-          onChange={handleBookerInfoChange}
+          booker={booker}
+          email={email}
+          onChange={handleBookingInfoChange}
         />
 
         {/* 개인정보동의 */}
         <InfoAgreement 
           infoAgreement={infoAgreement}
-          onChange={handleInfoAgreementChange}
+          onChange={handleBookingInfoChange}
         />
       </BookingForm>
 
@@ -232,5 +210,5 @@ function ReservationPage(props) {
   )
 }
 
-export default ReservationPage;
+export default BookingPage;
 

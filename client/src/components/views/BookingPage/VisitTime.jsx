@@ -45,7 +45,7 @@ function VisitTime ({ visitTime, onClick }) {
         {visitTimeList.map((list, i) => 
           <button 
             key={`time${list.value}`}
-            onClick={() => onClick(list.value)}
+            onClick={() => onClick('visitTime', list.value)}
             className={ visitTime == list.value ? 'selected' : "" }
           >
             {list.time}

@@ -54,7 +54,7 @@ function VisitDate ({ visitDate, nights, onChange }) {
         <div className="check-in">
           <span>체크인</span>
           <DatePicker
-            selectedDate={visitDate.checkIn}
+            selectedDate={checkIn}
             onChange={(e) => onChange('checkIn', e)}
             minDate={moment().toDate()}
             />
@@ -62,7 +62,7 @@ function VisitDate ({ visitDate, nights, onChange }) {
         <div className="check-out">
           <span>체크아웃</span>
           <DatePicker 
-            selectedDate={visitDate.checkOut}
+            selectedDate={checkOut}
             onChange={(e) => onChange('checkOut', e)}
             minDate={moment().toDate()}
             maxDate={moment().add('1', 'M').toDate()}

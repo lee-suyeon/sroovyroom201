@@ -59,9 +59,9 @@ const InfoAgreement = ({ infoAgreement, onChange }) => {
 
         <CheckBox
           id="agree"
-          name={"개인정보수집에 동의하시나요?"}
+          label={"개인정보수집에 동의하시나요?"}
           checked={infoAgreement}
-          onChange={onChange}
+          onChange={(e) => onChange('infoAgreement', infoAgreement)}
         />
       </details>
     </InfoAgreementForm>

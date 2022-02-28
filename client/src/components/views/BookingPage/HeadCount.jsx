@@ -49,7 +49,7 @@ function HeadCount ({ headCount, onClick }) {
         {headCountList.map((head, idx) => 
           <button 
             key={`head${idx}`}
-            onClick={() => onClick(head.value)}
+            onClick={() => onClick('headCount', head.value)}
             value={headCount}
             className={ headCount == head.value ? 'selected' : "" }
           >

@@ -30,7 +30,7 @@ const BookerInfoForm = styled.div`
   }
 `
 
-function BookerInfo ({ bookerInfo, onChange }) {
+function BookerInfo ({ booker, email, onChange }) {
   return (
     <BookerInfoForm>
       <FormTitle>
@@ -43,8 +43,8 @@ function BookerInfo ({ bookerInfo, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이름을 입력해주세요."}
-        value={bookerInfo.booker}
-        onChange={onChange}
+        value={booker}
+        onChange={(e) => onChange('booker', e.target.value)}
       />
       <TextInput 
         name="email"
@@ -52,8 +52,8 @@ function BookerInfo ({ bookerInfo, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이메일을 입력해주세요."}
-        value={bookerInfo.email}
-        onChange={onChange}
+        value={email}
+        onChange={(e) => onChange('email',  e.target.value)}
       />
     </BookerInfoForm>
   )
