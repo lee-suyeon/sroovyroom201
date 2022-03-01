@@ -90,7 +90,7 @@ function BookingPage(props) {
   }, [ booker, email, infoAgreement, validate, nights ])
 
   useEffect(() => {
-    Axios.get('/api/booking')
+    Axios.get('/api/booking/date')
       .then(res => {
         if(res.data.success) {
           setBookingList(res.data.date);
@@ -147,7 +147,7 @@ function BookingPage(props) {
   }
 
   const sendMail = () => {
-    Axios.post('/api/booking/booking', createBookingData())
+    Axios.post('/api/booking/sendMail', createBookingData())
       .then(res => {
         if(res.data.success) {
           alert('메일 전송')
@@ -177,6 +177,7 @@ function BookingPage(props) {
           checkIn={checkIn}
           checkOut={checkOut}
           nights={nights}
+          bookingList={bookingList}
           onChange={handleBookingInfoChange}
         />
 

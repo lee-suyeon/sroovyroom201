@@ -6,7 +6,16 @@ const config = require('../config/key');
 
 const { Booking } = require('../models/Booking');
 
+// 전체 예약 조회
 router.get('/', (req, res) => {
+  Booking.find()
+    .exec((err, date ) => {
+      if(err) return res.status(400).json({ success: false, err })
+      return res.status(200).json({ success: true, date })
+    })
+})
+
+router.get(`/date`, (req, res) => {
   let today = moment().set({'hour': 0, 'minute': 0, 'second': 0});
 
   Booking.find({ 'checkIn': { '$gte' : today }})
@@ -27,7 +36,7 @@ router.post('/', (req, res) => {
   
 });
 
-router.post('/booking', (req, res) => {
+router.post('/sendMail', (req, res) => {
   
   let data = req.body;
   let checkIn = moment(data.checkIn).format("YYYY-MM-DD");
