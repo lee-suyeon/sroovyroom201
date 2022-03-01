@@ -45,8 +45,19 @@ const VisitDatePicker = styled.div`
   }
 `
 
-function VisitDate ({ checkIn, checkOut, nights, onChange }) {
+function VisitDate ({ checkIn, checkOut, nights, bookingList, onChange }) {
   let validNights = nights >= 0
+
+  let disabledDate = [];
+  bookingList.forEach(list => {
+    if(list.nights === 0) {
+      disabledDate.push(moment(list.checkIn).toDate())
+    } else {
+      for(let i = 0; i < list.nights + 1; i++) {
+        disabledDate.push(moment(list.checkIn).add(i, 'd').toDate())
+      }
+    }
+  })
 
   return (
     <VisitDateForm>
@@ -60,7 +71,9 @@ function VisitDate ({ checkIn, checkOut, nights, onChange }) {
           <DatePicker
             selectedDate={checkIn}
             onChange={(e) => onChange('checkIn', e)}
+            excludeDates={disabledDate}
             minDate={moment().toDate()}
+            maxDate={moment().add('2', 'M').toDate()}
             />
         </div>
         <div className="check-out">
@@ -68,8 +81,9 @@ function VisitDate ({ checkIn, checkOut, nights, onChange }) {
           <DatePicker 
             selectedDate={checkOut}
             onChange={(e) => onChange('checkOut', e)}
+            excludeDates={disabledDate}
             minDate={moment().toDate()}
-            maxDate={moment().add('1', 'M').toDate()}
+            maxDate={moment().add('2', 'M').toDate()}
           />
         </div>
         <div className="period">

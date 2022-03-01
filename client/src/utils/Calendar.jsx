@@ -61,7 +61,7 @@ const CustomContainer = ({ className, children }) => {
   );
 };
 
-function Calendar ({ selectedDate, onChange, maxDate, minDate, ...rest}) {
+function Calendar ({ selectedDate, onChange, maxDate, minDate, excludeDates, ...rest}) {
 
   const DatePickerInput = forwardRef(({ value, onClick }, ref) => (
     <DateSelectButton className="example-custom-input" onClick={onClick} ref={ref}>
@@ -78,6 +78,7 @@ function Calendar ({ selectedDate, onChange, maxDate, minDate, ...rest}) {
       maxDate={maxDate}
       minDate={minDate}
       calendarContainer={CustomContainer}
+      excludeDates={excludeDates}
       popperPlacement="bottom-start"
     />
   )
