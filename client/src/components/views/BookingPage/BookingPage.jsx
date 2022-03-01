@@ -72,6 +72,7 @@ function BookingPage(props) {
   const { checkIn, checkOut, nights, headCount, visitTime, dinnerMenu, booker, email, infoAgreement } = bookingInfo;
   const [ confirmModal, setConfirmModal ] = useState(false);
   const [ validate, setValidate ] = useState(false);
+  const [ bookingList, setBookingList ] = useState([]);
 
   useEffect(() => {
     setBookingInfo({
@@ -88,6 +89,18 @@ function BookingPage(props) {
     }
   }, [ booker, email, infoAgreement, validate, nights ])
 
+  useEffect(() => {
+    Axios.get('/api/booking')
+      .then(res => {
+        if(res.data.success) {
+          setBookingList(res.data.date);
+        } else {
+          alert('예약 정보를 가져오지못했습니다.');
+        }
+      })
+  }, []);
+
+
   const handleBookingInfoChange = useCallback((field, value) => {
     if(field === "infoAgreement") value = !value;
 
@@ -103,6 +116,7 @@ function BookingPage(props) {
 
   const createBookingData = () => {
     let result = {
+      user: userData?.isAuth && userData._id,
       booker,
       email,
       checkIn,

@@ -6,6 +6,16 @@ const config = require('../config/key');
 
 const { Booking } = require('../models/Booking');
 
+router.get('/', (req, res) => {
+  let today = moment().set({'hour': 0, 'minute': 0, 'second': 0});
+
+  Booking.find({ 'checkIn': { '$gte' : today }})
+    .exec((err, date ) => {
+      if(err) return res.status(400).json({ success: false, err })
+      return res.status(200).json({ success: true, date })
+    })
+})
+
 router.post('/', (req, res) => {
 
   const booking = new Booking(req.body)
@@ -53,9 +63,11 @@ router.post('/booking', (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-        console.log(error);
-        return;
-    }
+      console.log('err : ', info)
+      return res.status(400).json({ success: false, error })
+    } else{
+      return res.status(200).json({ success: true })
+    };
   });
 })
 
