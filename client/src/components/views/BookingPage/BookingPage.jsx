@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
-import { PageContent, TextLogo, Button, Modal } from 'utils';
+import { PageContent, TextLogo, Button } from 'utils';
+import { toast } from 'react-toastify';
 
 import Axios from 'axios'
 import moment from 'moment';
@@ -73,6 +74,7 @@ function BookingPage(props) {
   const [ confirmModal, setConfirmModal ] = useState(false);
   const [ validate, setValidate ] = useState(false);
   const [ bookingList, setBookingList ] = useState([]);
+  const [ successBooking, setSuccessBooking ] = useState(false);
 
   useEffect(() => {
     setBookingInfo({
@@ -95,11 +97,10 @@ function BookingPage(props) {
         if(res.data.success) {
           setBookingList(res.data.date);
         } else {
-          alert('예약 정보를 가져오지못했습니다.');
+          toast.error('예약 정보를 가져오지못했습니다.');
         }
       })
   }, []);
-
 
   const handleBookingInfoChange = useCallback((field, value) => {
     if(field === "infoAgreement") value = !value;
@@ -139,9 +140,10 @@ function BookingPage(props) {
     Axios.post('/api/booking', createBookingData())
       .then(res => {
         if(res.data.success) {
-          handleConfirmModalToggle();
+          // handleConfirmModalToggle();
+          setSuccessBooking(true);
         } else {
-          alert('예약 실패했습니다.');
+          toast.error('예약 실패했습니다.');
         }
       })
   }
@@ -150,9 +152,9 @@ function BookingPage(props) {
     Axios.post('/api/booking/sendMail', createBookingData())
       .then(res => {
         if(res.data.success) {
-          alert('메일 전송')
+          toast.success('메일이 전송되었습니다.')
         } else {
-          alert('메일 실패');
+          toast.erro('메일 전송에 실패했습니다.');
         }
       })
   }
@@ -224,6 +226,7 @@ function BookingPage(props) {
 
       {confirmModal &&
         <BookingConfirmModal
+          successBooking={successBooking}
           bookingInfo={createBookingData()}
           onToggle={handleConfirmModalToggle}
           onConfirm={confirmBooking}

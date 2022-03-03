@@ -10,6 +10,7 @@ import VisitorsPage from './components/views/VisitorsPage/VisitorsPage';
 import NoticePage from './components/views/NoticePage/NoticePage';
 import GalleryPage from './components/views/GalleryPage/GalleryPage';
 import BookingPage from './components/views/BookingPage/BookingPage';
+import Toast from 'utils/Toast';
 import './App.css';
 
 import Auth from './hoc/auth';
@@ -27,6 +28,7 @@ function App() {
         <Route exact path= "/booking" component={Auth(BookingPage, null)} />
         <Route exact path= "/visitors" component={Auth(VisitorsPage, null)} />
       </Switch>
+      <Toast />
     </div>
   );
 }
