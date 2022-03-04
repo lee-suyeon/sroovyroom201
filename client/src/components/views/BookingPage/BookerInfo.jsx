@@ -64,7 +64,7 @@ function BookerInfo ({ booker, email, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이름을 입력해주세요."}
-        maxlength={20}
+        maxLength={20}
         value={booker}
         onChange={(e) => onChange('booker', e.target.value)}
       />
@@ -74,7 +74,7 @@ function BookerInfo ({ booker, email, onChange }) {
         required={true}
         className="booker-input"
         placeholder={"이메일을 입력해주세요."}
-        maxlength={50}
+        maxLength={50}
         value={email}
         onChange={onChangeEmail}
       />
