@@ -117,7 +117,7 @@ function BookingPage(props) {
 
   const createBookingData = () => {
     let result = {
-      user: userData?.isAuth && userData._id,
+      user: userData._id,
       booker,
       email,
       checkIn,
@@ -140,7 +140,6 @@ function BookingPage(props) {
     Axios.post('/api/booking', createBookingData())
       .then(res => {
         if(res.data.success) {
-          // handleConfirmModalToggle();
           setSuccessBooking(true);
         } else {
           toast.error('예약 실패했습니다.');
