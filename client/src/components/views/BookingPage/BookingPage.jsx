@@ -15,7 +15,8 @@ import VisitTime, { visitTimeList } from './VisitTime';
 import DinnerMenu, { dinnerMenuList } from './DinnerMenu';
 import BookerInfo from './BookerInfo';
 import InfoAgreement from './InfoAgreement';
-import BookingConfirmModal from './BookingConfirmModal'
+import BookingConfirmModal from './BookingConfirmModal';
+import BookingSuccessModal from './BookingSuccessModal';
 
 const ContentPage = styled.div`
   height: 100%;
@@ -75,6 +76,7 @@ function BookingPage(props) {
   const [ validate, setValidate ] = useState(false);
   const [ bookingList, setBookingList ] = useState([]);
   const [ successBooking, setSuccessBooking ] = useState(false);
+  const [ successModal, setSuccessModal ] = useState(false);
 
   useEffect(() => {
     setBookingInfo({
@@ -115,6 +117,11 @@ function BookingPage(props) {
     setConfirmModal(prev => !prev);
   }, [ confirmModal ])
 
+  const handleSuccessModalToggle = useCallback(() => {
+    setSuccessModal(prev => !prev);
+    props.history.push('/menu');
+  }, [ successModal ])
+
   const createBookingData = () => {
     let result = {
       user: userData._id,
@@ -141,6 +148,8 @@ function BookingPage(props) {
       .then(res => {
         if(res.data.success) {
           setSuccessBooking(true);
+          handleConfirmModalToggle();
+          setSuccessModal(prev => !prev);
         } else {
           toast.error('예약 실패했습니다.');
         }
@@ -225,10 +234,15 @@ function BookingPage(props) {
 
       {confirmModal &&
         <BookingConfirmModal
-          successBooking={successBooking}
           bookingInfo={createBookingData()}
           onToggle={handleConfirmModalToggle}
           onConfirm={confirmBooking}
+        />
+      }
+
+      {successBooking && successModal &&
+        <BookingSuccessModal
+          onToggle={handleSuccessModalToggle}
         />
       }
     </ContentPage>
