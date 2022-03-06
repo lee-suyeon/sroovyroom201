@@ -59,7 +59,10 @@ const ModalFooter = styled.div`
   }
 `
 
-export const Modal = ({ children, onClose, onConfirm, width }) => {
+export const Modal = ({ children, type, onClose, onConfirm, width }) => {
+  // Type 
+  // alert
+  // confirm
   return (
     <Overlay>
       <ModalWrapper width={width}>
@@ -83,14 +86,16 @@ export const Modal = ({ children, onClose, onConfirm, width }) => {
           >
             확인
           </Button>
-          <Button
-            fullWidth
-            size="small"
-            className="cancel"
-            onClick={onClose}
-          >
-            취소
-          </Button>
+          {type !== 'confirm' &&
+            <Button
+              fullWidth
+              size="small"
+              className="cancel"
+              onClick={onClose}
+            >
+              취소
+            </Button>
+          }
         </ModalFooter>
       </ModalWrapper>
     </Overlay>
