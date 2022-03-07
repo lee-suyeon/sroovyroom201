@@ -25,7 +25,7 @@ function App() {
         <Route exact path= "/register" component={Auth(RegisterPage, false)} />
         <Route exact path= "/notice" component={Auth(NoticePage, null)} />
         <Route exact path= "/gallery" component={Auth(GalleryPage, null)} />
-        <Route exact path= "/booking" component={Auth(BookingPage, null)} />
+        <Route exact path= "/booking" component={Auth(BookingPage, true)} />
         <Route exact path= "/visitors" component={Auth(VisitorsPage, null)} />
       </Switch>
       <Toast />
