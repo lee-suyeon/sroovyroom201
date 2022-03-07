@@ -236,7 +236,10 @@ function DoorLock( props ) {
       </DoorLockWrapper>
       
       {showWelcome &&
-        <Modal onClose={onClickConfirm}>
+        <Modal 
+          onConfirm={onClickConfirm}
+          type="confirm"
+          >
           🤗 👐 🤗 <br />
           환영합니다!!!!!🥳
         </Modal>
