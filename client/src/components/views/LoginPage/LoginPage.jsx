@@ -6,8 +6,9 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { loginUser } from '_actions/user_action';
+import SideNav from 'components/views/SideNav/SideNav'
 import { Button, TextInput, PageContent, TextLogo } from 'utils'
-import { Menu, PhoneCall, UserPlus } from 'react-feather';
+import { PhoneCall, UserPlus } from 'react-feather';
 
 const ContentPage = styled.div`
   height: 100vh;
@@ -22,8 +23,9 @@ const DayCounter = styled.div`
   text-align: right;
   color: ${({ theme }) => theme.textColor };
 
-  .day-counter {
+  & > span {
     color:  ${({ theme }) => theme.mainColor };
+    font-weight: 500;
   }
 `
 
@@ -45,13 +47,6 @@ const InputForm = styled.form`
   flex-direction: column;
   padding: 0 1rem;
   margin-bottom: 1rem;
-`
-
-const NavIcon = styled.div`
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  color: ${({ theme }) => theme.mainColor };
 `
 
 const ButtonGroup = styled.div`
@@ -101,15 +96,13 @@ function LoginPage(props) {
 
   const dayCounter = (
     <DayCounter>
-      🏡 독립 
-      <span className="day-counter"> {dayCount}</span>
-      일 째
+      🏡 독립 <span> {dayCount}</span>일 째
     </DayCounter>
   )
 
   return (
     <ContentPage>
-        <NavIcon><Menu /></NavIcon>
+      <SideNav />
       <PageContent
         title={checkInTitle}
         desc={dayCounter}
@@ -129,6 +122,7 @@ function LoginPage(props) {
           label="Password"
           placeholder="비밀번호를 입력해주세요"
           value={password}
+          autoComplete="on"
           onChange={onPasswordHandler}
         />
       </InputForm>
