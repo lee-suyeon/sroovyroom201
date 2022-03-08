@@ -5,7 +5,8 @@
   "main": "index.js",
   "engine": {
     "node": "16.13.2",
-    "npm": "8.3.1"
+    "npm": "8.3.1",
+    "yarn": "1.22.10"
   },
   "scripts": {
     "start": "node server/index.js",
