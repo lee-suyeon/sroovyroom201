@@ -57,14 +57,21 @@ function GalleryPage() {
   }
 
   const renderCaption = (caption) => {
+    return renderHtml(captionFormat(caption));
+  }
+
+  const captionFormat = (caption) => {
     const captionStr = caption.split('\n');
     const dotIndex = captionStr.findIndex(c => c === '.');
-
     captionStr.splice(dotIndex, captionStr.length);
 
-    let result = captionStr.map((line, idx) => 
+    return captionStr;
+  }
+
+  const renderHtml = (captionData) => {
+    let result = captionData.map((data, idx) => 
       <p key={idx}> 
-        {line}<br />
+        {data}<br />
       </p>
     );
     
