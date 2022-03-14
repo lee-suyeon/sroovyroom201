@@ -210,37 +210,48 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       })
   }
 
-  const onLike = () => {
+  const onClickHeart = () => {
+    if(!likes) addLike();
+    else cancelLike();
+  }
+
+  const fillLike = () => {
+    setLikes(true);
+    setCountLikes(countLikes + 1);
+  }
+
+  const emptyLike = () => {
+    setLikes(false);
+    setCountLikes(countLikes - 1);
+  }
+
+  const addLike = () => {
     if(!isAuth) {
-      if(likes) {
-        setLikes(false);
-        setCountLikes(countLikes - 1);
-      } else {
-        setLikes(true);
-        setCountLikes(countLikes + 1);
-      }
+      fillLike();
     } else {
-      if(likes) { // unlike
-        Axios.post('/api/like/unLike', messageData)
+      Axios.post('/api/like/upLike', messageData)
         .then(res => {
           if(res.data.success) {
-            setLikes(false);
-            setCountLikes(countLikes - 1);
-          } else {
-            console.error('failed unlike')
-          }
-        })
-      } else { // uplike 
-        Axios.post('/api/like/upLike', messageData)
-        .then(res => {
-          if(res.data.success) {
-            setLikes(true);
-            setCountLikes(countLikes + 1);
+            fillLike();
           } else {
             console.error('failed like')
           }
         })
-      }
+    }
+  }
+
+  const cancelLike = () => {
+    if(!isAuth) {
+      emptyLike();
+    } else {
+      Axios.post('/api/like/unLike', messageData)
+        .then(res => {
+          if(res.data.success) {
+            emptyLike();
+          } else {
+            console.error('failed unlike')
+          }
+      })
     }
   }
 
@@ -269,7 +280,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
           </div>
         }
         </Comment>
-        <Likes onClick={onLike} like={likes}>
+        <Likes onClick={onClickHeart} like={likes}>
           <span>{countLikes}</span>
           <Heart />
         </Likes>
