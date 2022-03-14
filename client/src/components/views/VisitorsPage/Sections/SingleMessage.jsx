@@ -141,7 +141,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   const isAuth = userData && userData.isAuth;
   const userAvatar = userData && userData.avatar;
 
-  const variable = {
+  const messageData = {
     userId: userData._id,
     messageId: message._id
   }
@@ -160,7 +160,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
 
   // getLike
   useEffect(() => {
-    Axios.post('/api/like/getLikes', variable)
+    Axios.post('/api/like/getLikes', messageData)
       .then(res => {
         if(res.data.success) {
           setCountLikes(res.data.likes.length); // number of likes
@@ -221,7 +221,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       }
     } else {
       if(likes) { // unlike
-        Axios.post('/api/like/unLike', variable)
+        Axios.post('/api/like/unLike', messageData)
         .then(res => {
           if(res.data.success) {
             setLikes(false);
@@ -231,7 +231,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
           }
         })
       } else { // uplike 
-        Axios.post('/api/like/upLike', variable)
+        Axios.post('/api/like/upLike', messageData)
         .then(res => {
           if(res.data.success) {
             setLikes(true);
