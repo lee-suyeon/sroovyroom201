@@ -136,6 +136,7 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
   const [ commentNumber, setCommentNumber ] = useState(0);
   const [ likes, setLikes ] = useState(false);
   const [ countLikes, setCountLikes ] = useState(0);
+  const [ disableLike, setDisableLike ] = useState(false);
   const { writer, temporaryUser, content, createdAt } = message;
 
   const isAuth = userData && userData.isAuth;
@@ -210,7 +211,12 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
       })
   }
 
-  const onClickHeart = () => {
+  const onClickHeart = (e) => {
+    if(disableLike) {
+      console.log('disable');
+      e.preventDefault();
+    }
+
     if(!likes) addLike();
     else cancelLike();
   }
@@ -229,11 +235,14 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     if(!isAuth) {
       fillLike();
     } else {
+      setDisableLike(true);
       Axios.post('/api/like/upLike', messageData)
         .then(res => {
           if(res.data.success) {
+            setDisableLike(false);
             fillLike();
           } else {
+            setDisableLike(false);
             console.error('failed like')
           }
         })
@@ -244,11 +253,14 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
     if(!isAuth) {
       emptyLike();
     } else {
+      setDisableLike(true);
       Axios.post('/api/like/unLike', messageData)
         .then(res => {
           if(res.data.success) {
+            setDisableLike(false);
             emptyLike();
           } else {
+            setDisableLike(false);
             console.error('failed unlike')
           }
       })
