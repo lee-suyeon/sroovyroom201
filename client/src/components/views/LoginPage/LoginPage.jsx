@@ -9,6 +9,7 @@ import { loginUser } from '_actions/user_action';
 import SideNav from 'components/views/SideNav/SideNav'
 import { Button, TextInput, PageContent, TextLogo } from 'utils'
 import { PhoneCall, UserPlus } from 'react-feather';
+import { toast } from 'react-toastify';
 
 const ContentPage = styled.div`
   height: 100vh;
@@ -82,7 +83,9 @@ function LoginPage(props) {
         if(response.payload.loginSuccess){
           props.history.push('/menu');
         } else {
-          alert('Error');
+          setEmail("");
+          setPassword("");
+          toast.error('아이디와 비밀번호를 확인해주세요!')
         }
       });
   }
