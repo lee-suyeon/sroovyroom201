@@ -6,7 +6,8 @@ import styled from 'styled-components';
 
 import SideNav from 'components/views/SideNav/SideNav';
 import { Button, TextInput, TextLogo, SelectBox, PageContent } from 'utils';
-import { mbtiList, avatarList } from './selectList'
+import { mbtiList, avatarList } from './selectList';
+import { toast } from 'react-toastify';
 
 const ContentPage = styled.div`
   display: flex;
@@ -115,10 +116,10 @@ function RegisterPage(props) {
     dispatch(registerUser(body))
       .then(response => {
         if(response.payload.success){
-          alert('회원가입에 성공했습니다!');
+          toast.success('이제부터 sroovyroom과 칭긔칭긔~🥳');
           props.history.push('/login');
         } else {
-          alert('Failed to be friend');
+          toast.error('sroovyroom과 친구되기 실패!😓');
         }
       });
   }

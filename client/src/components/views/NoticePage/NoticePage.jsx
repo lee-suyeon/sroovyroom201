@@ -8,7 +8,8 @@ import moment from 'moment';
 import SideNav from 'components/views/SideNav/SideNav';
 import { PageContent, Button, TextLogo } from 'utils'
 import NoticeForm from './NoticeForm';
-import { Hash, X, Delete, Edit, Trash2, Edit3 } from 'react-feather';
+import { Hash, Trash2, Edit3 } from 'react-feather';
+import { toast } from 'react-toastify'
 
 const NoticeWrapper = styled.div`
 
@@ -104,9 +105,9 @@ function NoticePage() {
     Axios.post('/api/notice/notice')
       .then(res => {
         if(res.data.success){
-          setNotices(res.data.notice.reverse())
+          setNotices(res.data.notice.reverse());
         } else {
-          alert('방명록을 불러오는 데 실패했습니다. ')
+          toast.error("공지사항을 불러오는데에 실패했습니다. ");
         }
       })
   }
@@ -130,8 +131,8 @@ function NoticePage() {
 
   const onClickSubmit = () => {
 
-    if(!title) return alert("제목을 입력해주세요.");
-    if(!content) return alert("내용을 입력해주세요.");
+    if(!title) return toast.error("제목을 입력해주세요.");
+    if(!content) return toast.error("내용을 입력해주세요.");
 
     let body = {
       writer: userData && userData._id,
@@ -142,10 +143,10 @@ function NoticePage() {
     Axios.post('/api/notice', body)
       .then(res => {
         if(res.data.success) {
-          alert('공지사항 작성에 성공했습니다.')
+          toast.success('공지사항 작성에 성공했습니다.')
           setShowNoticeForm(prev => !prev);
         } else {
-          alert('공지사항 작성에 실패했습니다.')
+          toast.error('공지사항 작성에 실패했습니다.')
         }
       })
   }

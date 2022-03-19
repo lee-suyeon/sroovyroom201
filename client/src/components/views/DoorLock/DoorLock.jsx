@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { Key, HelpCircle, Delete } from 'react-feather';
 import { TextLogo, Button, Modal } from 'utils';
+import { toast } from 'react-toastify';
 
 const Layout = styled.div`
   padding: 2rem;
@@ -169,7 +170,7 @@ function DoorLock( props ) {
     if(PASSWORD.join('') === pwd.join('')) {
       setShowWelcome(true);
     } else {
-      alert('틀렸습니다. 다시 한번 입력해주세요. ')
+      toast.error('땡!🙅🏻‍♀️ 다시한번 도전해주세요.');
       setNumbers(defaultPassword);
     }
   }

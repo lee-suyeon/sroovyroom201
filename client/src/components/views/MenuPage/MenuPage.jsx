@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import { Button, PageContent, TextLogo } from 'utils'
 import { Home } from 'react-feather';
+import { toast } from 'react-toastify';
 
 const Menus = [
   { name: "Notice", desc: "우리집 소식", path: "/notice", open: true },
@@ -68,7 +69,7 @@ function MenuPage(props) {
       if (response.status === 200) {
         props.history.push("/login");
       } else {
-        alert('Log Out Failed')
+        toast.error('로그아웃에 실패했습니다.')
       }
     });
   };

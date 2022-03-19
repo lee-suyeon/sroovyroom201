@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import styled, { css } from 'styled-components'
+import React, { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 
 import Axios from 'axios';
 
-import ReplyMessage from './ReplyMessage'
+import ReplyMessage from './ReplyMessage';
 import { TextInput, Avatar } from 'utils';
 import { Heart, CornerDownLeft } from 'react-feather';
+import { toast } from 'react-toastify';
 
 const Message = styled.div`
   font-size: 0.8rem;
@@ -206,14 +207,13 @@ function SingleMessage({ message, refreshMessage, userData, changeTimeFormat, me
           setOpenReply(false);
           setShowComment(true);
         } else {
-          alert("방명록 작성에 실패했습니다.")
+          toast.error("방명록 작성에 실패했습니다.")
         }
       })
   }
 
   const onClickHeart = (e) => {
     if(disableLike) {
-      console.log('disable');
       e.preventDefault();
     }
 

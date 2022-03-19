@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Axios from 'axios';
 
-import SideNav from 'components/views/SideNav/SideNav'
+import SideNav from 'components/views/SideNav/SideNav';
 import Message from './Sections/Message';
-import { TextLogo, PageContent, Loading } from 'utils'
+import { TextLogo, PageContent, Loading } from 'utils';
+import { toast } from 'react-toastify';
 
 const GuestCount = styled.div`
   text-align: right;
@@ -40,7 +41,7 @@ function VisitorsPage() {
           setLoading(false);
           setMessages(res.data.messages)
         } else {
-          alert('방명록을 불러오는 데 실패했습니다. ')
+          toast.error('방명록을 불러오는 데 실패했습니다. ')
         }
       })
   }, [])

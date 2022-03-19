@@ -6,7 +6,8 @@ import moment from 'moment';
 
 import { TextInput, TextLogo } from 'utils';
 import { Send, Meh } from 'react-feather';
-import SingleMessage from './SingleMessage'
+import SingleMessage from './SingleMessage';
+import { toast } from 'react-toastify';
 
 const VisitorsForm = styled.form`
   display: flex;
@@ -82,7 +83,7 @@ function Message({
     e.preventDefault();
 
     if(!guestComment) {
-      return alert("내용을 입력해주세요.")
+      return toast.error("내용을 입력해주세요.");
     }
 
     let temporaryUser = !userData._id ? JSON.parse(localStorage.getItem("temporaryUser")) : null
@@ -96,12 +97,12 @@ function Message({
     Axios.post('/api/visitors/saveVisitors', body)
       .then(res => {
         if(res.data.success){
-          alert("다음에 또 놀러오실거죠?😉")
+          toast.success("다음에 또 놀러오실거죠?😉");
           setGuestComment("");
           refreshMessage(res.data.result);
           window.scrollTo(0, 0);
         } else {
-          alert("방명록 작성에 실패했습니다.")
+          toast.error("방명록 작성에 실패했습니다.");
         }
       })
   }
