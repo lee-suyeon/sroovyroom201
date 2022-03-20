@@ -2,7 +2,7 @@
 
 <br />
 
-<img src="./design/sroovyroom201.png" width="300" />
+<img src="./client/public/sroovyroom201.png" width="300" />
 
 <br />
 <br />
