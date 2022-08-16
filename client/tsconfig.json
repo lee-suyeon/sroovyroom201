@@ -14,13 +14,28 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@components": ["src/components"],
+      "@styles/*": ["src/styles/*"],
+      "@styles": ["src/styles"],
+      "@hooks/*": ["src/hooks/*"],
+      "@hooks": ["src/hooks"],
+      "@constants": ["src/constants"],
+      "@constants/*": ["src/constants/*"],
+      "@stores": ["src/stores"],
+      "@service": ["src/service"],
+      "@libs/*": ["src/libs/*"],
+      "@utils": ["src/utils"]
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx"],
   "exclude": [
     "node_modules"
   ]
