@@ -6,3 +6,4 @@ client/debug.log
 *.swp
 /.vscode
 .next
+/.yarn
