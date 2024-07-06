@@ -1,20 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
-import { Menu, X} from 'react-feather';
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { Menu, X } from "react-feather";
 
-import { Logo } from 'utils'
+import { Logo } from "utils";
 
-import { toggleSideNav } from '_actions/menu_action';
+import { toggleSideNav } from "_actions/menu_action";
 
 const NavIcon = styled.div`
   position: absolute;
   top: 2.5rem;
   right: 2rem;
-  color: ${({ theme }) => theme.mainColor };
-`
+  color: ${({ theme }) => theme.mainColor};
+`;
 
 const SideNavWrapper = styled.div`
   width: 100%;
@@ -23,7 +23,7 @@ const SideNavWrapper = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  background: ${({ theme }) => theme.darkGreen };
+  background: ${({ theme }) => theme.darkGreen};
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -40,55 +40,61 @@ const SideNavWrapper = styled.div`
   }
 
   svg {
-    color: ${({ theme }) => theme.white };
+    color: ${({ theme }) => theme.white};
   }
 
   .logo {
-    background: ${({ theme }) => theme.white };
+    background: ${({ theme }) => theme.white};
     margin: 0 auto;
 
-    .sroovy, .room {
-      color: ${({ theme }) => theme.mainColor };
+    .sroovy,
+    .room {
+      color: ${({ theme }) => theme.mainColor};
     }
 
     &:after {
-      background: ${({ theme }) => theme.mainColor };
+      background: ${({ theme }) => theme.mainColor};
     }
   }
-`
+`;
 
 const MenuList = styled.ul`
   text-align: center;
   margin: 1rem 0;
 
   li {
-    color: ${({ theme }) => theme.white };
+    color: ${({ theme }) => theme.white};
     font-size: 1.2rem;
     padding: 0.8rem 0;
   }
-`
+`;
 
 const Footer = styled.div`
   text-align: center;
   font-size: 0.8rem;
-  color: ${({ theme }) => theme.white };
-`
+  color: ${({ theme }) => theme.white};
+`;
 
 const menuList = [
-  { id: 0, name: 'Home', path: '/'},
-  { id: 1, name: 'Menu', path: '/menu'},
-  { id: 2, name: 'Notice', path: '/notice'},
-  { id: 3, name: 'Visitors', path: '/visitors'},
-  { id: 4, name: 'Gallery', path: '/gallery'},
-]
+  { id: 0, name: "Home", path: "/" },
+  { id: 1, name: "Menu", path: "/menu" },
+  { id: 2, name: "Notice", path: "/notice" },
+  { id: 3, name: "Visitors", path: "/visitors" },
+  { id: 4, name: "Gallery", path: "/gallery" },
+];
 
-function SideNav () {
-  const visible = useSelector(state => state.menu.showSideNav)
+function SideNav(props) {
+  const visible = useSelector((state) => state.menu.showSideNav);
   const dispatch = useDispatch();
 
   const onClickSideNav = () => {
     dispatch(toggleSideNav());
-  }
+  };
+
+  const onClickMenu = (path) => {
+    props.history.push(path);
+    dispatch(toggleSideNav());
+  };
 
   return (
     <React.Fragment>
@@ -96,15 +102,15 @@ function SideNav () {
         <Menu />
       </NavIcon>
       <SideNavWrapper className={visible ? "show" : "hide"}>
-        <X onClick={onClickSideNav}/>
+        <X onClick={onClickSideNav} />
         <div>
           <Logo size="large" color="white" />
           <MenuList>
-            {menuList.map(list =>
-              <Link to={list.path} key={`menu${list.id}`}>
+            {menuList.map((list) => (
+              <li key={`menu${list.id}`} onClick={() => onClickMenu(list.path)}>
                 <li>{list.name}</li>
-              </Link> 
-            )}
+              </li>
+            ))}
           </MenuList>
         </div>
         <Footer>
@@ -114,7 +120,7 @@ function SideNav () {
         </Footer>
       </SideNavWrapper>
     </React.Fragment>
-  )
+  );
 }
 
-export default SideNav;
+export default withRouter(SideNav);

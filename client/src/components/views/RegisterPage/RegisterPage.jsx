@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '_actions/user_action';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerUser } from "_actions/user_action";
+import styled from "styled-components";
 
-import SideNav from 'components/views/SideNav/SideNav';
-import { Button, TextInput, TextLogo, SelectBox, PageContent } from 'utils';
-import { mbtiList, avatarList } from './selectList';
-import { toast } from 'react-toastify';
+import SideNav from "components/views/SideNav/SideNav";
+import { Button, TextInput, TextLogo, SelectBox, PageContent } from "utils";
+import { mbtiList, avatarList } from "./selectList";
+import { toast } from "react-toastify";
 
 const ContentPage = styled.div`
   display: flex;
@@ -16,23 +16,23 @@ const ContentPage = styled.div`
   width: 100%;
   height: 100%;
   padding: 2rem;
-`
+`;
 
 const FreeDrink = styled.div`
   font-size: 0.8rem;
-`
+`;
 
 const InputForm = styled.form`
   display: flex;
   flex-direction: column;
   overflow: auto;
   padding: 0 1rem 3rem;
-`
+`;
 const AvatarSelect = styled.div`
   margin-bottom: 2rem;
 
   .title {
-    color: ${({ theme }) => theme.mainColor };
+    color: ${({ theme }) => theme.mainColor};
     font-weight: 500;
     margin-bottom: 1rem;
   }
@@ -40,7 +40,7 @@ const AvatarSelect = styled.div`
   p {
     font-size: 0.825rem;
     color: #666;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
   }
 
   .avatar {
@@ -53,7 +53,7 @@ const AvatarSelect = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: ${({ theme }) => theme.lightGreen };
+    background: ${({ theme }) => theme.lightGreen};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,18 +71,18 @@ const AvatarSelect = styled.div`
     font-size: 23px;
     grid-gap: 0.7rem;
   }
-`
+`;
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
-  const [ inputs, setInputs ] = useState({
+  const [inputs, setInputs] = useState({
     name: "",
     email: "",
     password: "",
     message: "",
-  })
-  const [ mbti, setMbti ] = useState(-1);
-  const [ avatar, setAvatar ] = useState(0);
+  });
+  const [mbti, setMbti] = useState(-1);
+  const [avatar, setAvatar] = useState(0);
   const { name, email, password, message } = inputs;
 
   const onChangeInput = (e) => {
@@ -90,20 +90,20 @@ function RegisterPage(props) {
     setInputs({
       ...inputs,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const onChangeSelect = (e) => {
     setMbti(e.target.value);
-  }
+  };
 
   const onChangeAvatart = (idx) => {
     setAvatar(idx);
-  }
+  };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-  
+
     let body = {
       email,
       name,
@@ -111,50 +111,44 @@ function RegisterPage(props) {
       avatar,
       mbti,
       message,
-    }
+    };
 
-    dispatch(registerUser(body))
-      .then(response => {
-        if(response.payload.success){
-          toast.success('이제부터 sroovyroom과 칭긔칭긔~🥳');
-          props.history.push('/login');
-        } else {
-          toast.error('sroovyroom과 친구되기 실패!😓');
-        }
-      });
-  }
+    dispatch(registerUser(body)).then((response) => {
+      if (response.payload.success) {
+        toast.success("이제부터 sroovyroom과 칭긔칭긔~🥳");
+        props.history.push("/login");
+      } else {
+        toast.error("sroovyroom과 친구되기 실패!😓");
+      }
+    });
+  };
 
   const renderAvatar = () => {
-    let findEmoji = avatarList.find(list => list.idx === avatar);
+    let findEmoji = avatarList.find((list) => list.idx === avatar);
     return findEmoji && findEmoji.emoji;
-  }
+  };
 
   const registerTitle = (
     <React.Fragment>
-      <TextLogo size="large" />과
-      <p>친구되기 👫🏻</p>
+      <TextLogo size="large" />과<p>친구되기 👫🏻</p>
     </React.Fragment>
-  )
+  );
 
   const freeDrink = (
     <FreeDrink>
       <TextLogo size="small" color="text" />과 친구하면 웰컴 드링크🍹를 드려요!
     </FreeDrink>
-  )
+  );
 
   const toMessage = (
     <React.Fragment>
       To. <TextLogo size="medium" />
     </React.Fragment>
-  )
+  );
 
   return (
     <ContentPage>
-      <SideNav />
-      <PageContent
-        title={registerTitle}
-        desc={freeDrink}
-      />
+      <PageContent title={registerTitle} desc={freeDrink} />
 
       <InputForm onSubmit={onSubmitHandler}>
         <TextInput
@@ -165,7 +159,7 @@ function RegisterPage(props) {
           value={email}
           onChange={onChangeInput}
         />
-        <TextInput 
+        <TextInput
           label="Name"
           type="text"
           name="name"
@@ -189,12 +183,14 @@ function RegisterPage(props) {
               <span>{renderAvatar()}</span>
             </div>
             <ul>
-              {avatarList.map((list, idx) => 
-                <li 
+              {avatarList.map((list, idx) => (
+                <li
                   key={`avatar${idx}`}
                   onClick={() => onChangeAvatart(list.idx)}
-                >{list.emoji}</li>
-              )}
+                >
+                  {list.emoji}
+                </li>
+              ))}
             </ul>
           </div>
         </AvatarSelect>
@@ -214,10 +210,12 @@ function RegisterPage(props) {
           value={message}
           onChange={onChangeInput}
         />
-        <Button fullWidth float size="medium">OK</Button>
+        <Button fullWidth float size="medium">
+          OK
+        </Button>
       </InputForm>
     </ContentPage>
-  )
+  );
 }
 
 export default withRouter(RegisterPage);
